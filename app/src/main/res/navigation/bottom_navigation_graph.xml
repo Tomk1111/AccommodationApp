@@ -5,11 +5,6 @@
     android:id="@+id/bottom_navigation_graph"
     app:startDestination="@id/homeShowFragment">
     <fragment
-        android:id="@+id/homeShowFragment"
-        android:name="ie.ul.accommodationapp.HomeShowFragment"
-        android:label="fragment_home_show"
-        tools:layout="@layout/fragment_home_show" />
-    <fragment
         android:id="@+id/searchFragment"
         android:name="ie.ul.accommodationapp.SearchFragment"
         android:label="fragment_search"
@@ -19,9 +14,30 @@
         android:name="ie.ul.accommodationapp.MapFragment"
         android:label="fragment_map"
         tools:layout="@layout/fragment_map" />
-    <fragment
-        android:id="@+id/profileFragment"
-        android:name="ie.ul.accommodationapp.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+    <navigation
+        android:id="@+id/homeShowFragment"
+        app:startDestination="@id/homeShowFragment" >
+        <fragment
+            android:id="@+id/homeShowFragment"
+            android:name="ie.ul.accommodationapp.HomeShowFragment"
+            android:label="fragment_home_show"
+            tools:layout="@layout/fragment_home_show" />
+    </navigation>
+    <navigation
+        android:id="@+id/profileNav"
+        app:startDestination="@id/profileFragment" >
+        <fragment
+            android:id="@+id/profileFragment"
+            android:name="ie.ul.accommodationapp.ProfileFragment"
+            android:label="fragment_profile"
+            tools:layout="@layout/fragment_profile" >
+            <action
+                android:id="@+id/action_profileFragment_to_personalInformationFragment"
+                app:destination="@id/personalInformationFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/personalInformationFragment"
+            android:name="ie.ul.accommodationapp.PersonalInformationFragment"
+            android:label="PersonalInformationFragment" />
+    </navigation>
 </navigation>

@@ -11,4 +11,7 @@
     <action
         android:id="@+id/action_global_bottom_navigation_graph2"
         app:destination="@id/bottom_navigation_graph" />
+    <action
+        android:id="@+id/action_global_authenticationFragment"
+        app:destination="@id/authenticationFragment" />
 </navigation>

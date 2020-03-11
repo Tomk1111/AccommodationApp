@@ -1,11 +1,8 @@
 package ie.ul.accommodationapp;
 
-
 import android.os.Bundle;
 
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +12,9 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProfileFragment extends Fragment {
+public class AboutFragment extends Fragment {
 
-    private CardView personalInformation;
-
-    public ProfileFragment() {
+    public AboutFragment() {
         // Required empty public constructor
     }
 
@@ -27,9 +22,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        personalInformation = getActivity().findViewById(R.id.personal_details_item);
-        return view;
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_about, container, false);
     }
-
 }

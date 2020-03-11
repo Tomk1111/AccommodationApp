@@ -3,4 +3,6 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="personal_information">Personal Information</string>
+    <string name="listed_ads">Listed Ads</string>
 </resources>
