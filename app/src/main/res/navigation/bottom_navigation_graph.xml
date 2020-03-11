@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_navigation_graph"
+    app:startDestination="@id/homeShowFragment">
+    <fragment
+        android:id="@+id/homeShowFragment"
+        android:name="ie.ul.accommodationapp.HomeShowFragment"
+        android:label="fragment_home_show"
+        tools:layout="@layout/fragment_home_show" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="ie.ul.accommodationapp.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="ie.ul.accommodationapp.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="ie.ul.accommodationapp.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+</navigation>

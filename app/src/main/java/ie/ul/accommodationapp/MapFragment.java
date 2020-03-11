@@ -13,10 +13,10 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class mapFragment extends Fragment {
+public class MapFragment extends Fragment {
 
 
-    public mapFragment() {
+    public MapFragment() {
         // Required empty public constructor
     }
 

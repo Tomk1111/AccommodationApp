@@ -13,10 +13,10 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class listedAddsFragment extends Fragment {
+public class ViewAdFragment extends Fragment {
 
 
-    public listedAddsFragment() {
+    public ViewAdFragment() {
         // Required empty public constructor
     }
 
@@ -25,7 +25,7 @@ public class listedAddsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_listed_adds, container, false);
+        return inflater.inflate(R.layout.fragment_view_ad, container, false);
     }
 
 }

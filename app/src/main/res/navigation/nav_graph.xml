@@ -1,68 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
-    app:startDestination="@id/signInFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
+    app:startDestination="@id/authenticationFragment">
 
     <fragment
-        android:id="@+id/signInFragment"
-        android:name="ie.ul.accommodationapp.signInFragment"
-        android:label="fragment_sign_in"
-        tools:layout="@layout/fragment_sign_in" />
-    <fragment
-        android:id="@+id/navBarFragment"
-        android:name="ie.ul.accommodationapp.navBarFragment"
-        android:label="fragment_nav_bar"
-        tools:layout="@layout/fragment_nav_bar" />
-    <fragment
-        android:id="@+id/homeShowFragment"
-        android:name="ie.ul.accommodationapp.homeShowFragment"
-        android:label="fragment_home_show"
-        tools:layout="@layout/fragment_home_show" />
-    <fragment
-        android:id="@+id/homeListFragment"
-        android:name="ie.ul.accommodationapp.homeListFragment"
-        android:label="fragment_home_list"
-        tools:layout="@layout/fragment_home_list" />
-    <fragment
-        android:id="@+id/searchFragment"
-        android:name="ie.ul.accommodationapp.searchFragment"
-        android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
-    <fragment
-        android:id="@+id/mapFragment"
-        android:name="ie.ul.accommodationapp.mapFragment"
-        android:label="fragment_map"
-        tools:layout="@layout/fragment_map" />
-    <fragment
-        android:id="@+id/profileFragment"
-        android:name="ie.ul.accommodationapp.profileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
-    <fragment
-        android:id="@+id/accountFragment"
-        android:name="ie.ul.accommodationapp.accountFragment"
-        android:label="fragment_account"
-        tools:layout="@layout/fragment_account" />
-    <fragment
-        android:id="@+id/likedAddsFragment"
-        android:name="ie.ul.accommodationapp.likedAddsFragment"
-        android:label="fragment_liked_adds"
-        tools:layout="@layout/fragment_liked_adds" />
-    <fragment
-        android:id="@+id/listedAddsFragment"
-        android:name="ie.ul.accommodationapp.listedAddsFragment"
-        android:label="fragment_listed_adds"
-        tools:layout="@layout/fragment_listed_adds" />
-    <fragment
-        android:id="@+id/inboxFragment"
-        android:name="ie.ul.accommodationapp.inboxFragment"
-        android:label="fragment_inbox"
-        tools:layout="@layout/fragment_inbox" />
-    <fragment
-        android:id="@+id/viewAddFragment"
-        android:name="ie.ul.accommodationapp.viewAddFragment"
-        android:label="fragment_view_add"
-        tools:layout="@layout/fragment_view_add" />
+        android:id="@+id/authenticationFragment"
+        android:name="ie.ul.accommodationapp.AuthenticationFragment"
+        android:label="AuthenticationFragment" />
+    <include app:graph="@navigation/bottom_navigation_graph" />
+    <action
+        android:id="@+id/action_global_bottom_navigation_graph2"
+        app:destination="@id/bottom_navigation_graph" />
 </navigation>
