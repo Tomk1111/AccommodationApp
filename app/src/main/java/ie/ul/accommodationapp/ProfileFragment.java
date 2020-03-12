@@ -10,6 +10,9 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -19,8 +22,9 @@ import com.google.firebase.auth.FirebaseAuth;
  */
 public class ProfileFragment extends Fragment {
 
-    private CardView personalInformationOption, likedAdsOption, listedAdsOption,
+    private LinearLayout personalInformationOption, likedAdsOption, listedAdsOption,
             inboxOption, aboutOption, signOutOption;
+    private TextView displayName;
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -30,6 +34,8 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        displayName = view.findViewById(R.id.profile_display_name);
+        displayName.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
         personalInformationOption = view.findViewById(R.id.personal_details_item);
         personalInformationOption.setOnClickListener(new View.OnClickListener() {
             @Override

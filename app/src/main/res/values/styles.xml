@@ -10,7 +10,10 @@
     <style name="Divider">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
-        <item name="android:background">?android:attr/listDivider</item>
+        <item name="android:background">#1fffffff</item>
     </style>
-
+    <style name="BottomNavigationStyle">
+        <item name="fontFamily">@font/source_sans_pro</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

@@ -36,7 +36,7 @@ public class AuthenticationFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_authentication, container, false);
         container.removeAllViews();
-   
+
         bottomNavigationView = getActivity().findViewById(R.id.bottom_navigation_view);
         authButton = view.findViewById(R.id.authButton);
         authButton.setOnClickListener(new View.OnClickListener() {
