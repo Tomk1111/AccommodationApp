@@ -34,10 +34,51 @@
             <action
                 android:id="@+id/action_profileFragment_to_personalInformationFragment"
                 app:destination="@id/personalInformationFragment" />
+            <action
+                android:id="@+id/action_profileFragment_to_likedAdsFragment"
+                app:destination="@id/likedAdsFragment" />
+            <action
+                android:id="@+id/action_profileFragment_to_listedAdsFragment"
+                app:destination="@id/listedAdsFragment" />
+            <action
+                android:id="@+id/action_profileFragment_to_inboxFragment"
+                app:destination="@id/inboxFragment" />
+            <action
+                android:id="@+id/action_profileFragment_to_aboutFragment"
+                app:destination="@id/aboutFragment" />
+            <action
+                android:id="@+id/action_profileFragment_to_authenticationFragment2"
+                app:destination="@id/authenticationFragment2" />
+
+
         </fragment>
         <fragment
             android:id="@+id/personalInformationFragment"
             android:name="ie.ul.accommodationapp.PersonalInformationFragment"
             android:label="PersonalInformationFragment" />
+        <fragment
+            android:id="@+id/listedAdsFragment"
+            android:name="ie.ul.accommodationapp.ListedAdsFragment"
+            android:label="fragment_listed_ads"
+            tools:layout="@layout/fragment_listed_ads" />
+        <fragment
+            android:id="@+id/inboxFragment"
+            android:name="ie.ul.accommodationapp.InboxFragment"
+            android:label="fragment_inbox"
+            tools:layout="@layout/fragment_inbox" />
+        <fragment
+            android:id="@+id/aboutFragment"
+            android:name="ie.ul.accommodationapp.AboutFragment"
+            android:label="fragment_about"
+            tools:layout="@layout/fragment_about" />
+        <fragment
+            android:id="@+id/authenticationFragment2"
+            android:name="ie.ul.accommodationapp.AuthenticationFragment"
+            android:label="AuthenticationFragment" />
+        <fragment
+            android:id="@+id/likedAdsFragment"
+            android:name="ie.ul.accommodationapp.LikedAdsFragment"
+            android:label="fragment_liked_ads"
+            tools:layout="@layout/fragment_liked_ads" />
     </navigation>
 </navigation>

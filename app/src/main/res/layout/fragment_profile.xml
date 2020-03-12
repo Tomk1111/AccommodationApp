@@ -27,6 +27,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
+        android:id="@+id/personal_details_item"
         android:layout_height="48dp"
         android:elevation="0dp"
         app:cardBackgroundColor="@color/cardview_light_background">
@@ -38,7 +39,6 @@
             android:layout_marginStart="16dp"
             android:layout_gravity="center_vertical"/>
         <TextView
-            android:id="@+id/personal_details_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -50,6 +50,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:id="@+id/liked_ads_item"
         android:elevation="0dp"
         app:cardBackgroundColor="@color/cardview_light_background">
 
@@ -61,7 +62,6 @@
             android:src="@drawable/ic_star_black_24dp" />
 
         <TextView
-            android:id="@+id/liked_ads_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -73,6 +73,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:id="@+id/listed_ads_item"
         android:elevation="0dp"
         app:cardBackgroundColor="@color/cardview_light_background">
 
@@ -84,7 +85,6 @@
             android:src="@drawable/ic_business_center_black_24dp" />
 
         <TextView
-            android:id="@+id/listed_ads_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -97,6 +97,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:elevation="0dp"
+        android:id="@+id/inbox_item"
         app:cardBackgroundColor="@color/cardview_light_background">
 
         <ImageView
@@ -107,7 +108,6 @@
             android:src="@drawable/ic_message_black_24dp" />
 
         <TextView
-            android:id="@+id/inbox_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -119,6 +119,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:id="@+id/about_item"
         android:elevation="0dp"
         app:cardBackgroundColor="@color/cardview_light_background">
 
@@ -130,7 +131,6 @@
             android:src="@drawable/ic_info_black_24dp" />
 
         <TextView
-            android:id="@+id/about_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -142,6 +142,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:id="@+id/logout_item"
         android:elevation="0dp"
         app:cardBackgroundColor="@color/cardview_light_background">
 
@@ -153,7 +154,6 @@
             android:src="@drawable/ic_exit_to_app_black_24dp" />
 
         <TextView
-            android:id="@+id/logout_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
