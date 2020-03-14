@@ -1,10 +1,12 @@
 package ie.ul.accommodationapp;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
@@ -25,6 +27,7 @@ public class ProfileFragment extends Fragment {
     private LinearLayout personalInformationOption, likedAdsOption, listedAdsOption,
             inboxOption, aboutOption, signOutOption;
     private TextView displayName;
+    private ProfileViewModel profileViewModel;
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -33,9 +36,10 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         displayName = view.findViewById(R.id.profile_display_name);
-        displayName.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+        displayName.setText(profileViewModel.getNameText());
         personalInformationOption = view.findViewById(R.id.personal_details_item);
         personalInformationOption.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +80,8 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
-                getActivity().finishAffinity();
+                getActivity().finish();
+                startActivity(new Intent(getActivity(), MainActivity.class));
             }
         });
         return view;

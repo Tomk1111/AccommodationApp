@@ -16,12 +16,11 @@
         tools:layout="@layout/fragment_map" />
     <navigation
         android:id="@+id/homeShowFragment"
-        app:startDestination="@id/homeShowFragment" >
+        app:startDestination="@id/homeTabFragment4">
         <fragment
-            android:id="@+id/homeShowFragment"
-            android:name="ie.ul.accommodationapp.HomeShowFragment"
-            android:label="fragment_home_show"
-            tools:layout="@layout/fragment_home_show" />
+            android:id="@+id/homeTabFragment4"
+            android:name="ie.ul.accommodationapp.HomeTabFragment"
+            android:label="HomeTabFragment" />
     </navigation>
     <navigation
         android:id="@+id/profileNav"

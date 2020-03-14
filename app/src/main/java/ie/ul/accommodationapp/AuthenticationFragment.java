@@ -69,8 +69,10 @@ public class AuthenticationFragment extends Fragment {
                 int duration = Toast.LENGTH_SHORT;
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
-                bottomNavigationView.setVisibility(View.VISIBLE);
-                Navigation.findNavController(getView()).navigate(R.id.action_global_bottom_navigation_graph2);
+                Intent intent = new Intent(getActivity(), BottomNavigationActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                getActivity().finish();
+                startActivity(intent);
             } else {
                 if(response == null){
                     return;
