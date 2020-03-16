@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.UUID;
 
 public class Listing {
-    private UUID id;
+    private int id;
     private double longitude;
     private double latitude;
     private String address;
@@ -15,7 +15,11 @@ public class Listing {
     private Date endDate;
     private int duration;
 
-    public Listing(UUID id, double longitude,
+    public Listing(){
+
+    }
+
+    public Listing(int id, double longitude,
                double latitude, String address, int rooms,int price,String description,
                    Date startDate,Date endDate,int duration)
     {
@@ -71,11 +75,11 @@ public class Listing {
         this.address = address;
     }
 
-    public UUID getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(int id) {
         this.id = id;
     }
 
