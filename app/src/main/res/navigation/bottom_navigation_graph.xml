@@ -20,7 +20,16 @@
         <fragment
             android:id="@+id/homeTabFragment4"
             android:name="ie.ul.accommodationapp.HomeTabFragment"
-            android:label="HomeTabFragment" />
+            android:label="HomeTabFragment" >
+            <action
+                android:id="@+id/action_homeTabFragment4_to_houseDetailsFragment"
+                app:destination="@id/houseDetailsFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/houseDetailsFragment"
+            android:name="ie.ul.accommodationapp.HouseDetailsFragment"
+            android:label="fragment_house_details"
+            tools:layout="@layout/fragment_house_details" />
     </navigation>
     <navigation
         android:id="@+id/profileNav"

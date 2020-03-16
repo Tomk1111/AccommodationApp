@@ -38,7 +38,7 @@ public class HomeTabFragment extends Fragment {
         tab2 = new HomeListFragment();
         final ViewPager viewPager = view.findViewById(R.id.home_tab_pager);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        pageAdapter = new PageAdapter(getActivity().getSupportFragmentManager(), tabLayout.getTabCount(), tab1, tab2);
+            pageAdapter = new PageAdapter(getChildFragmentManager(), tabLayout.getTabCount(), tab1, tab2);
         viewPager.setAdapter(pageAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -54,7 +54,6 @@ public class HomeTabFragment extends Fragment {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
         return view;

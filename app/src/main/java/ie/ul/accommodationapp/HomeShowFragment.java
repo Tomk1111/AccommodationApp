@@ -4,6 +4,7 @@ package ie.ul.accommodationapp;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,9 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -34,7 +37,7 @@ public class HomeShowFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home_show, container, false);
+        final View view = inflater.inflate(R.layout.fragment_home_show, container, false);
         Query query = notebookRef.orderBy("price", Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<Listing> options = new FirestoreRecyclerOptions.Builder<Listing>()
                 .setQuery(query, Listing.class)
@@ -45,6 +48,15 @@ public class HomeShowFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new ListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+                Listing listing = documentSnapshot.toObject(Listing.class);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("listingModel", listing);
+                Navigation.findNavController(view).navigate(R.id.action_homeTabFragment4_to_houseDetailsFragment, bundle);
+            }
+        });
         return view;
     }
 

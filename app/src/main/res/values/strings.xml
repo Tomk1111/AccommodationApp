@@ -6,4 +6,7 @@
     <string name="personal_information">Personal Information</string>
     <string name="listed_ads">Listed Ads</string>
     <string name="app_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur non magna eget diam efficitur lacinia. Sed mollis nibh volutpat, viverra est in, sagittis lacus. Ut non magna sem. Etiam ultrices diam justo, nec vestibulum dolor ullamcorper a. Phasellus dictum sollicitudin nunc. Donec faucibus posuere lectus, non dapibus eros sollicitudin ut. Sed mattis augue eget facilisis faucibus. In nec mattis velit, ut porttitor ex. Nunc gravida nec arcu sed pretium. Integer pretium nisl in massa posuere, ac luctus massa sagittis. Nulla vulputate, elit eu posuere imperdiet, eros nulla feugiat erat, et aliquet arcu tellus vel massa. Praesent quis ex leo. Nam auctor congue dolor, sit amet interdum tellus. Maecenas posuere in odio pellentesque egestas. Proin ut rhoncus justo. Sed suscipit faucibus arcu ut vulputate.</string>
+    <string name="from">From</string>
+    <string name="move_in">Move in\t</string>
+    <string name="move_out">Move out\t</string>
 </resources>

@@ -1,9 +1,12 @@
 package ie.ul.accommodationapp;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 import java.util.UUID;
 
-public class Listing {
+public class Listing implements Parcelable {
     private int id;
     private double longitude;
     private double latitude;
@@ -116,5 +119,50 @@ public class Listing {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeDouble(this.longitude);
+        dest.writeDouble(this.latitude);
+        dest.writeString(this.address);
+        dest.writeInt(this.rooms);
+        dest.writeInt(this.price);
+        dest.writeString(this.description);
+        dest.writeLong(this.startDate != null ? this.startDate.getTime() : -1);
+        dest.writeLong(this.endDate != null ? this.endDate.getTime() : -1);
+        dest.writeInt(this.duration);
+    }
+
+    protected Listing(Parcel in) {
+        this.id = in.readInt();
+        this.longitude = in.readDouble();
+        this.latitude = in.readDouble();
+        this.address = in.readString();
+        this.rooms = in.readInt();
+        this.price = in.readInt();
+        this.description = in.readString();
+        long tmpStartDate = in.readLong();
+        this.startDate = tmpStartDate == -1 ? null : new Date(tmpStartDate);
+        long tmpEndDate = in.readLong();
+        this.endDate = tmpEndDate == -1 ? null : new Date(tmpEndDate);
+        this.duration = in.readInt();
+    }
+
+    public static final Parcelable.Creator<Listing> CREATOR = new Parcelable.Creator<Listing>() {
+        @Override
+        public Listing createFromParcel(Parcel source) {
+            return new Listing(source);
+        }
+
+        @Override
+        public Listing[] newArray(int size) {
+            return new Listing[size];
+        }
+    };
 }
 
