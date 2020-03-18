@@ -17,6 +17,7 @@ public class Listing implements Parcelable {
     private Date startDate;
     private Date endDate;
     private int duration;
+    private String uploadedBy;
 
     public Listing(){
 
@@ -24,7 +25,7 @@ public class Listing implements Parcelable {
 
     public Listing(int id, double longitude,
                double latitude, String address, int rooms,int price,String description,
-                   Date startDate,Date endDate,int duration)
+                   Date startDate,Date endDate,int duration, String uploadedBy)
     {
         this.id = id;
         this.longitude = longitude;
@@ -36,6 +37,7 @@ public class Listing implements Parcelable {
         this.startDate =startDate;
         this.endDate = endDate;
         this.duration = duration;
+        this.uploadedBy = uploadedBy;
     }
 
     public double getLatitude() {
@@ -118,6 +120,9 @@ public class Listing implements Parcelable {
         this.duration = duration;
     }
 
+    public String getUploadedBy() { return uploadedBy; }
+
+    public void setUploadedBy(String uploadedBy) { this.uploadedBy = uploadedBy; }
 
     @Override
     public int describeContents() {
@@ -136,6 +141,7 @@ public class Listing implements Parcelable {
         dest.writeLong(this.startDate != null ? this.startDate.getTime() : -1);
         dest.writeLong(this.endDate != null ? this.endDate.getTime() : -1);
         dest.writeInt(this.duration);
+        dest.writeString(this.uploadedBy);
     }
 
     protected Listing(Parcel in) {
@@ -151,6 +157,7 @@ public class Listing implements Parcelable {
         long tmpEndDate = in.readLong();
         this.endDate = tmpEndDate == -1 ? null : new Date(tmpEndDate);
         this.duration = in.readInt();
+        this.uploadedBy = in.readString();
     }
 
     public static final Parcelable.Creator<Listing> CREATOR = new Parcelable.Creator<Listing>() {

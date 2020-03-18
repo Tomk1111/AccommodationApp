@@ -1,6 +1,7 @@
 package ie.ul.accommodationapp;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,11 +17,17 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.model.GeocodingResult;
@@ -30,6 +37,7 @@ import com.google.maps.model.LatLng;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import java.io.InputStream;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.concurrent.TimeUnit;
@@ -40,6 +48,12 @@ import java.util.concurrent.TimeUnit;
 public class HomeListFragment extends Fragment {
 
     int id;
+    private static final int PICK_PHOTO_FOR_LISTING = 0;
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageRef = storage.getReference();
+    StorageReference listingImagesRef = null;
+    InputStream inputStream;
+
 
     public HomeListFragment() {
         // Required empty public constructor
@@ -72,6 +86,15 @@ public class HomeListFragment extends Fragment {
         final GeoApiContext context = new GeoApiContext.Builder()
                 .apiKey("AIzaSyCJorsEbO8BWUmHINg18AXww1wJpItBqQg")
                 .build();
+        Button attachImage = view.findViewById(R.id.attachImage);
+        attachImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(intent, PICK_PHOTO_FOR_LISTING);
+            }
+        });
         Button submit = view.findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +119,7 @@ public class HomeListFragment extends Fragment {
                     int difInt = (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
                     Listing newHouse = new Listing(id,coords.lng,coords.lat,
                             addressText,roomInt,priceInt,
-                            description.getText().toString(),sDate,eDate, difInt);
+                            description.getText().toString(),sDate,eDate, difInt, FirebaseAuth.getInstance().getCurrentUser().getEmail());
                     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().detectAll().build();
                     StrictMode.setThreadPolicy(policy);
                     listing1.document("House"+id).set(newHouse);
@@ -107,11 +130,40 @@ public class HomeListFragment extends Fragment {
                     startDate.setText("");
                     endDate.setText("");
                     Toast.makeText(getActivity(), "Successfully Added Listing.", Toast.LENGTH_SHORT).show();
+                    if(inputStream != null){
+                        listingImagesRef = storageRef.child("House"+id+".jpg");
+                        UploadTask uploadTask = listingImagesRef.putStream(inputStream);
+                        uploadTask.addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                inputStream = null;
+                            }
+                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                Toast.makeText(getActivity(), "Successfully Uploaded Image.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_PHOTO_FOR_LISTING && resultCode == getActivity().RESULT_OK) {
+            if (data == null) {
+                return;
+            }
+            try {
+                inputStream = getActivity().getContentResolver().openInputStream(data.getData());
+                Toast.makeText(getActivity(), "Successfully Attached Image.", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {}
+        }
     }
 
 }
