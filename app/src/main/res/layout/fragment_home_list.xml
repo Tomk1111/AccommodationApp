@@ -157,5 +157,33 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/username_text_input_layout6" />
 
+        <LinearLayout
+            android:id="@+id/linearImageLayout"
+            android:layout_width="409dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="45dp"
+            android:layout_marginEnd="1dp"
+            android:background="#DEF4B2"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/submit"></LinearLayout>
+
+        <TextView
+            android:id="@+id/bannerText"
+            android:layout_width="420dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="15dp"
+            android:background="#8BC34A"
+            android:text="Attached Images"
+            android:textAlignment="center"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/linearImageLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/submit" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

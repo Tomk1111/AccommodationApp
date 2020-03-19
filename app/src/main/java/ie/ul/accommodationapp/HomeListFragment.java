@@ -2,6 +2,8 @@ package ie.ul.accommodationapp;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,12 +16,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.common.base.Charsets;
+import com.google.common.io.CharStreams;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -37,7 +44,10 @@ import com.google.maps.model.LatLng;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import java.io.File;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.concurrent.TimeUnit;
@@ -52,7 +62,7 @@ public class HomeListFragment extends Fragment {
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
     StorageReference listingImagesRef = null;
-    InputStream inputStream;
+    ArrayList<InputStream> inputStream = new ArrayList<InputStream>();
 
 
     public HomeListFragment() {
@@ -131,19 +141,32 @@ public class HomeListFragment extends Fragment {
                     endDate.setText("");
                     Toast.makeText(getActivity(), "Successfully Added Listing.", Toast.LENGTH_SHORT).show();
                     if(inputStream != null){
-                        listingImagesRef = storageRef.child("House"+id+".jpg");
-                        UploadTask uploadTask = listingImagesRef.putStream(inputStream);
-                        uploadTask.addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception exception) {
-                                inputStream = null;
-                            }
-                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                Toast.makeText(getActivity(), "Successfully Uploaded Image.", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        int i=1;
+                        for (InputStream streamer: inputStream) {
+                            listingImagesRef = storageRef.child("House" + id + "image" + i + ".jpg");
+                            UploadTask uploadTask = listingImagesRef.putStream(streamer);
+                            uploadTask.addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    inputStream = null;
+                                    LinearLayout linLayout = (LinearLayout) getActivity().findViewById(R.id.linearImageLayout);
+                                    linLayout.setVisibility(View.INVISIBLE);
+                                    TextView textBanner = (TextView) getActivity().findViewById(R.id.bannerText);
+                                    textBanner.setVisibility(View.INVISIBLE);
+                                }
+                            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    Toast.makeText(getActivity(), "Successfully Uploaded Image.", Toast.LENGTH_SHORT).show();
+                                    inputStream = null;
+                                    LinearLayout linLayout = (LinearLayout) getActivity().findViewById(R.id.linearImageLayout);
+                                    linLayout.setVisibility(View.INVISIBLE);
+                                    TextView textBanner = (TextView) getActivity().findViewById(R.id.bannerText);
+                                    textBanner.setVisibility(View.INVISIBLE);
+                                }
+                            });
+                            i++;
+                        }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -160,8 +183,21 @@ public class HomeListFragment extends Fragment {
                 return;
             }
             try {
-                inputStream = getActivity().getContentResolver().openInputStream(data.getData());
+                inputStream.add(getActivity().getContentResolver().openInputStream(data.getData()));
+                LinearLayout linLayout = (LinearLayout) getActivity().findViewById(R.id.linearImageLayout);
+                try{
+                    Bitmap myBitmap = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(data.getData()));
+                    ImageView myImage = new ImageView(getActivity());
+                    myImage.setLayoutParams(new android.view.ViewGroup.LayoutParams(200,200));
+                    myImage.setMaxHeight(200);
+                    myImage.setMaxWidth(200);
+                    myImage.setImageBitmap(myBitmap);
+                    linLayout.addView(myImage);
+                } catch (Exception e) {}
                 Toast.makeText(getActivity(), "Successfully Attached Image.", Toast.LENGTH_SHORT).show();
+                linLayout.setVisibility(View.VISIBLE);
+                TextView banner = (TextView) getActivity().findViewById(R.id.bannerText);
+                banner.setVisibility(View.VISIBLE);
             } catch (Exception e) {}
         }
     }
