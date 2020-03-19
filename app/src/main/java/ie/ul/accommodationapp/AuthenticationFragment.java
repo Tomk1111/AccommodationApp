@@ -12,14 +12,18 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Arrays;
 import java.util.List;
@@ -64,6 +68,7 @@ public class AuthenticationFragment extends Fragment {
 
             if(resultCode == RESULT_OK) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                updateUserDatabase(user);
                 Context context = getActivity();
                 CharSequence text = "Sign in Successful. Welcome " + user.getDisplayName()+ "!";
                 int duration = Toast.LENGTH_SHORT;
@@ -88,4 +93,31 @@ public class AuthenticationFragment extends Fragment {
             }
         }
     }
+
+
+    //TEMP METHOD UNTIL WE REDO THE LOGIN/REGISTRATION SCREENS
+    // CHECKS USER DB IF USER ALREADY REGISTERED, IF NOT IT ADDS THEM
+    public void updateUserDatabase(FirebaseUser user) {
+        String uid = user.getUid();
+        String userName = user.getDisplayName();
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+        CollectionReference users = firebaseFirestore.collection("Users");
+        users.document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+
+                    } else {
+                        User user = new User(uid, userName);
+                        users.document(uid).set(user);
+                        Toast.makeText(getContext(), " Added " + userName, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
+    }
+
 }
