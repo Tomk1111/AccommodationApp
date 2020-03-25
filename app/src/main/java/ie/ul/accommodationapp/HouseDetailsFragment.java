@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ public class HouseDetailsFragment extends Fragment {
     private Listing listingModel;
     private TextView addressTextView, pricePerWeekView, descriptionView, roomsView,
             moveInDateView, moveOutViewDate;
+    private Button button;
 
     public HouseDetailsFragment() {
         // Required empty public constructor
@@ -45,6 +47,16 @@ public class HouseDetailsFragment extends Fragment {
         roomsView.setText(listingModel.getRooms() + " rooms");
         moveInDateView.setText(simpleDateFormat.format(listingModel.getStartDate()));
         moveOutViewDate.setText(simpleDateFormat.format(listingModel.getEndDate()));
+        button=view.findViewById(R.id.button_like);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            User currentUser=new User();
+            currentUser.addToLikedAdds(listingModel);
+            currentUser.updateUserInDB();
+            }
+        });
+
         return view;
     }
 }
