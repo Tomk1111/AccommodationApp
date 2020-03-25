@@ -1,5 +1,6 @@
 package ie.ul.accommodationapp;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,11 +32,12 @@ public class ListAdapter extends FirestoreRecyclerAdapter<Listing, ListAdapter.N
         super(options);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onBindViewHolder(@NonNull NoteHolder holder, int i, @NonNull Listing model) {
-        holder.textViewTitle.setText(String.valueOf(model.getPrice()));
+        holder.textViewTitle.setText(model.getAddress());
         holder.textViewDescription.setText(model.getDescription());
-        holder.textViewPriority.setText(model.getAddress());
+        holder.textViewPriority.setText("€"+String.valueOf(model.getPrice()));
     }
 
 
