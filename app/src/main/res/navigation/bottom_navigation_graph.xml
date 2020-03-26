@@ -5,11 +5,6 @@
     android:id="@+id/bottom_navigation_graph"
     app:startDestination="@id/homeShowFragment">
     <fragment
-        android:id="@+id/searchFragment"
-        android:name="ie.ul.accommodationapp.SearchFragment"
-        android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
-    <fragment
         android:id="@+id/mapFragment"
         android:name="ie.ul.accommodationapp.MapFragment"
         android:label="fragment_map"
@@ -88,5 +83,23 @@
             android:name="ie.ul.accommodationapp.LikedAdsFragment"
             android:label="fragment_liked_ads"
             tools:layout="@layout/fragment_liked_ads" />
+    </navigation>
+    <navigation
+        android:id="@+id/searchFragment"
+        app:startDestination="@id/searchFragment" >
+        <fragment
+            android:id="@+id/searchFragment"
+            android:name="ie.ul.accommodationapp.SearchFragment"
+            android:label="fragment_search"
+            tools:layout="@layout/fragment_search" >
+            <action
+                android:id="@+id/action_searchFragment_to_houseDetailsFragment2"
+                app:destination="@id/houseDetailsFragment2" />
+        </fragment>
+        <fragment
+            android:id="@+id/houseDetailsFragment2"
+            android:name="ie.ul.accommodationapp.HouseDetailsFragment"
+            android:label="fragment_house_details"
+            tools:layout="@layout/fragment_house_details" />
     </navigation>
 </navigation>
