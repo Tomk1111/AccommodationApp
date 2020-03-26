@@ -78,11 +78,6 @@
             android:id="@+id/authenticationFragment2"
             android:name="ie.ul.accommodationapp.AuthenticationFragment"
             android:label="AuthenticationFragment" />
-        <fragment
-            android:id="@+id/likedAdsFragment"
-            android:name="ie.ul.accommodationapp.LikedAdsFragment"
-            android:label="fragment_liked_ads"
-            tools:layout="@layout/fragment_liked_ads" />
     </navigation>
     <navigation
         android:id="@+id/searchFragment"
@@ -98,6 +93,24 @@
         </fragment>
         <fragment
             android:id="@+id/houseDetailsFragment2"
+            android:name="ie.ul.accommodationapp.HouseDetailsFragment"
+            android:label="fragment_house_details"
+            tools:layout="@layout/fragment_house_details" />
+    </navigation>
+    <navigation
+        android:id="@+id/likedAdsFragment"
+        app:startDestination="@id/likedAdsFragment" >
+        <fragment
+            android:id="@+id/likedAdsFragment"
+            android:name="ie.ul.accommodationapp.LikedAdsFragment"
+            android:label="fragment_liked"
+            tools:layout="@layout/fragment_liked_ads" >
+            <action
+                android:id="@+id/action_likedAdsFragment_to_houseDetailsFragment3"
+                app:destination="@id/houseDetailsFragment3" />
+        </fragment>
+        <fragment
+            android:id="@+id/houseDetailsFragment3"
             android:name="ie.ul.accommodationapp.HouseDetailsFragment"
             android:label="fragment_house_details"
             tools:layout="@layout/fragment_house_details" />
