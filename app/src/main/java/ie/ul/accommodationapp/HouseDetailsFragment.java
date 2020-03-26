@@ -53,7 +53,6 @@ public class HouseDetailsFragment extends Fragment {
             public void onClick(View v) {
             User currentUser=new User();
             currentUser.addToLikedAdds(listingModel);
-            currentUser.updateUserInDB();
             }
         });
 

@@ -16,7 +16,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class User implements Parcelable {
     private String uid;
@@ -25,6 +28,8 @@ public class User implements Parcelable {
     private List<Listing> listedAds=new ArrayList<>();
     List<Listing> tempLikedAds=new ArrayList<>();
     List<Listing> tempListedAds=new ArrayList<>();
+
+
     //this populates a user object with the current users info from the users collection
     //including their listed and liked adds
     public User() {
@@ -32,8 +37,6 @@ public class User implements Parcelable {
         this.uid=uid;
         String userName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
         this.userName=userName;
-        List<Listing> likedAds;
-        List<Listing> listedAds;
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
         CollectionReference users = firebaseFirestore.collection("Users");
         users.document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -44,16 +47,12 @@ public class User implements Parcelable {
                     if (document.exists()) {
                         tempLikedAds=(List<Listing>)document.get("likedAds");
                         tempListedAds=(List<Listing>)document.get("listedAds");
-                        System.out.println(tempLikedAds);
+                        updateArrayLists(tempLikedAds,tempListedAds);
+                        updateUserInDB();
                     }
                 }
             }
         });
-        this.likedAds=tempLikedAds;
-        this.listedAds=tempListedAds;
-        System.out.println("54"+tempLikedAds);
-        System.out.println("55"+this.likedAds);
-
     }
 
     public User(String uid, String userName) {
@@ -71,13 +70,17 @@ public class User implements Parcelable {
         this.listedAds = listedAds;
     }
 
+    private void updateArrayLists(List<Listing> likedAds, List<Listing> listedAds) {
+        for(int i=0; i<likedAds.size();i++)
+            this.likedAds.add(likedAds.get(i));
+        this.listedAds=listedAds;
+        for(int j=0; j<listedAds.size();j++)
+            this.listedAds.add(listedAds.get(j));
+    }
+
     //removes old user info and adds the new info
     //use: if a new liked add is added to the arraylist, remove old user info add new.
-    public void updateUserInDB() {
-        ArrayList<Integer> myarray=new ArrayList<>();
-        for (Listing s : this.likedAds) {
-            myarray.add(s.getId());
-        }
+    private void updateUserInDB() {
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
         CollectionReference users = firebaseFirestore.collection("Users");
         users.document(this.uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -86,12 +89,12 @@ public class User implements Parcelable {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        document.getReference().update("likedAds", myarray);
+
                     }
                 }
             }
         });
-//        users.document(this.uid).set(new User(this.uid,this.userName,this.likedAds,this.listedAds));
+        users.document(this.uid).set(new User(this.uid,this.userName,this.likedAds,this.listedAds));
     }
 
     public String getUid() {
@@ -129,13 +132,11 @@ public class User implements Parcelable {
     public void addToLikedAdds(Listing e) {
         if (this.likedAds==null){
             ArrayList<Listing> temp=new ArrayList<Listing>();
-            temp.add(e);
             this.likedAds=temp;
         }
         else{
             this.likedAds.add(e);
         }
-//        System.out.println(this.likedAds.get(0).getAddress());
     }
 
     public void addToListedAdds(Listing e) {
