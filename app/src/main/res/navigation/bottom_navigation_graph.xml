@@ -60,11 +60,6 @@
             android:name="ie.ul.accommodationapp.PersonalInformationFragment"
             android:label="PersonalInformationFragment" />
         <fragment
-            android:id="@+id/listedAdsFragment"
-            android:name="ie.ul.accommodationapp.ListedAdsFragment"
-            android:label="fragment_listed_ads"
-            tools:layout="@layout/fragment_listed_ads" />
-        <fragment
             android:id="@+id/inboxFragment"
             android:name="ie.ul.accommodationapp.InboxFragment"
             android:label="fragment_inbox"
@@ -107,6 +102,24 @@
             tools:layout="@layout/fragment_liked_ads" >
             <action
                 android:id="@+id/action_likedAdsFragment_to_houseDetailsFragment3"
+                app:destination="@id/houseDetailsFragment3" />
+        </fragment>
+        <fragment
+            android:id="@+id/houseDetailsFragment3"
+            android:name="ie.ul.accommodationapp.HouseDetailsFragment"
+            android:label="fragment_house_details"
+            tools:layout="@layout/fragment_house_details" />
+    </navigation>
+    <navigation
+        android:id="@+id/listedAdsFragment"
+        app:startDestination="@id/listedAdsFragment" >
+        <fragment
+            android:id="@+id/listedAdsFragment"
+            android:name="ie.ul.accommodationapp.ListedAdsFragment"
+            android:label="fragment_listed"
+            tools:layout="@layout/fragment_listed_ads" >
+            <action
+                android:id="@+id/action_listedAdsFragment_to_houseDetailsFragment3"
                 app:destination="@id/houseDetailsFragment3" />
         </fragment>
         <fragment

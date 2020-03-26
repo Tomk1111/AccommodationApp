@@ -96,8 +96,9 @@ public class LikedAdsFragment extends Fragment {
                             Date endDate= (Date) hashMap1.get("endDate");
                             Long duration= (Long) hashMap1.get("duration");
                             Integer duration_1=duration.intValue();
-                            String uploadedBy= (String) hashMap1.get("uploadedBy");
-                            Listing listing=new Listing(id_1,longitude,latitude,address,rooms_1,price_1,description,startDate,endDate,duration_1,uploadedBy);
+                            String uid= (String) hashMap1.get("uid");
+                            String userName= (String) hashMap1.get("userName");
+                            Listing listing=new Listing(id_1,longitude,latitude,address,rooms_1,price_1,description,startDate,endDate,duration_1,uid,userName);
                             mData.add(listing);
                         }
                         homeAdapter = new HomeAdapter(getContext(), mData);
