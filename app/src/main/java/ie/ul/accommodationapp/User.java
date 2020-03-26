@@ -47,7 +47,7 @@ public class User implements Parcelable {
                     if (document.exists()) {
                         tempLikedAds=(List<Listing>)document.get("likedAds");
                         tempListedAds=(List<Listing>)document.get("listedAds");
-                        updateArrayLists(tempLikedAds,tempListedAds);
+                        updateArrayLists(tempLikedAds, tempListedAds);
                         updateUserInDB();
                     }
                 }
@@ -73,8 +73,7 @@ public class User implements Parcelable {
     private void updateArrayLists(List<Listing> likedAds, List<Listing> listedAds) {
         for(int i=0; i<likedAds.size();i++)
             this.likedAds.add(likedAds.get(i));
-        this.listedAds=listedAds;
-        for(int j=0; j<listedAds.size();j++)
+        for (int j = 0; j < listedAds.size(); j++)
             this.listedAds.add(listedAds.get(j));
     }
 
@@ -140,7 +139,13 @@ public class User implements Parcelable {
     }
 
     public void addToListedAdds(Listing e) {
-        this.listedAds.add(e);
+        if (this.listedAds==null){
+            ArrayList<Listing> temp=new ArrayList<Listing>();
+            this.listedAds=temp;
+        }
+        else{
+            this.listedAds.add(e);
+        }
     }
 
     @Override

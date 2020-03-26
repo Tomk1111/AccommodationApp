@@ -81,8 +81,6 @@ public class SearchFragment extends Fragment {
 
 
         mData = new ArrayList<>();
-        mData.add(new Listing(11111, 232, 223, "aaa", 2, 23, "test", new Date(),
-                new Date(),  200, "a"));
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference collectionReference = db.collection("Listings");
         collectionReference.get()

@@ -112,7 +112,7 @@ public class AuthenticationFragment extends Fragment {
                     } else {
                         User user = new User(uid, userName);
                         users.document(uid).set(user);
-                        Toast.makeText(getContext(), " Added " + userName, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getContext(), " Added " + userName, Toast.LENGTH_SHORT).show();
                     }
                 }
             }

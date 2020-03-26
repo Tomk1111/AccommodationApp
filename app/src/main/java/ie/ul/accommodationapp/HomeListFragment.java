@@ -4,6 +4,7 @@ package ie.ul.accommodationapp;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -50,6 +52,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -63,7 +68,6 @@ public class HomeListFragment extends Fragment {
     StorageReference storageRef = storage.getReference();
     StorageReference listingImagesRef = null;
     ArrayList<InputStream> inputStream = new ArrayList<InputStream>();
-
 
     public HomeListFragment() {
         // Required empty public constructor
@@ -82,6 +86,7 @@ public class HomeListFragment extends Fragment {
         StrictMode.setThreadPolicy(policy);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         final CollectionReference listing1 = db.collection("Listings");
+        final CollectionReference listing2 = db.collection("HouseImage");
         listing1.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -127,19 +132,6 @@ public class HomeListFragment extends Fragment {
                     Date eDate = formatter1.parse(endDate.getText().toString());
                     long diff = eDate.getTime() - sDate.getTime();
                     int difInt = (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-                    Listing newHouse = new Listing(id,coords.lng,coords.lat,
-                            addressText,roomInt,priceInt,
-                            description.getText().toString(),sDate,eDate, difInt, FirebaseAuth.getInstance().getCurrentUser().getEmail());
-                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().detectAll().build();
-                    StrictMode.setThreadPolicy(policy);
-                    listing1.document("House"+id).set(newHouse);
-                    address.setText("");
-                    rooms.setText("");
-                    price.setText("");
-                    description.setText("");
-                    startDate.setText("");
-                    endDate.setText("");
-                    Toast.makeText(getActivity(), "Successfully Added Listing.", Toast.LENGTH_SHORT).show();
                     if(inputStream != null){
                         int i=1;
                         for (InputStream streamer: inputStream) {
@@ -165,9 +157,49 @@ public class HomeListFragment extends Fragment {
                                     textBanner.setVisibility(View.INVISIBLE);
                                 }
                             });
+                            Task<Uri> getDownloadUriTask = uploadTask.continueWithTask(
+                                    new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                                        @Override
+                                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                                            if(!task.isSuccessful()) {
+                                                throw task.getException();
+                                            }
+                                            return listingImagesRef.getDownloadUrl();
+                                        }
+                                    }
+                            );
+
+                            getDownloadUriTask.addOnCompleteListener(getActivity(), new OnCompleteListener<Uri>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Uri> task) {
+                                    if(task.isSuccessful()) {
+                                        Map<String, Object> houseImage= new HashMap<>();
+                                        houseImage.put("id",id);
+                                        houseImage.put("URL",task.getResult().toString());
+                                        listing2.document("House"+id).set(houseImage);
+                                    }
+                                }
+                            });
                             i++;
                         }
                     }
+                    Listing newHouse = new Listing(id,coords.lng,coords.lat,
+                            addressText,roomInt,priceInt,
+                            description.getText().toString(),sDate,eDate, difInt, FirebaseAuth.getInstance().getCurrentUser().getUid(), FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+                    try {
+                        User currentUser = new User();
+                        currentUser.addToListedAdds(newHouse);
+                    } catch (Exception e) {}
+                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().detectAll().build();
+                    StrictMode.setThreadPolicy(policy);
+                    listing1.document("House"+id).set(newHouse);
+                    address.setText("");
+                    rooms.setText("");
+                    price.setText("");
+                    description.setText("");
+                    startDate.setText("");
+                    endDate.setText("");
+                    Toast.makeText(getActivity(), "Successfully Added Listing.", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

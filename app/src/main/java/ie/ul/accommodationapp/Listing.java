@@ -1,9 +1,12 @@
 package ie.ul.accommodationapp;
 
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class Listing implements Parcelable {
@@ -17,28 +20,29 @@ public class Listing implements Parcelable {
     private Date startDate;
     private Date endDate;
     private int duration;
-    private String uploadedBy;
+    private String uid;
+    private String userName;
+
 
     public Listing(){
 
     }
 
-    public Listing(int id, double longitude,
-               double latitude, String address, int rooms,int price,String description,
-                   Date startDate,Date endDate,int duration, String uploadedBy)
-    {
+    public Listing(int id, double lng, double lat, String addressText, int roomInt, int priceInt, String toString, Date sDate, Date eDate, int difInt, String uid, String userName) {
         this.id = id;
-        this.longitude = longitude;
-        this.latitude = latitude;
-        this.address = address;
-        this.rooms = rooms;
-        this.price = price;
-        this.description = description;
-        this.startDate =startDate;
-        this.endDate = endDate;
-        this.duration = duration;
-        this.uploadedBy = uploadedBy;
+        this.longitude = lng;
+        this.latitude = lat;
+        this.address = addressText;
+        this.rooms = roomInt;
+        this.price = priceInt;
+        this.description = toString;
+        this.startDate =sDate;
+        this.endDate = eDate;
+        this.duration = difInt;
+        this.uid = uid;
+        this.userName = userName;
     }
+
 
     public double getLatitude() {
         return latitude;
@@ -120,9 +124,21 @@ public class Listing implements Parcelable {
         this.duration = duration;
     }
 
-    public String getUploadedBy() { return uploadedBy; }
+    public String getUid() {
+        return uid;
+    }
 
-    public void setUploadedBy(String uploadedBy) { this.uploadedBy = uploadedBy; }
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     @Override
     public int describeContents() {
@@ -141,7 +157,6 @@ public class Listing implements Parcelable {
         dest.writeLong(this.startDate != null ? this.startDate.getTime() : -1);
         dest.writeLong(this.endDate != null ? this.endDate.getTime() : -1);
         dest.writeInt(this.duration);
-        dest.writeString(this.uploadedBy);
     }
 
     protected Listing(Parcel in) {
@@ -157,7 +172,6 @@ public class Listing implements Parcelable {
         long tmpEndDate = in.readLong();
         this.endDate = tmpEndDate == -1 ? null : new Date(tmpEndDate);
         this.duration = in.readInt();
-        this.uploadedBy = in.readString();
     }
 
     public static final Parcelable.Creator<Listing> CREATOR = new Parcelable.Creator<Listing>() {
