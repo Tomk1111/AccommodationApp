@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class PersonalInformationFragment extends Fragment {
-    private TextView nameText, emailText, dateJoinedText;
+    private TextView nameText, emailText, dateJoinedText,lastLoginText;
     private FirebaseAuth mAuth;
     private ProfileViewModel profileViewModel;
     @Nullable
@@ -25,9 +25,12 @@ public class PersonalInformationFragment extends Fragment {
         nameText = view.findViewById(R.id.name_item);
         emailText = view.findViewById(R.id.email_item);
         dateJoinedText = view.findViewById(R.id.date_joined_item);
+        lastLoginText = view.findViewById(R.id.date_lastLogin);
         mAuth = FirebaseAuth.getInstance();
         nameText.setText(profileViewModel.getNameText());
         emailText.setText(profileViewModel.getEmailText());
+        dateJoinedText.setText(profileViewModel.getJoined());
+        lastLoginText.setText(profileViewModel.getLastLogin());
         return view;
     }
 }
