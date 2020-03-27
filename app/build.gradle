@@ -41,6 +41,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:19.1.1'
     implementation 'org.slf4j:slf4j-simple:1.7.25'
     implementation 'de.hdodenhof:circleimageview:3.1.0' //Custom circular image view for profiles
+    implementation 'com.google.firebase:firebase-database:18.0.1' //updated from 16.0.4
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
