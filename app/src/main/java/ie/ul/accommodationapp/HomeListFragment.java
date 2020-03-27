@@ -1,6 +1,7 @@
 package ie.ul.accommodationapp;
 
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -50,10 +52,12 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -69,6 +73,19 @@ public class HomeListFragment extends Fragment {
     StorageReference listingImagesRef = null;
     ArrayList<InputStream> inputStream = new ArrayList<InputStream>();
 
+
+    private void updateStartDateLabel(EditText startDate, Calendar myCalendar) {
+        SimpleDateFormat formatter1=new SimpleDateFormat("dd/MM/yyyy");
+
+        startDate.setText(formatter1.format(myCalendar.getTime()));
+    }
+
+    private void updateEndDateLabel(EditText endDate, Calendar myCalendar) {
+        SimpleDateFormat formatter1=new SimpleDateFormat("dd/MM/yyyy");
+
+        endDate.setText(formatter1.format(myCalendar.getTime()));
+    }
+
     public HomeListFragment() {
         // Required empty public constructor
     }
@@ -82,6 +99,61 @@ public class HomeListFragment extends Fragment {
     @Override
     public void onViewCreated(@Nonnull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        final Calendar myCalendar = Calendar.getInstance();
+        EditText startDate = getView().findViewById(R.id.startDate);
+        EditText endDate = getView().findViewById(R.id.endDate);
+        DatePickerDialog.OnDateSetListener startDateListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateStartDateLabel(startDate, myCalendar);
+            }
+        };
+        DatePickerDialog.OnDateSetListener endDateListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateEndDateLabel(endDate, myCalendar);
+            }
+        };
+        startDate.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                DatePickerDialog datePickerDialog = new
+                        DatePickerDialog(getContext(), startDateListener,
+                        myCalendar.get(Calendar.YEAR),
+                        myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH));
+                // Limiting access to past dates in the step below:
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+                datePickerDialog.show();
+            }
+        });
+        endDate.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                DatePickerDialog datePickerDialog = new
+                        DatePickerDialog(getContext(), endDateListener,
+                        myCalendar.get(Calendar.YEAR),
+                        myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH));
+                // Limiting access to past dates in the step below:
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() + 86400000);
+                datePickerDialog.show();
+            }
+        });
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -118,8 +190,6 @@ public class HomeListFragment extends Fragment {
                 EditText rooms = getView().findViewById(R.id.rooms);
                 EditText price = getView().findViewById(R.id.price);
                 EditText description = getView().findViewById(R.id.description);
-                EditText startDate = getView().findViewById(R.id.startDate);
-                EditText endDate = getView().findViewById(R.id.endDate);
                 SimpleDateFormat formatter1=new SimpleDateFormat("dd/MM/yyyy");
                 try {
                     String addressText = address.getText().toString();
