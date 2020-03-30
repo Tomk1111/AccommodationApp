@@ -18,6 +18,9 @@
 
     <Button
         android:text="LIKE"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/quantum_white_100"
         android:id="@+id/button_like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

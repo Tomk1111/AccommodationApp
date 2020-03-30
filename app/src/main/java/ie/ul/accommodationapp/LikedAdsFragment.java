@@ -9,16 +9,19 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.load.engine.bitmap_recycle.IntegerArrayAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,16 +37,12 @@ import io.grpc.InternalDecompressorRegistry;
  */
 public class LikedAdsFragment extends Fragment {
 
-    private RecyclerView recyclerView;
-    private HomeAdapter homeAdapter;
-    private List<Listing> mData;
-    private FirebaseFirestore firebaseFirestore;
-    private CollectionReference collectionReference;
-    private ListAdapter adapter;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference notebookRef = db.collection("Listings");
+    //    private CollectionReference notebookRef = db.collection("Listings");
+    private String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    private CollectionReference notebookRef = db.collection("LikedAds/" + uid + "/userLikes");
 
-
+    private ListAdapter listAdapter;
     public LikedAdsFragment() {
         // Required empty public constructor
     }
@@ -53,64 +52,40 @@ public class LikedAdsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_liked_ads, container, false);
-        recyclerView = view.findViewById(R.id.house_listing_recycler_view_1);
-        retrieveListings();
+        Query query = notebookRef.orderBy("price", Query.Direction.DESCENDING);
+        FirestoreRecyclerOptions<Listing> options = new FirestoreRecyclerOptions.Builder<Listing>()
+                .setQuery(query, Listing.class)
+                .setLifecycleOwner(getViewLifecycleOwner())
+                .build();
+        listAdapter = new ListAdapter(options);
+        System.out.println(options.toString());
+
+        RecyclerView recyclerView = view.findViewById(R.id.house_listing_recycler_view_1);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(listAdapter);
+        listAdapter.setOnItemClickListener(new ListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+                Listing listing = documentSnapshot.toObject(Listing.class);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("listingModel", listing);
+                Navigation.findNavController(view).navigate(R.id.action_likedAdsFragment_to_houseDetailsFragment4, bundle);
+            }
+        });
         return view;
     }
 
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        listAdapter.startListening();
+    }
 
-
-
-    public void retrieveListings() {
-
-
-        mData = new ArrayList<>();
-//        mData.add(new Listing(11111, 232, 223, "aaa", 2, 23, "test", new Date(),
-//                new Date(),  200, "a"));
-        User user=new User();
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-        CollectionReference users = firebaseFirestore.collection("Users");
-        users.document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        ArrayList a = (ArrayList) document.get("likedAds");
-                        for ( Object b: a)
-                        {
-                            HashMap hashMap1=((HashMap)b);
-                            Long id= (Long) hashMap1.get("id");
-                            Integer id_1=id.intValue();
-                            double longitude= (double) hashMap1.get("longitude");
-                            double latitude= (double) hashMap1.get("latitude");
-                            String address= (String) hashMap1.get("address");
-                            Long rooms= (Long) hashMap1.get("rooms");
-                            Integer rooms_1=rooms.intValue();
-                            Long price= (Long) hashMap1.get("price");
-                            Integer price_1=price.intValue();
-                            String description= (String) hashMap1.get("descrition");
-                            Date startDate= (Date) hashMap1.get("startDate");
-                            Date endDate= (Date) hashMap1.get("endDate");
-                            Long duration= (Long) hashMap1.get("duration");
-                            Integer duration_1=duration.intValue();
-                            String uid= (String) hashMap1.get("uid");
-                            String userName= (String) hashMap1.get("userName");
-                            Listing listing=new Listing(id_1,longitude,latitude,address,rooms_1,price_1,description,startDate,endDate,duration_1,uid,userName);
-                            mData.add(listing);
-                        }
-                        homeAdapter = new HomeAdapter(getContext(), mData);
-                        recyclerView.setAdapter(homeAdapter);
-                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-                        linearLayoutManager.setStackFromEnd(true);
-                        linearLayoutManager.setReverseLayout(true);
-                        recyclerView.setLayoutManager(linearLayoutManager);
-                    }
-                }
-            }
-        });
-
+    @Override
+    public void onStop() {
+        super.onStop();
+        listAdapter.stopListening();
     }
 }

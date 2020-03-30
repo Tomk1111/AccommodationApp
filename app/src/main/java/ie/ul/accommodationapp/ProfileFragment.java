@@ -51,14 +51,14 @@ public class ProfileFragment extends Fragment {
         likedAdsOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_profileFragment_to_likedAdsFragment);
+                Navigation.findNavController(v).navigate(R.id.action_profileFragment_to_likedAdsFragment2);
             }
         });
         listedAdsOption = view.findViewById(R.id.listed_ads_item);
         listedAdsOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_profileFragment_to_listedAdsFragment);
+                Navigation.findNavController(v).navigate(R.id.action_profileFragment_to_listedAdsFragment2);
             }
         });
         inboxOption = view.findViewById(R.id.inbox_item);

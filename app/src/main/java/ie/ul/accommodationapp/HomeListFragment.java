@@ -157,6 +157,7 @@ public class HomeListFragment extends Fragment {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         final CollectionReference listing1 = db.collection("Listings");
         final CollectionReference listing2 = db.collection("HouseImage");
         listing1.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -258,10 +259,11 @@ public class HomeListFragment extends Fragment {
                             description.getText().toString(),sDate,eDate, difInt, FirebaseAuth.getInstance().getCurrentUser().getUid(), FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
                     try {
                         User currentUser = new User();
-                        currentUser.addToListedAdds(newHouse);
                     } catch (Exception e) {}
                     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().detectAll().build();
                     StrictMode.setThreadPolicy(policy);
+                    final CollectionReference listedAds = db.collection("ListedAds/" + userId + "/userListed");
+                    listedAds.document("House"+id).set(newHouse);
                     listing1.document("House"+id).set(newHouse);
                     address.setText("");
                     rooms.setText("");

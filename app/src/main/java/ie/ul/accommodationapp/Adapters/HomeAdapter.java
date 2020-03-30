@@ -53,10 +53,10 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("listingModel", listing);
                 try {
-                    Navigation.findNavController(v).navigate(R.id.action_listedAdsFragment_to_houseDetailsFragment3, bundle);
+                    Navigation.findNavController(v).navigate(R.id.action_listedAdsFragment_to_houseDetailsFragment4, bundle);
                 } catch (Exception e) {}
                 try {
-                    Navigation.findNavController(v).navigate(R.id.action_likedAdsFragment_to_houseDetailsFragment3, bundle);
+                    Navigation.findNavController(v).navigate(R.id.action_likedAdsFragment_to_houseDetailsFragment4, bundle);
                 } catch (Exception e) {}
                 try {
                     Navigation.findNavController(v).navigate(R.id.action_searchFragment_to_houseDetailsFragment2, bundle);
