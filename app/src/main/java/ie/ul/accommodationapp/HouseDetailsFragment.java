@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Document;
 
@@ -36,6 +38,7 @@ public class HouseDetailsFragment extends Fragment {
     private Listing listingModel;
     private TextView addressTextView, pricePerWeekView, descriptionView, roomsView,
             moveInDateView, moveOutViewDate;
+    private ImageView listingImage;
     private Button button;
     private FirebaseFirestore db;
     private CollectionReference userLikes;
@@ -64,8 +67,9 @@ public class HouseDetailsFragment extends Fragment {
         moveInDateView.setText(simpleDateFormat.format(listingModel.getStartDate()));
         moveOutViewDate.setText(simpleDateFormat.format(listingModel.getEndDate()));
         button=view.findViewById(R.id.button_like);
-
+        listingImage = view.findViewById(R.id.listing_image);
         updateLikeStatus(false);
+        getHouseImageURL();
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,6 +123,22 @@ public class HouseDetailsFragment extends Fragment {
                     }
                 }
             }
+        });
+    }
+
+    public void getHouseImageURL() {
+        DocumentReference documentReference = db.collection("HouseImage").document("House"+ listingModel.getId()+"");
+        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    if (documentSnapshot.exists()) {
+                        String url = documentSnapshot.getString("URL");
+                        Picasso.get().load(url).fit().into(listingImage);
+                    }
+                }
+                }
         });
     }
 }
