@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,6 +38,9 @@ public class AuthenticationFragment extends Fragment {
     private FirebaseAuth mAuth;
     private BottomNavigationView bottomNavigationView;
     private Button authButton;
+    private ImageView icon;
+    Animation fromBottom;
+    Animation fromTop;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -43,6 +49,11 @@ public class AuthenticationFragment extends Fragment {
 
         bottomNavigationView = getActivity().findViewById(R.id.bottom_navigation_view);
         authButton = view.findViewById(R.id.authButton);
+        icon = view.findViewById(R.id.icon_home);
+        fromBottom = AnimationUtils.loadAnimation(getContext(),R.anim.frombottom);
+        fromTop = AnimationUtils.loadAnimation(getContext(),R.anim.fromtop);
+        authButton.setAnimation(fromBottom);
+        icon.setAnimation(fromTop);
         authButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
