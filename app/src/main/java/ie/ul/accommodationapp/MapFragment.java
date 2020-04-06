@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -169,13 +170,32 @@ public class MapFragment extends SupportMapFragment
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        int pos=0;
                         for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
                             Listing listing = documentSnapshot.toObject(Listing.class);
                             String name = listing.getAddress();
                             double lat = listing.getLatitude();
                             double lng = listing.getLongitude();
                             LatLng latLng = new LatLng(lat, lng);
-                            mGoogleMap.addMarker(new MarkerOptions().position(latLng).title(name));
+                            Marker marker=mGoogleMap.addMarker(new MarkerOptions().position(latLng).title(name));
+                            marker.setTag(listing);
+                            pos=pos+1;
+                            mGoogleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                                @Override
+                                public boolean onMarkerClick(Marker marker) {
+                                    if (marker.getTag()==null){
+                                        Toast.makeText(getContext(),"This is your Location!",Toast.LENGTH_SHORT).show();
+                                    }
+                                    else {
+                                        Listing listing = (Listing) marker.getTag();
+                                        Bundle bundle = new Bundle();
+                                        bundle.putParcelable("listingModel", listing);
+                                        Navigation.findNavController(Objects.requireNonNull(getView())).navigate(R.id.action_mapFragment_to_houseDetailsFragment6, bundle);
+                                    }
+                                    return false;
+                                }
+                            });
+
                         }
                     }
                 });
@@ -231,7 +251,7 @@ public class MapFragment extends SupportMapFragment
 
                     // permission was granted, yay! Do the
                     // location-related task you need to do.
-                    if (ContextCompat.checkSelfPermission(getActivity(),
+                    if (ContextCompat.checkSelfPermission(getContext(),
                             Manifest.permission.ACCESS_FINE_LOCATION)
                             == PackageManager.PERMISSION_GRANTED) {
 

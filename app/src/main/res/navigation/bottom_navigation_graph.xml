@@ -4,11 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottom_navigation_graph"
     app:startDestination="@id/homeShowFragment">
-    <fragment
+    <navigation
         android:id="@+id/mapFragment"
-        android:name="ie.ul.accommodationapp.MapFragment"
-        android:label="fragment_map"
-        tools:layout="@layout/fragment_map" />
+        app:startDestination="@id/mapFragment" >
+        <fragment
+            android:id="@+id/mapFragment"
+            android:name="ie.ul.accommodationapp.MapFragment"
+            android:label="fragment_map"
+            tools:layout="@layout/fragment_map" >
+            <action
+                android:id="@+id/action_mapFragment_to_houseDetailsFragment6"
+                app:destination="@id/houseDetailsFragment6" />
+        </fragment>
+        <fragment
+            android:id="@+id/houseDetailsFragment6"
+            android:name="ie.ul.accommodationapp.HouseDetailsFragment"
+            android:label="fragment_house_details"
+            tools:layout="@layout/fragment_house_details" />
+    </navigation>
     <navigation
         android:id="@+id/homeShowFragment"
         app:startDestination="@id/homeTabFragment4">
