@@ -4,6 +4,8 @@ package ie.ul.accommodationapp;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -12,10 +14,12 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
 
@@ -24,10 +28,10 @@ import com.google.firebase.auth.FirebaseAuth;
  */
 public class ProfileFragment extends Fragment {
 
-    private LinearLayout personalInformationOption, likedAdsOption, listedAdsOption,
-            inboxOption, aboutOption, signOutOption;
-    private TextView displayName;
-    private ProfileViewModel profileViewModel;
+    private Toolbar mToolbar;
+    private TextView profileEditText,inboxText, likedAdsText, listedAdsText, devInfoText;
+    private Button logoutButton;
+    private SearchView searchView;
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -36,47 +40,55 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        displayName = view.findViewById(R.id.profile_display_name);
-        displayName.setText(profileViewModel.getNameText());
-        personalInformationOption = view.findViewById(R.id.personal_details_item);
-        personalInformationOption.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_profileFragment_to_personalInformationFragment);
-            }
-        });
-        likedAdsOption = view.findViewById(R.id.liked_ads_item);
-        likedAdsOption.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_profileFragment_to_likedAdsFragment2);
-            }
-        });
-        listedAdsOption = view.findViewById(R.id.listed_ads_item);
-        listedAdsOption.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_profileFragment_to_listedAdsFragment2);
-            }
-        });
-        inboxOption = view.findViewById(R.id.inbox_item);
-        inboxOption.setOnClickListener(new View.OnClickListener() {
+        mToolbar = getActivity().findViewById(R.id.main_toolbar);
+        mToolbar.setNavigationIcon(null);
+
+        searchView = getActivity().findViewById(R.id.search_view);
+        searchView.setVisibility(View.GONE);
+        TextView personalInfo = view.findViewById(R.id.personal_information_header_tag);
+        profileEditText = view.findViewById(R.id.profile_edit_tag);
+        inboxText = view.findViewById(R.id.inbox_item);
+        likedAdsText = view.findViewById(R.id.liked_ads_header);
+        listedAdsText = view.findViewById(R.id.listed_ads_header);
+        devInfoText = view.findViewById(R.id.developer_information_header);
+        logoutButton = view.findViewById(R.id.logout_button);
+        inboxText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate(R.id.action_profileFragment_to_inboxFragment);
             }
         });
-        aboutOption = view.findViewById(R.id.about_item);
-        aboutOption.setOnClickListener(new View.OnClickListener() {
+        devInfoText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate(R.id.action_profileFragment_to_aboutFragment);
             }
         });
-        signOutOption = view.findViewById(R.id.logout_item);
-        signOutOption.setOnClickListener(new View.OnClickListener() {
+        profileEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_profileFragment_to_personalInformationFragment);
+            }
+        });
+        likedAdsText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_profileFragment_to_likedAdsFragment2);
+            }
+        });
+        listedAdsText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_profileFragment_to_listedAdsFragment2);
+            }
+        });
+
+
+
+
+
+        logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
@@ -84,6 +96,7 @@ public class ProfileFragment extends Fragment {
                 startActivity(new Intent(getActivity(), MainActivity.class));
             }
         });
+
         return view;
     }
 }

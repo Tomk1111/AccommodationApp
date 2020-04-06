@@ -3,192 +3,110 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context=".ProfileFragment">
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
         android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="96dp"
-        android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/profile_display_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:alpha="0.87"
-            android:fontFamily="@font/source_sans_pro"
-            android:text="Display Name"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:id="@+id/personal_details_item"
-        android:layout_height="48dp">
-
-        <ImageView
-            android:alpha="0.6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_account_circle_black_24dp"
+            android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"
-            android:layout_gravity="center_vertical"/>
-
+            android:id="@+id/personal_information_header_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Personal Information"
+            style="@style/DarkModeAccountPageItemStyleHeaders"
+            />
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_below="@id/personal_information_header_tag"
+            android:id="@+id/profile_edit_tag"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="32dp"
-            android:alpha="0.87"
-            android:fontFamily="@font/source_sans_pro"
-            android:text="@string/personal_information"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:id="@+id/liked_ads_item">
-
-        <ImageView
-            android:alpha="0.6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:layout_marginStart="16dp"
-            android:src="@drawable/ic_favorite_border_black_24dp" />
-
+            android:layout_marginTop="16dp"
+            style="@style/DarkModeAccountPageItemStyleText"
+            android:text="Edit"/>
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/inbox_item"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="32dp"
-            android:alpha="0.87"
-            android:fontFamily="@font/source_sans_pro"
-            android:text="Liked Ads"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:id="@+id/listed_ads_item">
-
-        <ImageView
-            android:alpha="0.6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="16dp"
-            android:src="@drawable/ic_work_black_24dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="32dp"
-            android:alpha="0.87"
-            android:fontFamily="@font/source_sans_pro"
-            android:text="@string/listed_ads"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:id="@+id/inbox_item">
-
-        <ImageView
-            android:alpha="0.6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="16dp"
-            android:src="@drawable/ic_email_black_24dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="32dp"
-            android:alpha="0.87"
-            android:fontFamily="@font/source_sans_pro"
             android:text="Inbox"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:id="@+id/about_item">
-
-        <ImageView
-            android:alpha="0.6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:layout_marginStart="16dp"
-            android:src="@drawable/ic_info_outline_black_24dp" />
-
+            android:layout_marginTop="36dp"
+            android:layout_below="@id/profile_edit_tag"
+            style="@style/DarkModeAccountPageItemStyleText"/>
+        <View
+            android:id="@+id/top_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider1"
+            android:layout_below="@id/inbox_item"
+            android:layout_marginTop="24dp"/>
         <TextView
+            android:id="@+id/ads_title_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="32dp"
-            android:alpha="0.87"
-            android:fontFamily="@font/source_sans_pro"
-            android:text="About"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:id="@+id/logout_item">
-
-        <ImageView
-            android:alpha="0.6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:text="Listings"
+            android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"
-            android:src="@drawable/ic_exit_to_app_black_24dp" />
-
+            style="@style/DarkModeAccountPageItemStyleHeaders"
+            android:layout_below="@id/top_divider"/>
         <TextView
+            android:id="@+id/liked_ads_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Liked Ads"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="16dp"
+            style="@style/DarkModeAccountPageItemStyleText"
+            android:layout_below="@id/ads_title_tag"/>
+        <TextView
+            android:id="@+id/listed_ads_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Listed Ads"
+            android:layout_marginTop="36dp"
+            android:layout_marginStart="16dp"
+            style="@style/DarkModeAccountPageItemStyleText"
+            android:layout_below="@id/liked_ads_header"/>
+        <View
+            android:id="@+id/bottom_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider1"
+            android:layout_marginTop="24dp"
+            android:layout_below="@id/listed_ads_header"/>
+        <TextView
+            android:id="@+id/about_title_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="32dp"
-            android:alpha="0.87"
-            android:fontFamily="@font/source_sans_pro"
-            android:text="Sign Out"
-            android:textStyle="bold" />
-    </LinearLayout>
-    </LinearLayout>
+            android:text="General"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            style="@style/DarkModeAccountPageItemStyleHeaders"
+            android:layout_below="@id/bottom_divider"/>
+        <TextView
+            android:id="@+id/developer_information_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Developer Information"
+            style="@style/DarkModeAccountPageItemStyleText"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_below="@id/about_title_tag"/>
+        <Button
+            android:id="@+id/logout_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/colorPrimary"
+            android:layout_below="@id/developer_information_header"
+            android:text="Log Out"
+            android:fontFamily="@font/googlesans_bold"
+            android:textColor="@color/lightText1"/>
+    </RelativeLayout>
 </ScrollView>
