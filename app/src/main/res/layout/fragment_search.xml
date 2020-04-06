@@ -5,19 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".SearchFragment">
 
-    <EditText
-        android:id="@+id/search_box"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_marginHorizontal="16dp"
-        android:hint="Search"
-        />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/house_listing_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_below="@id/search_box"/>
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"/>
 
 </RelativeLayout>

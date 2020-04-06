@@ -17,6 +17,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -67,6 +69,8 @@ public class MapFragment extends SupportMapFragment
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
+    private SearchView searchView;
+    private Toolbar mToolbar;
     GoogleMap mGoogleMap;
     SupportMapFragment mapFrag;
     LocationRequest mLocationRequest;
@@ -101,6 +105,10 @@ public class MapFragment extends SupportMapFragment
     @Override
     public void onMapReady(GoogleMap googleMap)
     {
+        mToolbar = getActivity().findViewById(R.id.main_toolbar);
+        mToolbar.setNavigationIcon(null);
+        searchView = getActivity().findViewById(R.id.search_view);
+        searchView.setVisibility(View.GONE);
         mGoogleMap=googleMap;
 //        mGoogleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 

@@ -193,10 +193,6 @@ public class HomeListFragment extends Fragment {
                 EditText description = getView().findViewById(R.id.description);
                 SimpleDateFormat formatter1=new SimpleDateFormat("dd/MM/yyyy");
                 try {
-                    if(address.getText().toString().length()==0 || rooms.getText().toString().length() ==0 || price.getText().toString().length() ==0 || description.getText().toString().length() ==0 || startDate.getText().toString().length()==0 ||endDate.getText().toString().length()==0) {
-                        Toast.makeText(getActivity(), "One or more fields missing.", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
                     String addressText = address.getText().toString();
                     GeocodingResult[] results =  GeocodingApi.geocode(context,
                             addressText).await();
@@ -206,11 +202,6 @@ public class HomeListFragment extends Fragment {
                     Date sDate = formatter1.parse(startDate.getText().toString());
                     Date eDate = formatter1.parse(endDate.getText().toString());
                     long diff = eDate.getTime() - sDate.getTime();
-                    if (diff <0) {
-                        Toast.makeText(getActivity(), "End date cannot be before start date.", Toast.LENGTH_SHORT).show();
-                        endDate.setText("");
-                        return;
-                    }
                     int difInt = (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
                     if(inputStream != null){
                         int i=1;

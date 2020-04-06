@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,6 +33,8 @@ import ie.ul.accommodationapp.Adapters.HomeAdapter;
  */
 public class SearchFragment extends Fragment {
 
+    private SearchView searchView;
+    private Toolbar mToolbar;
     private EditText searchText;
     private RecyclerView recyclerView;
     private HomeAdapter homeAdapter;
@@ -51,23 +55,24 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_search, container, false);
-        searchText = view.findViewById(R.id.search_box);
+        mToolbar = getActivity().findViewById(R.id.main_toolbar);
+        mToolbar.setNavigationIcon(null);
+        searchView = getActivity().findViewById(R.id.search_view);
+        searchView.setVisibility(View.VISIBLE);
+        searchView.setIconified(true);
         recyclerView = view.findViewById(R.id.house_listing_recycler_view);
         retrieveListings();
-        searchText.addTextChangedListener(new TextWatcher() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+            public boolean onQueryTextSubmit(String query) {
+                homeAdapter.getFilter().filter(query);
+                return true;
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                homeAdapter.getFilter().filter(s);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
+            public boolean onQueryTextChange(String newText) {
+                homeAdapter.getFilter().filter(newText);
+                return true;
             }
         });
         return view;
