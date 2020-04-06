@@ -13,54 +13,93 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Developers"
-            style="@style/DarkModeAccountPageItemStyleHeaders"
-            android:layout_marginStart="16dp"/>
+            android:fontFamily="@font/source_sans_pro"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginLeft="16dp"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:orientation="horizontal">
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/ic_info_outline_black_24dp"/>
             <TextView
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                style="@style/DarkModeAccountPageItemStyleText"
+                android:textSize="16sp"
+                android:layout_marginLeft="32dp"
+                android:alpha="0.87"
+                android:textStyle="bold"
+                android:fontFamily="@font/source_sans_pro"
                 android:text="Thomas Kiely"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:orientation="horizontal">
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/ic_info_outline_black_24dp"/>
             <TextView
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                style="@style/DarkModeAccountPageItemStyleText"
+                android:textSize="16sp"
+                android:layout_marginLeft="32dp"
+                android:alpha="0.87"
+                android:textStyle="bold"
+                android:fontFamily="@font/source_sans_pro"
                 android:text="Sean Morrissey"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:orientation="horizontal">
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/ic_info_outline_black_24dp"/>
             <TextView
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                style="@style/DarkModeAccountPageItemStyleText"
+                android:textSize="16sp"
+                android:layout_marginLeft="32dp"
+                android:alpha="0.87"
+                android:textStyle="bold"
+                android:fontFamily="@font/source_sans_pro"
                 android:text="Paul Murphy"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:orientation="horizontal">
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/ic_info_outline_black_24dp"/>
             <TextView
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                style="@style/DarkModeAccountPageItemStyleText"
+                android:textSize="16sp"
+                android:layout_marginLeft="32dp"
+                android:alpha="0.87"
+                android:textStyle="bold"
+                android:fontFamily="@font/source_sans_pro"
                 android:text="Mark McNabola"/>
         </LinearLayout>
         <LinearLayout
@@ -73,11 +112,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Description"
-                style="@style/DarkModeAccountPageItemStyleHeaders"/>
+                android:fontFamily="@font/source_sans_pro"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="@color/colorPrimary"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                style="@style/DarkModeAccountPageItemStyleText"
+                android:alpha="0.87"
+                android:textSize="16sp"
+                android:fontFamily="@font/source_sans_pro"
+                android:textStyle="bold"
                 android:text="@string/app_description"/>
         </LinearLayout>
     </LinearLayout>

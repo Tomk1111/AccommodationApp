@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,7 +23,6 @@ import com.google.firebase.firestore.Query;
  */
 public class LikedAdsFragment extends Fragment {
 
-    private Toolbar mToolbar;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private CollectionReference notebookRef = db.collection("LikedAds/" + uid + "/userLikes");
@@ -38,15 +36,7 @@ public class LikedAdsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_liked_ads, container, false);
-        mToolbar = getActivity().findViewById(R.id.main_toolbar);
-        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
+        final View view = inflater.inflate(R.layout.fragment_listed_ads, container, false);
         Query query = notebookRef.orderBy("price", Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<Listing> options = new FirestoreRecyclerOptions.Builder<Listing>()
                 .setQuery(query, Listing.class)
@@ -54,16 +44,13 @@ public class LikedAdsFragment extends Fragment {
                 .build();
         listAdapter = new ListAdapter(options);
 
-        RecyclerView recyclerView = view.findViewById(R.id.house_listing_recycler_view_1);
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_listed_ads);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(listAdapter);
         listAdapter.setOnItemClickListener(new ListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
                 Listing listing = documentSnapshot.toObject(Listing.class);
-                Bundle bundle = new Bundle();
-                bundle.putParcelable("listingModel", listing);
-                Navigation.findNavController(view).navigate(R.id.action_likedAdsFragment_to_houseDetailsFragment4, bundle);
             }
         });
         return view;

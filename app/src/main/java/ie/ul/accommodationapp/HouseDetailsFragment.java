@@ -11,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,7 +35,6 @@ import java.text.SimpleDateFormat;
  */
 public class HouseDetailsFragment extends Fragment {
 
-    private Toolbar mToolbar;
     private Listing listingModel;
     private TextView addressTextView, pricePerWeekView, descriptionView, roomsView,
             moveInDateView, moveOutViewDate;
@@ -53,14 +51,6 @@ public class HouseDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_house_details, container, false);
-        mToolbar = getActivity().findViewById(R.id.main_toolbar);
-        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM yyyy");
         listingModel = getArguments().getParcelable("listingModel");
         db = FirebaseFirestore.getInstance();
