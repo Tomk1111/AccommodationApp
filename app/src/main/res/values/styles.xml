@@ -1,10 +1,10 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/darkBackground</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
     <style name="Divider">
@@ -12,8 +12,26 @@
         <item name="android:layout_height">1dp</item>
         <item name="android:background">#1fffffff</item>
     </style>
-    <style name="BottomNavigationStyle">
-        <item name="fontFamily">@font/source_sans_pro</item>
-        <item name="android:textStyle">bold</item>
+    <style name="BottomNavigationStyle" parent="Theme.AppCompat.Light">
+        <item name="fontFamily">@font/googlesans_bold</item>
+        <item name="colorPrimary">@color/lightText1</item>
+        <item name="android:textColorSecondary">@color/lightText2</item>
     </style>
+    <style name="DarkModeToolbarTitleStyleTheme">
+        <item name="fontFamily">@font/googlesans_bold</item>
+        <item name="android:textColor">@color/lightText1</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="DarkModeAccountPageItemStyleHeaders">
+        <item name="fontFamily">@font/googlesans_bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/lightText1</item>
+    </style>
+    <style name="DarkModeAccountPageItemStyleText">
+        <item name="fontFamily">@font/googlesans_regular</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/lightText2</item>
+    </style>
+
+
 </resources>

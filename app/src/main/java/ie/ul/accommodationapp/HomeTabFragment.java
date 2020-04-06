@@ -2,6 +2,8 @@ package ie.ul.accommodationapp;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -19,6 +21,8 @@ import ie.ul.accommodationapp.Adapters.PageAdapter;
  */
 public class HomeTabFragment extends Fragment {
 
+    private SearchView searchView;
+    private Toolbar mToolbar;
     private PageAdapter pageAdapter;
     private Fragment tab1, tab2;
     private TabLayout tabLayout;
@@ -33,7 +37,10 @@ public class HomeTabFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_tab, container, false);
         tabLayout = view.findViewById(R.id.home_tab_layout);
-
+        mToolbar = getActivity().findViewById(R.id.main_toolbar);
+        mToolbar.setNavigationIcon(null);
+        searchView = getActivity().findViewById(R.id.search_view);
+        searchView.setVisibility(View.GONE);
         tab1 = new HomeShowFragment();
         tab2 = new HomeListFragment();
         final ViewPager viewPager = view.findViewById(R.id.home_tab_pager);
