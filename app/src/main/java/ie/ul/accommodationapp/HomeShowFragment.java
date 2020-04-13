@@ -54,7 +54,7 @@ public class HomeShowFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         Spinner filterbutton=view.findViewById(R.id.filterbutton);
         //Creating the ArrayAdapter instance having the country list
-        String[] filters = { "price", "rooms", "duration"};
+        String[] filters = { "price", "rooms", "startDate", "endDate"};
         ArrayAdapter<String> aa = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_item,filters);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //Setting the ArrayAdapter data on the Spinner
@@ -86,7 +86,7 @@ public class HomeShowFragment extends Fragment {
                 // Showing selected spinner item
                 Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
                 notebookRef
-                        .orderBy(item,Query.Direction.ASCENDING)
+                        .orderBy(item,Query.Direction.DESCENDING)
                         .get()
                         .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                             @Override
