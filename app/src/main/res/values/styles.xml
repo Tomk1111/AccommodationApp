@@ -6,6 +6,10 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/darkBackground</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorHint">@color/colorPrimary</item>
+        <item name="colorControlNormal">@color/lightText1</item>
+        <item name="colorControlActivated">@color/lightText1</item>
+        <item name="colorControlHighlight">@color/lightText1</item>
     </style>
     <style name="Divider">
         <item name="android:layout_width">match_parent</item>

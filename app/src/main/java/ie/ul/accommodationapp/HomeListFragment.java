@@ -291,10 +291,11 @@ public class HomeListFragment extends Fragment {
                 LinearLayout linLayout = (LinearLayout) getActivity().findViewById(R.id.linearImageLayout);
                 try{
                     Bitmap myBitmap = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(data.getData()));
-                    ImageView myImage = new ImageView(getActivity());
-                    myImage.setLayoutParams(new android.view.ViewGroup.LayoutParams(200,200));
-                    myImage.setMaxHeight(200);
-                    myImage.setMaxWidth(200);
+                    ImageView myImage = getActivity().findViewById(R.id.imageView);
+                    //ImageView myImage = new ImageView(getActivity());
+                    //myImage.setLayoutParams(new android.view.ViewGroup.LayoutParams(200,200));
+                    //myImage.setMaxHeight(200);
+                    //myImage.setMaxWidth(200);
                     myImage.setImageBitmap(myBitmap);
                     linLayout.addView(myImage);
                 } catch (Exception e) {}
