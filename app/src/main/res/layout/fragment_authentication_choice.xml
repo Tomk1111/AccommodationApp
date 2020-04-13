@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    android:paddingHorizontal="32dp"
+    android:paddingBottom="56dp"
+    android:layout_height="match_parent"
+    tools:context=".AuthenticationChoiceFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome to House Hunter"
+        style="@style/DarkModeIntroHeadline"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@color/colorPrimary"
+        android:fontFamily="@font/googlesans_bold"
+        android:text="Log in"
+        android:textColor="@color/lightText1"/>
+
+    <Button
+        android:id="@+id/register_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:text="Create Account"
+        android:fontFamily="@font/googlesans_bold"
+        android:textColor="@color/lightText1"/>
+
+</LinearLayout>

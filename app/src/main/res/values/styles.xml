@@ -33,5 +33,17 @@
         <item name="android:textColor">@color/lightText2</item>
     </style>
 
+    <style name="DarkModeIntroHeadline">
+        <item name="fontFamily">@font/googlesans_bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/lightText1</item>
+        <item name="android:textColorHint">@color/lightText2</item>
+    </style>
+
+    <style name="DarkModeIntroFields">
+        <item name="fontFamily">@font/googlesans_regular</item>
+        <item name="android:textColor">@color/lightText1</item>
+        <item name="android:textColorHint">@color/lightText2</item>
+    </style>
 
 </resources>

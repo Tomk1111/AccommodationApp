@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
@@ -57,78 +58,9 @@ public class AuthenticationFragment extends Fragment {
         authButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<AuthUI.IdpConfig> providers = Arrays.asList(
-                        new AuthUI.IdpConfig.EmailBuilder().build()
-                );
-
-                startActivityForResult(
-                        AuthUI.getInstance()
-                                .createSignInIntentBuilder()
-                                .setAvailableProviders(providers)
-                                .build(), RC_SIGN_IN);
+                Navigation.findNavController(v).navigate(R.id.action_authenticationFragment_to_authenticationChoiceFragment);
             }
         });
         return view;
     }
-
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode,resultCode,data);
-
-        if(requestCode == RC_SIGN_IN){
-            IdpResponse response = IdpResponse.fromResultIntent(data);
-
-            if(resultCode == RESULT_OK) {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                updateUserDatabase(user);
-                Context context = getActivity();
-                CharSequence text = "Sign in Successful. Welcome " + user.getDisplayName()+ "!";
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-                Intent intent = new Intent(getActivity(), BottomNavigationActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                getActivity().finish();
-                startActivity(intent);
-            } else {
-                if(response == null){
-                    return;
-                }
-                if(response.getError().getErrorCode() == ErrorCodes.NO_NETWORK) {
-                    Context context = getActivity();
-                    CharSequence text = "No Internet Connection.";
-                    int duration = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-                    return;
-                }
-            }
-        }
-    }
-
-
-    //TEMP METHOD UNTIL WE REDO THE LOGIN/REGISTRATION SCREENS
-    // CHECKS USER DB IF USER ALREADY REGISTERED, IF NOT IT ADDS THEM
-    public void updateUserDatabase(FirebaseUser user) {
-        String uid = user.getUid();
-        String userName = user.getDisplayName();
-        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-        CollectionReference users = firebaseFirestore.collection("Users");
-        users.document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-
-                    } else {
-                        User user = new User(uid, userName);
-                        users.document(uid).set(user);
-                        //Toast.makeText(getContext(), " Added " + userName, Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        });
-
-    }
-
 }

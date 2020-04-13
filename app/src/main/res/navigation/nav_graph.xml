@@ -8,8 +8,34 @@
     <fragment
         android:id="@+id/authenticationFragment"
         android:name="ie.ul.accommodationapp.AuthenticationFragment"
-        android:label="AuthenticationFragment" />
+        android:label="AuthenticationFragment" >
+        <action
+            android:id="@+id/action_authenticationFragment_to_authenticationChoiceFragment"
+            app:destination="@id/authenticationChoiceFragment" />
+    </fragment>
     <action
         android:id="@+id/action_global_authenticationFragment"
         app:destination="@id/authenticationFragment" />
+    <fragment
+        android:id="@+id/authenticationChoiceFragment"
+        android:name="ie.ul.accommodationapp.AuthenticationChoiceFragment"
+        android:label="fragment_authentication_choice"
+        tools:layout="@layout/fragment_authentication_choice" >
+        <action
+            android:id="@+id/action_authenticationChoiceFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_authenticationChoiceFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="ie.ul.accommodationapp.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="ie.ul.accommodationapp.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" />
 </navigation>
