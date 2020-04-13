@@ -62,6 +62,7 @@ public class SearchFragment extends Fragment {
         searchView.setIconified(true);
         recyclerView = view.findViewById(R.id.house_listing_recycler_view);
         retrieveListings();
+        System.out.println(mData.size() + " AICE");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -85,32 +86,13 @@ public class SearchFragment extends Fragment {
     public void retrieveListings() {
 
 
-        mData = new ArrayList<>();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference collectionReference = db.collection("Listings");
-        collectionReference.get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        if(!queryDocumentSnapshots.isEmpty()) {
-                            List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
-                            for (DocumentSnapshot documentSnapshot : list) {
-                                Listing listing = documentSnapshot.toObject(Listing.class);
-                                mData.add(listing);
-                            }
-                        }
-
-                        homeAdapter = new HomeAdapter(getContext(), mData);
-
-                        recyclerView.setAdapter(homeAdapter);
-                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-                        linearLayoutManager.setStackFromEnd(true);
-                        linearLayoutManager.setReverseLayout(true);
-                        recyclerView.setLayoutManager(linearLayoutManager);
-                    }
-                });
-
-
+        mData = ((BottomNavigationActivity) getActivity()).getListings();
+        homeAdapter = new HomeAdapter(getContext(), mData);
+        recyclerView.setAdapter(homeAdapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setStackFromEnd(true);
+        linearLayoutManager.setReverseLayout(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
     }
 
 
