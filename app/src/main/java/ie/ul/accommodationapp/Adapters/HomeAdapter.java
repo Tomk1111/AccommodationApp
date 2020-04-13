@@ -61,6 +61,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
                 try {
                     Navigation.findNavController(v).navigate(R.id.action_searchFragment_to_houseDetailsFragment2, bundle);
                 } catch (Exception e) {}
+                try {
+                    Navigation.findNavController(v).navigate(R.id.action_homeTabFragment4_to_houseDetailsFragment, bundle);
+                } catch (Exception e) {}
             }
         });
     }

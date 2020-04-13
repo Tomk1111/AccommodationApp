@@ -8,21 +8,29 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
-import java.io.Console;
+import java.util.ArrayList;
+import java.util.List;
+
+import ie.ul.accommodationapp.Adapters.HomeAdapter;
+
+import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 
 /**
@@ -40,18 +48,25 @@ public class HomeShowFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView (LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_home_show, container, false);
+        View view = inflater.inflate(R.layout.fragment_home_show, container, false);
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+        Spinner filterbutton=view.findViewById(R.id.filterbutton);
+        //Creating the ArrayAdapter instance having the country list
+        String[] filters = { "price", "rooms", "duration"};
+        ArrayAdapter<String> aa = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_item,filters);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //Setting the ArrayAdapter data on the Spinner
+        filterbutton.setAdapter(aa);
         System.out.println("ListedAds/" + FirebaseAuth.getInstance().getCurrentUser().getUid()
                 + "/userListed"+"\nFINDTEXTHERE");
         Query query = notebookRef.orderBy("price", Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<Listing> options = new FirestoreRecyclerOptions.Builder<Listing>()
                 .setQuery(query, Listing.class)
                 .build();
+        System.out.println((options.getSnapshots().toArray().length));
         adapter = new ListAdapter(options);
-
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
@@ -64,6 +79,61 @@ public class HomeShowFragment extends Fragment {
                 Navigation.findNavController(view).navigate(R.id.action_homeTabFragment4_to_houseDetailsFragment, bundle);
             }
         });
+        filterbutton.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String item = parent.getItemAtPosition(position).toString();
+                // Showing selected spinner item
+                Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+                notebookRef
+                        .orderBy(item,Query.Direction.ASCENDING)
+                        .get()
+                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                System.out.println(queryDocumentSnapshots.toObjects(Listing.class));
+                                List <Listing>ab=new ArrayList<Listing>();
+                                ab=queryDocumentSnapshots.toObjects(Listing.class);
+                                HomeAdapter homeAdapter= new HomeAdapter(getContext(), ab);
+                                recyclerView.setAdapter(homeAdapter);
+                                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+                                linearLayoutManager.setStackFromEnd(true);
+                                linearLayoutManager.setReverseLayout(true);
+                                recyclerView.setLayoutManager(linearLayoutManager);
+                            }
+                        });
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+//         filterbutton.setOnItemSelectedListener(this {
+//             List<Listing> myList=new ArrayList<Listing>();
+//             @Override
+//             public void onClick(View v) {
+//                 Toast.makeText(getContext(),"HERE", Toast.LENGTH_LONG).show();
+//                 CollectionReference notebookRef1 = db.collection("Listings");
+//                 notebookRef1
+//                         .orderBy("rooms",Query.Direction.DESCENDING)
+//                         .get()
+//                         .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                             @Override
+//                             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                                 System.out.println(queryDocumentSnapshots.toObjects(Listing.class));
+//                                 List <Listing>ab=new ArrayList<Listing>();
+//                                 ab=queryDocumentSnapshots.toObjects(Listing.class);
+//                                 HomeAdapter homeAdapter= new HomeAdapter(getContext(), ab);
+//                                 recyclerView.setAdapter(homeAdapter);
+//                                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+//                                 linearLayoutManager.setStackFromEnd(true);
+//                                 linearLayoutManager.setReverseLayout(true);
+//                                 recyclerView.setLayoutManager(linearLayoutManager);
+//                             }
+//                         });
+//             }
+//         });
         return view;
     }
 
