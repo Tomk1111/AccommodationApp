@@ -28,9 +28,7 @@
         android:id="@+id/address_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/source_sans_pro"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        style="@style/DarkModeAccountPageItemStyleHeaders"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:text="address"/>
@@ -42,8 +40,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/source_sans_pro"
-            android:textSize="16sp"
+            style="@style/DarkModeAccountPageItemStyleText"
             android:text="@string/from"/>
         <TextView
             android:id="@+id/price_view"
@@ -51,16 +48,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
             android:text="€100"
-            android:fontFamily="@font/source_sans_pro"
+            android:fontFamily="@font/googlesans_bold"
             android:textSize="20sp"
-            android:textStyle="bold"
             android:textColor="@color/colorPrimary"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="/week"
-            android:fontFamily="@font/source_sans_pro"
-            android:textSize="16sp"/>
+            style="@style/DarkModeAccountPageItemStyleText"/>
     </LinearLayout>
     <LinearLayout
         android:layout_marginStart="16dp"
@@ -71,36 +66,28 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimary"
-            android:textStyle="bold"
             android:text="description"
-            android:textSize="16sp"
-            android:fontFamily="@font/source_sans_pro"/>
+            style="@style/DarkModeAccountPageItemStyleHeaders"/>
         <TextView
             android:id="@+id/description_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="description"
-            android:textSize="16sp"
-            android:fontFamily="@font/source_sans_pro"/>
+            style="@style/DarkModeAccountPageItemStyleText"/>
         <TextView
             android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimary"
-            android:textStyle="bold"
-            android:text="Rooms"
-            android:textSize="16sp"
-            android:fontFamily="@font/source_sans_pro"/>
+            style="@style/DarkModeAccountPageItemStyleHeaders"
+            android:text="Rooms"/>
         <TextView
             android:id="@+id/rooms_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="Rooms"
-            android:textSize="16sp"
-            android:fontFamily="@font/source_sans_pro"/>
+            style="@style/DarkModeAccountPageItemStyleText"/>
     </LinearLayout>
 
     <LinearLayout
@@ -113,17 +100,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/move_in"
-            android:fontFamily="@font/source_sans_pro"
-            android:textSize="14sp"/>
+            style="@style/DarkModeAccountPageItemStyleHeaders"/>
         <TextView
             android:id="@+id/move_in_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Date"
-            android:textStyle="bold"
-            android:fontFamily="@font/source_sans_pro"
-            android:textColor="@color/colorPrimary"
-            android:textSize="16sp"/>
+            style="@style/DarkModeAccountPageItemStyleText"/>
     </LinearLayout>
     <LinearLayout
         android:layout_marginTop="8dp"
@@ -135,17 +118,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/move_out"
-            android:fontFamily="@font/source_sans_pro"
-            android:textSize="14sp"/>
+            style="@style/DarkModeAccountPageItemStyleHeaders"/>
         <TextView
             android:id="@+id/move_out_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Date"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
-            android:fontFamily="@font/source_sans_pro"
-            android:textSize="16sp"/>
+            style="@style/DarkModeAccountPageItemStyleText"/>
     </LinearLayout>
     <Button
         android:layout_marginTop="32dp"

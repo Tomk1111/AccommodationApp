@@ -109,7 +109,7 @@ public class HouseDetailsFragment extends Fragment {
                                     if (task.isSuccessful()) {
                                         Toast.makeText(getContext(), listingModel.getAddress()
                                                 + " removed from likes.", Toast.LENGTH_SHORT).show();
-                                        button.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                                        button.setBackgroundColor(getResources().getColor(R.color.lightText2));
                                     }
                                 }
                             });
@@ -129,7 +129,7 @@ public class HouseDetailsFragment extends Fragment {
                                 }
                             });
                         }
-                        button.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                        button.setBackgroundColor(getResources().getColor(R.color.lightText2));
                     }
                 }
             }
