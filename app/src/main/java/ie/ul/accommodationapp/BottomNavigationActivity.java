@@ -23,7 +23,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private BottomNavigationView bottomNavigationView;
     private NavController navController;
-    private List<Listing> mData;
+    public List<Listing> mData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +40,10 @@ public class BottomNavigationActivity extends AppCompatActivity {
 
     public List<Listing> getListings() {
         return mData;
+    }
+
+    public void addListing(Listing listing) {
+        mData.add(listing);
     }
 
     public void getAllListings() {

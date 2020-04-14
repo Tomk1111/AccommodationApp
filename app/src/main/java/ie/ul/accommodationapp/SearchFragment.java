@@ -62,7 +62,6 @@ public class SearchFragment extends Fragment {
         searchView.setIconified(true);
         recyclerView = view.findViewById(R.id.house_listing_recycler_view);
         retrieveListings();
-        System.out.println(mData.size() + " AICE");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -84,7 +83,6 @@ public class SearchFragment extends Fragment {
 
 
     public void retrieveListings() {
-
 
         mData = ((BottomNavigationActivity) getActivity()).getListings();
         homeAdapter = new HomeAdapter(getContext(), mData);
