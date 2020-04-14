@@ -78,7 +78,6 @@ public class MapFragment extends SupportMapFragment
     Location mLastLocation;
     Marker mCurrLocationMarker;
 
-
     @Override
     public void onResume() {
         super.onResume();
@@ -101,6 +100,7 @@ public class MapFragment extends SupportMapFragment
 //            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, (com.google.android.gms.location.LocationListener) getContext());
 //        }
 //    }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap)
@@ -215,11 +215,9 @@ public class MapFragment extends SupportMapFragment
     private void checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-
             // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+            if (shouldShowRequestPermissionRationale(
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
-
                 // Show an explanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
@@ -241,7 +239,7 @@ public class MapFragment extends SupportMapFragment
 
             } else {
                 // No explanation needed, we can request the permission.
-                ActivityCompat.requestPermissions(getActivity(),
+                requestPermissions(
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         MY_PERMISSIONS_REQUEST_LOCATION );
             }
