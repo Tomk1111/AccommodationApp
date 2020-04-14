@@ -67,6 +67,7 @@ import java.util.concurrent.TimeUnit;
 public class HomeListFragment extends Fragment {
 
     int id;
+    private EditText address, rooms, price, description, startDate, endDate;
     private static final int PICK_PHOTO_FOR_LISTING = 0;
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
@@ -100,8 +101,8 @@ public class HomeListFragment extends Fragment {
     public void onViewCreated(@Nonnull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         final Calendar myCalendar = Calendar.getInstance();
-        EditText startDate = getView().findViewById(R.id.startDate);
-        EditText endDate = getView().findViewById(R.id.endDate);
+        startDate = getView().findViewById(R.id.startDate);
+        endDate = getView().findViewById(R.id.endDate);
         DatePickerDialog.OnDateSetListener startDateListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
@@ -187,94 +188,97 @@ public class HomeListFragment extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText address = getView().findViewById(R.id.address);
-                EditText rooms = getView().findViewById(R.id.rooms);
-                EditText price = getView().findViewById(R.id.price);
-                EditText description = getView().findViewById(R.id.description);
-                SimpleDateFormat formatter1=new SimpleDateFormat("dd/MM/yyyy");
-                try {
-                    String addressText = address.getText().toString();
-                    GeocodingResult[] results =  GeocodingApi.geocode(context,
-                            addressText).await();
-                    LatLng coords  = (results[0].geometry.location);
-                    int priceInt = Integer.parseInt(price.getText().toString());
-                    int roomInt = Integer.parseInt(rooms.getText().toString());
-                    Date sDate = formatter1.parse(startDate.getText().toString());
-                    Date eDate = formatter1.parse(endDate.getText().toString());
-                    long diff = eDate.getTime() - sDate.getTime();
-                    int difInt = (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-                    if(inputStream != null){
-                        int i=1;
-                        for (InputStream streamer: inputStream) {
-                            listingImagesRef = storageRef.child("House" + id + "image" + i + ".jpg");
-                            UploadTask uploadTask = listingImagesRef.putStream(streamer);
-                            uploadTask.addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception exception) {
-                                    inputStream = null;
-                                    LinearLayout linLayout = (LinearLayout) getActivity().findViewById(R.id.linearImageLayout);
-                                    linLayout.setVisibility(View.INVISIBLE);
-                                    TextView textBanner = (TextView) getActivity().findViewById(R.id.bannerText);
-                                    textBanner.setVisibility(View.INVISIBLE);
-                                }
-                            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                @Override
-                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                    Toast.makeText(getActivity(), "Successfully Uploaded Image.", Toast.LENGTH_SHORT).show();
-                                    inputStream = null;
-                                    LinearLayout linLayout = (LinearLayout) getActivity().findViewById(R.id.linearImageLayout);
-                                    linLayout.setVisibility(View.INVISIBLE);
-                                    TextView textBanner = (TextView) getActivity().findViewById(R.id.bannerText);
-                                    textBanner.setVisibility(View.INVISIBLE);
-                                }
-                            });
-                            Task<Uri> getDownloadUriTask = uploadTask.continueWithTask(
-                                    new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                                        @Override
-                                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                                            if(!task.isSuccessful()) {
-                                                throw task.getException();
+                address = getView().findViewById(R.id.address);
+                rooms = getView().findViewById(R.id.rooms);
+                price = getView().findViewById(R.id.price);
+                description = getView().findViewById(R.id.description);
+                if (validateFields()) {
+                    SimpleDateFormat formatter1 = new SimpleDateFormat("dd/MM/yyyy");
+                    try {
+                        String addressText = address.getText().toString();
+                        GeocodingResult[] results = GeocodingApi.geocode(context,
+                                addressText).await();
+                        LatLng coords = (results[0].geometry.location);
+                        int priceInt = Integer.parseInt(price.getText().toString());
+                        int roomInt = Integer.parseInt(rooms.getText().toString());
+                        Date sDate = formatter1.parse(startDate.getText().toString());
+                        Date eDate = formatter1.parse(endDate.getText().toString());
+                        long diff = eDate.getTime() - sDate.getTime();
+                        int difInt = (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+                        if (inputStream != null) {
+                            int i = 1;
+                            for (InputStream streamer : inputStream) {
+                                listingImagesRef = storageRef.child("House" + id + "image" + i + ".jpg");
+                                UploadTask uploadTask = listingImagesRef.putStream(streamer);
+                                uploadTask.addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception exception) {
+                                        inputStream = null;
+                                        LinearLayout linLayout = (LinearLayout) getActivity().findViewById(R.id.linearImageLayout);
+                                        linLayout.setVisibility(View.INVISIBLE);
+                                        TextView textBanner = (TextView) getActivity().findViewById(R.id.bannerText);
+                                        textBanner.setVisibility(View.INVISIBLE);
+                                    }
+                                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        Toast.makeText(getActivity(), "Successfully Uploaded Image.", Toast.LENGTH_SHORT).show();
+                                        inputStream = null;
+                                        LinearLayout linLayout = (LinearLayout) getActivity().findViewById(R.id.linearImageLayout);
+                                        linLayout.setVisibility(View.INVISIBLE);
+                                        TextView textBanner = (TextView) getActivity().findViewById(R.id.bannerText);
+                                        textBanner.setVisibility(View.INVISIBLE);
+                                    }
+                                });
+                                Task<Uri> getDownloadUriTask = uploadTask.continueWithTask(
+                                        new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                                            @Override
+                                            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                                                if (!task.isSuccessful()) {
+                                                    throw task.getException();
+                                                }
+                                                return listingImagesRef.getDownloadUrl();
                                             }
-                                            return listingImagesRef.getDownloadUrl();
+                                        }
+                                );
+
+                                getDownloadUriTask.addOnCompleteListener(getActivity(), new OnCompleteListener<Uri>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Uri> task) {
+                                        if (task.isSuccessful()) {
+                                            Map<String, Object> houseImage = new HashMap<>();
+                                            houseImage.put("id", id);
+                                            houseImage.put("URL", task.getResult().toString());
+                                            listing2.document("House" + id).set(houseImage);
                                         }
                                     }
-                            );
-
-                            getDownloadUriTask.addOnCompleteListener(getActivity(), new OnCompleteListener<Uri>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Uri> task) {
-                                    if(task.isSuccessful()) {
-                                        Map<String, Object> houseImage= new HashMap<>();
-                                        houseImage.put("id",id);
-                                        houseImage.put("URL",task.getResult().toString());
-                                        listing2.document("House"+id).set(houseImage);
-                                    }
-                                }
-                            });
-                            i++;
+                                });
+                                i++;
+                            }
                         }
+                        Listing newHouse = new Listing(id, coords.lng, coords.lat,
+                                addressText, roomInt, priceInt,
+                                description.getText().toString(), sDate, eDate, difInt, FirebaseAuth.getInstance().getCurrentUser().getUid(), FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+                        try {
+                            User currentUser = new User();
+                        } catch (Exception e) {
+                        }
+                        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().detectAll().build();
+                        StrictMode.setThreadPolicy(policy);
+                        final CollectionReference listedAds = db.collection("ListedAds/" + userId + "/userListed");
+                        listedAds.document("House" + id).set(newHouse);
+                        listing1.document("House" + id).set(newHouse);
+                        address.setText("");
+                        rooms.setText("");
+                        price.setText("");
+                        description.setText("");
+                        startDate.setText("");
+                        endDate.setText("");
+                        Toast.makeText(getActivity(), "Successfully Added Listing.", Toast.LENGTH_SHORT).show();
+                        ((BottomNavigationActivity) getActivity()).addListing(newHouse);
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                    Listing newHouse = new Listing(id,coords.lng,coords.lat,
-                            addressText,roomInt,priceInt,
-                            description.getText().toString(),sDate,eDate, difInt, FirebaseAuth.getInstance().getCurrentUser().getUid(), FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
-                    try {
-                        User currentUser = new User();
-                    } catch (Exception e) {}
-                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().detectAll().build();
-                    StrictMode.setThreadPolicy(policy);
-                    final CollectionReference listedAds = db.collection("ListedAds/" + userId + "/userListed");
-                    listedAds.document("House"+id).set(newHouse);
-                    listing1.document("House"+id).set(newHouse);
-                    address.setText("");
-                    rooms.setText("");
-                    price.setText("");
-                    description.setText("");
-                    startDate.setText("");
-                    endDate.setText("");
-                    Toast.makeText(getActivity(), "Successfully Added Listing.", Toast.LENGTH_SHORT).show();
-                    ((BottomNavigationActivity) getActivity()).addListing(newHouse);
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
             }
         });
@@ -308,4 +312,27 @@ public class HomeListFragment extends Fragment {
         }
     }
 
+    public boolean validateFields() {
+        if (address.getText().toString() == null || address.getText().toString().isEmpty()) {
+            Toast.makeText(getActivity(), "Enter an address.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (rooms.getText().toString() == null || rooms.getText().toString().isEmpty()) {
+            Toast.makeText(getActivity(), "Enter number of rooms.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (price.getText().toString() == null || price.getText().toString().isEmpty()) {
+            Toast.makeText(getActivity(), "Enter price.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (startDate.getText().toString() == null || startDate.getText().toString().isEmpty()) {
+            Toast.makeText(getActivity(), "Enter start date.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (endDate.getText().toString() == null || endDate.getText().toString().isEmpty()) {
+            Toast.makeText(getActivity(), "Enter end date.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
 }
