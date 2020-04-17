@@ -101,16 +101,17 @@ public class InboxFragment extends Fragment {
                         usersRef.child(userIDs).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                //check for profile image not all users have house images
-                                if (dataSnapshot.hasChild("image")){
-                                    final String returnedImage = dataSnapshot.child("image").getValue().toString();
-                                    //add image to screen here - picasso library is good
-                                }
-                                final String returnedName = dataSnapshot.child("name").getValue().toString();
-                                conversationViewHolder.userName.setText(returnedName);
+                                if(dataSnapshot.exists()) {
+                                    //check for profile image not all users have house images
+                                    if (dataSnapshot.hasChild("image")) {
+                                        final String returnedImage = dataSnapshot.child("image").getValue().toString();
+                                        //add image to screen here - picasso library is good
+                                    }
+                                    final String returnedName = dataSnapshot.child("name").getValue().toString();
+                                    conversationViewHolder.userName.setText(returnedName);
 
-                                //if desire to add the 'last seen' feature that could be added here
-
+                                    //if desire to add the 'last seen' feature that could be added here
+                                }//if the data doesnt exist dont adding anything to the page - add future later if no messages add a textview telling you no messages exist
                             }
 
                             @Override
