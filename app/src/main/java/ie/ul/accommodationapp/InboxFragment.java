@@ -3,18 +3,33 @@ package ie.ul.accommodationapp;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import ie.ul.accommodationapp.Adapters.ConversationAdapter;
+
+import static com.firebase.ui.auth.AuthUI.TAG;
 
 
 /**
@@ -24,9 +39,15 @@ public class InboxFragment extends Fragment {
 
     private Toolbar mToolbar;
 
-    private RecyclerView recyclerview;
+
+    private RecyclerView conversationList;
     private ConversationAdapter conversationAdapter;
     private ArrayList<Conversation> convoList;
+    private DatabaseReference contactRef;
+    private DatabaseReference usersRef;
+    private FirebaseAuth mAuth;
+    private View PrivateChatsView;
+    private String currentUserId;
 
     public InboxFragment() {
         // Required empty public constructor
@@ -37,27 +58,18 @@ public class InboxFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        //inititialise the arraylist and get data to fill it
-        //this will be data coming from firebase 
-        convoList = new ArrayList<Conversation>();
-        convoList.add(new Conversation("user1", "2019-04-14 16:19:22"));
-        convoList.add(new Conversation("user2", "2019-04-14 15:19:22"));
-        convoList.add(new Conversation("user3", "2019-04-14 14:19:22"));
 
-        for (Conversation o : convoList) {
-            System.out.println("user:" + o.getUser() + " " + o.getTime()); //test print
-        } //prints this
+        mAuth = FirebaseAuth.getInstance();
+        currentUserId = mAuth.getCurrentUser().getUid();
+        contactRef = FirebaseDatabase.getInstance().getReference().child("Contacts").child(currentUserId);
+        usersRef = FirebaseDatabase.getInstance().getReference().child("Users");
+
 
         //inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_inbox, container, false);
+        PrivateChatsView = inflater.inflate(R.layout.fragment_inbox, container, false);
 
-        recyclerview = (RecyclerView) rootView.findViewById(R.id.recyclerview);
-
-        conversationAdapter = new ConversationAdapter(convoList);
-
-        //adding the adapter to the recycling view
-        recyclerview.setAdapter(conversationAdapter);
-        recyclerview.setLayoutManager(new LinearLayoutManager( getActivity() ));  //getActivity - gets the fragments activity
+        conversationList = (RecyclerView) PrivateChatsView.findViewById(R.id.inbox_recyclerview);
+        conversationList.setLayoutManager(new LinearLayoutManager( getContext() ));
 
         //needed for the toolbar
         mToolbar = getActivity().findViewById(R.id.main_toolbar);
@@ -68,7 +80,70 @@ public class InboxFragment extends Fragment {
                 getActivity().onBackPressed();
             }
         });
-        return rootView;
+        return PrivateChatsView;
     }
 
+    @Override
+    public void onStart(){
+        super.onStart();
+
+        FirebaseRecyclerOptions<Conversation> options =
+                new FirebaseRecyclerOptions.Builder<Conversation>()
+                .setQuery(contactRef, Conversation.class)
+                .build();
+
+        FirebaseRecyclerAdapter<Conversation, ConversationViewHolder> adapter =
+                new FirebaseRecyclerAdapter<Conversation, ConversationViewHolder>(options) {
+                    @Override
+                    protected void onBindViewHolder(@NonNull ConversationViewHolder conversationViewHolder, int i, @NonNull Conversation conversation) {
+                        final String userIDs = getRef(i).getKey();
+
+                        usersRef.child(userIDs).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                //check for profile image not all users have house images
+                                if (dataSnapshot.hasChild("image")){
+                                    final String returnedImage = dataSnapshot.child("image").getValue().toString();
+                                    //add image to screen here - picasso library is good
+                                }
+                                final String returnedName = dataSnapshot.child("name").getValue().toString();
+                                conversationViewHolder.userName.setText(returnedName);
+
+                                //if desire to add the 'last seen' feature that could be added here
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
+                    }
+
+                    @NonNull
+                    @Override
+                    public ConversationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.users_layout, parent, false);
+                        return new ConversationViewHolder(view);
+                    }
+                };
+        conversationList.setAdapter(adapter);
+        adapter.startListening();
+
+    }
+
+    public static class ConversationViewHolder extends RecyclerView.ViewHolder{
+
+        CircleImageView profileImage;
+        TextView userName;
+
+        public ConversationViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            profileImage = itemView.findViewById(R.id.users_profile_image);
+            userName = itemView.findViewById(R.id.user_profile_name);
+
+        }
+    }
 }

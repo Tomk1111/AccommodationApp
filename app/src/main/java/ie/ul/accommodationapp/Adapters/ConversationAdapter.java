@@ -43,12 +43,12 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
     @Override
     public void onBindViewHolder(@NonNull ConversationAdapter.ConversationViewHolder holder, int position) {
         //this is where you retrive data from the arraylist of conversations
-        String name = conversationList.get(position).getUser();
+        /*String name = conversationList.get(position).getUser();
         String date = conversationList.get(position).getTime();
 
         //then you add it to the textviews that you refer to below
         holder.txtName.setText(name);
-        holder.txtDate.setText(date);
+        holder.txtDate.setText(date); */
     }
 
     @Override
