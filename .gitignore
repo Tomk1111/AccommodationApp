@@ -24,5 +24,6 @@ hs_err_pid*
 
 # Local configuration file (sdk path, etc) 
 # I am adding this file as everytime we pull, gradle is required to change it to update to the specific file path of each of our machines.
+app.iml
 local.properties
 
