@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -111,6 +112,20 @@ public class InboxFragment extends Fragment {
                                     conversationViewHolder.userName.setText(returnedName);
 
                                     //if desire to add the 'last seen' feature that could be added here
+
+                                    conversationViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            //this will get the current item from the recycler view that is clicked
+                                            //now fetch information relating to this item
+                                            //investigate potential of adding custom onClick color to the item that is clicked
+                                            Bundle bundle = new Bundle();
+                                            bundle.putString("uid",userIDs); //string key - pair
+                                            bundle.putString("userName",returnedName); //string key - pair
+                                            Navigation.findNavController(v).navigate(R.id.action_inboxFragment_to_chatFragment2,bundle);
+                                        }
+                                    });
+
                                 }//if the data doesnt exist dont adding anything to the page - add future later if no messages add a textview telling you no messages exist
                             } 
 

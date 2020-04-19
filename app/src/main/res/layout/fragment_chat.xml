@@ -1,14 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ChatFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!--Do i need to include the toolbar here? -->
+    <!--<include
+        android:id="@+id/main_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </include> -->
+
+    <!--TODO: Fix layout on page asap-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/messages_list_of_users"
+        android:layout_width="match_parent"
+        android:layout_height="242dp"
+
+
+        >
+
+    </androidx.recyclerview.widget.RecyclerView>
+    <!--Need a way of getting the recycler view above the message bar .. and fit to screen-->
+
+
+    <LinearLayout
+        android:id="@+id/linear_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:background="@android:color/background_light"
+        android:orientation="horizontal"
+        android:layout_below="@id/messages_list_of_users"
+        >
 
-</FrameLayout>
+        <EditText
+            android:id="@+id/messageBox"
+            android:layout_width="274dp"
+            android:layout_height="wrap_content"
+            android:hint="Enter message here .. "
+            android:padding="15dp"
+
+            />
+
+        <ImageButton
+            android:id="@+id/send_message_btn"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_send_black_24dp" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

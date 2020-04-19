@@ -112,7 +112,11 @@
             android:id="@+id/houseDetailsFragment4"
             android:name="ie.ul.accommodationapp.HouseDetailsFragment"
             android:label="fragment_house_details"
-            tools:layout="@layout/fragment_house_details" />
+            tools:layout="@layout/fragment_house_details" >
+            <action
+                android:id="@+id/action_houseDetailsFragment4_to_inboxFragment"
+                app:destination="@id/inboxFragment" />
+        </fragment>
         <fragment
             android:id="@+id/chatFragment2"
             android:name="ie.ul.accommodationapp.ChatFragment"

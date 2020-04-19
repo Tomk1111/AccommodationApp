@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -46,6 +47,7 @@ public class HouseDetailsFragment extends Fragment {
     private FirebaseFirestore db;
     private CollectionReference userLikes;
     private String imageURL;
+    private View view;
     public HouseDetailsFragment() {
         // Required empty public constructor
     }
@@ -54,7 +56,7 @@ public class HouseDetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_house_details, container, false);
+        view = inflater.inflate(R.layout.fragment_house_details, container, false);
         mToolbar = getActivity().findViewById(R.id.main_toolbar);
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -92,27 +94,24 @@ public class HouseDetailsFragment extends Fragment {
         contactSellerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //updateLikeStatus(true);
-                // need to get the unique user id of the user who listed the ad
-                // get one image of the house
-                // bundle it together
-                // new intent w/ the bundle sent to the chat fragment
-                contactSeller();
+
+                String uid = listingModel.getUid();
+                String username = listingModel.getUserName();
+                String url = imageURL;
+                System.out.println("Contact seller button pressed");
+                Bundle bundle = new Bundle();
+                bundle.putString("uid",uid); //string key - pair
+                bundle.putString("userName",username); //string key - pair#
+
+                Toast.makeText(getActivity(),"Navigation.findNavController will send this to a new chat",Toast.LENGTH_SHORT).show();
+                //Navigation.findNavController(v).navigate(R.id.action_houseDetailsFragment4_to_inboxFragment);
+                // cant use navigation to get to either the chat page or the inbox page
+                //  java.lang.IllegalArgumentException: navigation destination ie.ul.accommodationapp:id/action_houseDetailsFragment4_to_chatFragment2 is unknown to this NavController
+
             }
         });
 
-
-
-
         return view;
-    }
-
-    //do i need to add a boolean buttonPressed
-    public void contactSeller(){
-        String uid = listingModel.getUid();
-        String username = listingModel.getUserName();
-        String url = imageURL;
-        System.out.println("Contact seller button pressed");
     }
 
     public void updateLikeStatus(boolean buttonPressed) {
