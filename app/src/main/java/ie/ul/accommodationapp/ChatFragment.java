@@ -48,7 +48,7 @@ public class ChatFragment extends Fragment {
         System.out.println("userid " + messageReceiverID);
         System.out.println("username " + messageReceiverName);
         Toast.makeText(getActivity(), messageReceiverID, Toast.LENGTH_SHORT).show();
-        Toast.makeText(getActivity(), messageReceiverName, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "name: " + messageReceiverName, Toast.LENGTH_SHORT).show();
     }
 
     @Override
