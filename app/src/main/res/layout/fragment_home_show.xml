@@ -1,37 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomeShowFragment"
     >
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+
+    <Spinner
+        android:id="@+id/filterbutton"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    <!-- TODO: Update blank fragment layout -->
-        <Spinner
-            android:id="@+id/filterbutton"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/colorPrimary"
-            android:textAlignment="center"
-            />
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        android:textAlignment="center"
+        />
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/filterbutton" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_below="@+id/filterbutton"/>
 
 
 
-</FrameLayout>
+</RelativeLayout>
