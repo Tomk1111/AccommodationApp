@@ -55,8 +55,8 @@ public class HomeShowFragment extends Fragment {
         Spinner filterbutton=view.findViewById(R.id.filterbutton);
         //Creating the ArrayAdapter instance having the country list
         String[] filters = { "price", "rooms", "startDate", "endDate"};
-        ArrayAdapter<String> aa = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_item,filters);
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> aa = new ArrayAdapter<>(getContext(),R.layout.simple_spinner,filters);
+        aa.setDropDownViewResource(R.layout.spinner_item);
         //Setting the ArrayAdapter data on the Spinner
         filterbutton.setAdapter(aa);
         System.out.println("ListedAds/" + FirebaseAuth.getInstance().getCurrentUser().getUid()
