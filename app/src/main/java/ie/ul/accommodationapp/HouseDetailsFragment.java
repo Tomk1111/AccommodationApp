@@ -41,9 +41,11 @@ public class HouseDetailsFragment extends Fragment {
     private TextView addressTextView, pricePerWeekView, descriptionView, roomsView,
             moveInDateView, moveOutViewDate;
     private ImageView listingImage;
-    private Button button;
+    private Button likeButton;
+    private Button contactSellerBtn;
     private FirebaseFirestore db;
     private CollectionReference userLikes;
+    private String imageURL;
     public HouseDetailsFragment() {
         // Required empty public constructor
     }
@@ -76,14 +78,26 @@ public class HouseDetailsFragment extends Fragment {
         roomsView.setText(listingModel.getRooms() + " rooms");
         moveInDateView.setText(simpleDateFormat.format(listingModel.getStartDate()));
         moveOutViewDate.setText(simpleDateFormat.format(listingModel.getEndDate()));
-        button=view.findViewById(R.id.button_like);
+        likeButton=view.findViewById(R.id.button_like);
+        contactSellerBtn = view.findViewById(R.id.contact_seller);
         listingImage = view.findViewById(R.id.listing_image);
         updateLikeStatus(false);
         getHouseImageURL();
-        button.setOnClickListener(new View.OnClickListener() {
+        likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 updateLikeStatus(true);
+            }
+        });
+        contactSellerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //updateLikeStatus(true);
+                // need to get the unique user id of the user who listed the ad
+                // get one image of the house
+                // bundle it together
+                // new intent w/ the bundle sent to the chat fragment
+                contactSeller();
             }
         });
 
@@ -91,6 +105,14 @@ public class HouseDetailsFragment extends Fragment {
 
 
         return view;
+    }
+
+    //do i need to add a boolean buttonPressed
+    public void contactSeller(){
+        String uid = listingModel.getUid();
+        String username = listingModel.getUserName();
+        String url = imageURL;
+        System.out.println("Contact seller button pressed");
     }
 
     public void updateLikeStatus(boolean buttonPressed) {
@@ -109,12 +131,12 @@ public class HouseDetailsFragment extends Fragment {
                                     if (task.isSuccessful()) {
                                         Toast.makeText(getContext(), listingModel.getAddress()
                                                 + " removed from likes.", Toast.LENGTH_SHORT).show();
-                                        button.setBackgroundColor(getResources().getColor(R.color.lightText2));
+                                        likeButton.setBackgroundColor(getResources().getColor(R.color.lightText2));
                                     }
                                 }
                             });
                         } else {
-                            button.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                            likeButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                         }
                     } else {
                         if (buttonPressed) {
@@ -124,12 +146,12 @@ public class HouseDetailsFragment extends Fragment {
                                     if (task.isSuccessful()) {
                                         Toast.makeText(getContext(), listingModel.getAddress()
                                                 + " added to likes.", Toast.LENGTH_SHORT).show();
-                                        button.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                                        likeButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                                     }
                                 }
                             });
                         }
-                        button.setBackgroundColor(getResources().getColor(R.color.lightText2));
+                        likeButton.setBackgroundColor(getResources().getColor(R.color.lightText2));
                     }
                 }
             }
@@ -144,8 +166,8 @@ public class HouseDetailsFragment extends Fragment {
                 if (task.isSuccessful()) {
                     DocumentSnapshot documentSnapshot = task.getResult();
                     if (documentSnapshot.exists()) {
-                        String url = documentSnapshot.getString("URL");
-                        Picasso.get().load(url).fit().into(listingImage);
+                        imageURL = documentSnapshot.getString("URL");
+                        Picasso.get().load(imageURL).fit().into(listingImage);
                     }
                 }
                 }

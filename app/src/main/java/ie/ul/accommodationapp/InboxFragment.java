@@ -112,7 +112,7 @@ public class InboxFragment extends Fragment {
 
                                     //if desire to add the 'last seen' feature that could be added here
                                 }//if the data doesnt exist dont adding anything to the page - add future later if no messages add a textview telling you no messages exist
-                            }
+                            } 
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
