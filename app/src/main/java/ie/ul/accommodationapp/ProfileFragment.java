@@ -56,7 +56,8 @@ public class ProfileFragment extends Fragment {
         inboxText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_profileFragment_to_inboxFragment);
+                //Navigation.findNavController(v).navigate(R.id.action_profileFragment_to_inboxFragment);
+                Navigation.findNavController(v).navigate(R.id.action_global_inboxFragment3);
             }
         });
         devInfoText.setOnClickListener(new View.OnClickListener() {

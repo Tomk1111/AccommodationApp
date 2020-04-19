@@ -19,6 +19,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -30,6 +35,7 @@ import com.squareup.picasso.Picasso;
 import org.w3c.dom.Document;
 
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 
 
 /**
@@ -48,6 +54,13 @@ public class HouseDetailsFragment extends Fragment {
     private CollectionReference userLikes;
     private String imageURL;
     private View view;
+    // Firebase RTDB additions
+    private FirebaseAuth mAuth;
+    private DatabaseReference contactRef;
+    private DatabaseReference usersRef;
+    private String currentUserId;
+
+
     public HouseDetailsFragment() {
         // Required empty public constructor
     }
@@ -91,6 +104,16 @@ public class HouseDetailsFragment extends Fragment {
                 updateLikeStatus(true);
             }
         });
+
+        //Firebase RTDB setup
+        mAuth = FirebaseAuth.getInstance();
+        currentUserId = mAuth.getUid().toString();
+
+        contactRef = FirebaseDatabase.getInstance().getReference().child("Contacts");
+        //if newUserID doesnt exist in users, they cannot have any conversations -
+        usersRef = FirebaseDatabase.getInstance().getReference().child("Users");
+
+
         contactSellerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,14 +127,83 @@ public class HouseDetailsFragment extends Fragment {
                 bundle.putString("userName",username); //string key - pair#
 
                 Toast.makeText(getActivity(),"Navigation.findNavController will send this to a new chat",Toast.LENGTH_SHORT).show();
-                //Navigation.findNavController(v).navigate(R.id.action_houseDetailsFragment4_to_inboxFragment);
+
+                //Navigation.findNavController(v).navigate(R.id.action_houseDetailsFragment4_to_inboxFragment2);
+                Navigation.findNavController(v).navigate(R.id.action_global_inboxFragment3);
+
                 // cant use navigation to get to either the chat page or the inbox page
                 //  java.lang.IllegalArgumentException: navigation destination ie.ul.accommodationapp:id/action_houseDetailsFragment4_to_chatFragment2 is unknown to this NavController
+                //createConversation(uid,username,url);
+            }
+
+            private void createConversation(String uid, String username, String imageURL) {
+                    //check do they have a profile in Users and if not create one
+                usersRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if( (dataSnapshot.child("uid").exists()) ){
+                            //the user has an account created already
+
+                            // has there been a conversation created before tho between the userid of the listing and currentUserID
+                            //check and call createConversation
+                        }
+                        else{
+                            //there is no account created for this user
+                            HashMap<String, String> profileMap = new HashMap<>();
+                                profileMap.put("image", imageURL);
+                                profileMap.put("name", username);
+                                profileMap.put("uid", uid);
+
+                                usersRef.child(uid).setValue(profileMap)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()){
+                                                    Toast.makeText(getActivity(), "User Created in RealTimeDB", Toast.LENGTH_SHORT).show();
+                                                    //calling outer class methods inside the anonymous inner class
+                                                    //HouseDetailsFragment.this.createConnection(uid);
+
+                                                }
+                                                else {
+                                                    String error = task.getException().toString();
+                                                    Toast.makeText(getActivity(), "Error: " + error , Toast.LENGTH_SHORT).show();
+                                                }
+
+                                            }
+                                        });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
 
             }
         });
 
         return view;
+    }
+
+    public void createConnection(String uid){
+        //Make a connection for the contact here ?
+        System.out.println("AM I HERE");
+        contactRef.child(uid).child(currentUserId).child("Chat").setValue("Yes")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        contactRef.child(currentUserId).child(uid).child("Chat").setValue("Yes")
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()){
+                                            Toast.makeText(getActivity(), "View INBOX to see your connection", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                    }
+                });
     }
 
     public void updateLikeStatus(boolean buttonPressed) {

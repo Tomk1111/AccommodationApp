@@ -122,7 +122,7 @@ public class InboxFragment extends Fragment {
                                             Bundle bundle = new Bundle();
                                             bundle.putString("uid",userIDs); //string key - pair
                                             bundle.putString("userName",returnedName); //string key - pair
-                                            Navigation.findNavController(v).navigate(R.id.action_inboxFragment_to_chatFragment2,bundle);
+                                            //Navigation.findNavController(v).navigate(R.id.action_inboxFragment_to_chatFragment2,bundle);
                                         }
                                     });
 
