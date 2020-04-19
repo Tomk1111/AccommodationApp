@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/message_navigation"
+    app:startDestination="@id/inboxFragment2">
+
+    <fragment
+        android:id="@+id/inboxFragment2"
+        android:name="ie.ul.accommodationapp.InboxFragment"
+        android:label="fragment_inbox"
+        tools:layout="@layout/fragment_inbox"
+        app:startDestination="@id/action_inboxFragment2_to_chatFragment">
+        <action
+            android:id="@+id/action_inboxFragment2_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="ie.ul.accommodationapp.ChatFragment"
+        android:label="fragment_chat"
+        tools:layout="@layout/fragment_chat" />
+</navigation>

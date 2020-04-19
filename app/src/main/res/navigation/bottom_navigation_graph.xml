@@ -76,7 +76,11 @@
             android:id="@+id/inboxFragment"
             android:name="ie.ul.accommodationapp.InboxFragment"
             android:label="fragment_inbox"
-            tools:layout="@layout/fragment_inbox" />
+            tools:layout="@layout/fragment_inbox" >
+            <action
+                android:id="@+id/action_inboxFragment_to_chatFragment2"
+                app:destination="@id/chatFragment2" />
+        </fragment>
         <fragment
             android:id="@+id/aboutFragment"
             android:name="ie.ul.accommodationapp.AboutFragment"
@@ -109,6 +113,11 @@
             android:name="ie.ul.accommodationapp.HouseDetailsFragment"
             android:label="fragment_house_details"
             tools:layout="@layout/fragment_house_details" />
+        <fragment
+            android:id="@+id/chatFragment2"
+            android:name="ie.ul.accommodationapp.ChatFragment"
+            android:label="fragment_chat"
+            tools:layout="@layout/fragment_chat" />
     </navigation>
     <navigation
         android:id="@+id/searchFragment"
