@@ -123,12 +123,8 @@ public class HouseDetailsFragment extends Fragment {
                 String url = imageURL;
                 System.out.println("Contact seller button pressed");
                 Bundle bundle = new Bundle();
-                bundle.putString("uid",uid); //string key - pair
-                bundle.putString("userName",username); //string key - pair#
-
-                Toast.makeText(getActivity(),"Navigation.findNavController will send this to a new chat",Toast.LENGTH_SHORT).show();
-
-                //Navigation.findNavController(v).navigate(R.id.action_houseDetailsFragment4_to_inboxFragment2);
+                bundle.putString("uid",uid);
+                bundle.putString("userName",username);
                 Navigation.findNavController(v).navigate(R.id.action_global_inboxFragment3);
 
                 // cant use navigation to get to either the chat page or the inbox page

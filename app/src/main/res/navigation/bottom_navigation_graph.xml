@@ -101,11 +101,6 @@
             android:name="ie.ul.accommodationapp.HouseDetailsFragment"
             android:label="fragment_house_details"
             tools:layout="@layout/fragment_house_details" />
-        <fragment
-            android:id="@+id/chatFragment2"
-            android:name="ie.ul.accommodationapp.ChatFragment"
-            android:label="fragment_chat"
-            tools:layout="@layout/fragment_chat" />
 
     </navigation>
     <navigation
@@ -130,6 +125,15 @@
         android:id="@+id/inboxFragment"
         android:name="ie.ul.accommodationapp.InboxFragment"
         android:label="fragment_inbox"
-        tools:layout="@layout/fragment_inbox" />
-    <action android:id="@+id/action_global_inboxFragment3" app:destination="@id/inboxFragment"/>
+        tools:layout="@layout/fragment_inbox" >
+        <action
+            android:id="@+id/action_inboxFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
+    <action android:id="@+id/action_global_inboxFragment3" app:destination="@id/inboxFragment" />
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="ie.ul.accommodationapp.ChatFragment"
+        android:label="fragment_chat"
+        tools:layout="@layout/fragment_chat" />
 </navigation>
