@@ -12,62 +12,67 @@
         <item name="colorControlHighlight">@color/lightText1</item>
     </style>
 
-
     <style name="darkBackgroundStyle">
-        <item name="android:background">@color/lightBackground</item>
+        <item name="android:background">@color/darkBackground</item>
     </style>
     <style name="darkToolbarBackground">
-        <item name="android:background">@color/lightBackground</item>
+        <item name="android:background">@color/darkBackground</item>
     </style>
     <style name="darkTabsBackground">
-        <item name="android:background">@color/lightBackground</item>
+        <item name="android:background">@color/darkBackground</item>
     </style>
+
+
+
     <style name="Divider">
-        <item name="android:background">@color/divider2</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/divider1</item>
     </style>
-    <style name="BottomNavigationStyle" parent="Theme.AppCompat.DayNight">
+    <style name="BottomNavigationStyle" parent="Theme.AppCompat.Light">
         <item name="fontFamily">@font/googlesans_bold</item>
-        <item name="colorPrimary">@color/darkText1</item>
-        <item name="android:textColorSecondary">@color/darkText2</item>
+        <item name="colorPrimary">@color/lightText1</item>
+        <item name="android:textColorSecondary">@color/lightText2</item>
     </style>
     <style name="DarkModeToolbarTitleStyleTheme">
         <item name="fontFamily">@font/googlesans_bold</item>
-        <item name="android:textColor">@color/darkText1</item>
+        <item name="android:textColor">@color/lightText1</item>
         <item name="android:textSize">20sp</item>
-    </style>
-
-    <style name="personalDetailsCardStyle">
-        <item name="cardBackgroundColor">@color/personalInfoCards</item>
     </style>
     <style name="DarkModeAccountPageItemStyleHeaders">
         <item name="fontFamily">@font/googlesans_bold</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/darkText1</item>
+        <item name="android:textColor">@color/lightText1</item>
     </style>
     <style name="DarkModeAccountPageItemStyleText">
         <item name="fontFamily">@font/googlesans_regular</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/darkText2</item>
+        <item name="android:textColor">@color/lightText2</item>
     </style>
     <style name="DarkModeAccountPageItemStyleEditText">
         <item name="fontFamily">@font/googlesans_regular</item>
         <item name="android:textSize">16sp</item>
-        <item name="backgroundTint">@color/darkText2</item>
-        <item name="android:textColor">@color/darkText2</item>
+        <item name="backgroundTint">@color/lightText2</item>
+        <item name="android:textColor">@color/lightText2</item>
     </style>
-
     <style name="DarkModeIntroHeadline">
         <item name="fontFamily">@font/googlesans_bold</item>
         <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/darkText1</item>
-        <item name="android:textColorHint">@color/darkText2</item>
+        <item name="android:textColor">@color/lightText1</item>
+        <item name="android:textColorHint">@color/lightText2</item>
     </style>
-
+    <style name="personalDetailsCardStyle">
+        <item name="cardBackgroundColor">@color/divider1</item>
+    </style>
+    <style name="DarkModeIntroFields">
+        <item name="fontFamily">@font/googlesans_regular</item>
+        <item name="android:textColor">@color/lightText1</item>
+        <item name="android:textColorHint">@color/lightText2</item>
+    </style>
     <style name="searchIconStyle" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="searchIcon">@drawable/ic_search_black_24dp</item>
-        <item name="closeIcon">@drawable/ic_search_black_24dp</item>
+        <item name="searchIcon">@drawable/ic_search_white_24dp</item>
+        <item name="closeIcon">@drawable/ic_search_white_24dp</item>
     </style>
-
     <style name="primaryButtonStyle">
         <item name="android:textColor">@color/darkText2</item>
         <item name="android:background">@color/colorPrimary</item>
@@ -84,5 +89,4 @@
         <item name="android:background">@color/personalInfoCards</item>
         <item name="android:fontFamily">@font/googlesans_bold</item>
     </style>
-
 </resources>

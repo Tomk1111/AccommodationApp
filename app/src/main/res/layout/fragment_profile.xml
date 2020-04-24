@@ -41,7 +41,7 @@
             android:id="@+id/top_divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/divider1"
+            style="@style/Divider"
             android:layout_below="@id/inbox_item"
             android:layout_marginTop="24dp"/>
         <TextView
@@ -75,7 +75,7 @@
             android:id="@+id/bottom_divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/divider1"
+            style="@style/Divider"
             android:layout_marginTop="24dp"
             android:layout_below="@id/listed_ads_header"/>
         <TextView
@@ -106,6 +106,18 @@
             android:background="@color/colorPrimary"
             android:layout_below="@id/developer_information_header"
             android:text="Log Out"
+            android:fontFamily="@font/googlesans_bold"
+            android:textColor="@color/lightText1"/>
+        <Button
+            android:id="@+id/night_mode_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/colorPrimary"
+            android:layout_below="@id/logout_button"
+            android:text="Night Mode Button"
             android:fontFamily="@font/googlesans_bold"
             android:textColor="@color/lightText1"/>
     </RelativeLayout>

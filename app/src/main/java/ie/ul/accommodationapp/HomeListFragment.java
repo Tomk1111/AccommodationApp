@@ -21,6 +21,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -94,7 +95,10 @@ public class HomeListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_home_list, container, false);
+        TextView textView = view.findViewById(R.id.bannerText);
+        textView.setVisibility(View.GONE);
+        return view;
     }
 
     @Override
@@ -214,20 +218,20 @@ public class HomeListFragment extends Fragment {
                                     @Override
                                     public void onFailure(@NonNull Exception exception) {
                                         inputStream = null;
-                                        LinearLayout linLayout = (LinearLayout) getActivity().findViewById(R.id.linearImageLayout);
-                                        linLayout.setVisibility(View.INVISIBLE);
+                                        ImageView imageView = view.findViewById(R.id.imageView);
+                                        imageView.setVisibility(View.GONE);
                                         TextView textBanner = (TextView) getActivity().findViewById(R.id.bannerText);
-                                        textBanner.setVisibility(View.INVISIBLE);
+                                        textBanner.setVisibility(View.GONE);
                                     }
                                 }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                     @Override
                                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                         Toast.makeText(getActivity(), "Successfully Uploaded Image.", Toast.LENGTH_SHORT).show();
                                         inputStream = null;
-                                        LinearLayout linLayout = (LinearLayout) getActivity().findViewById(R.id.linearImageLayout);
-                                        linLayout.setVisibility(View.INVISIBLE);
+                                        ImageView imageView = view.findViewById(R.id.imageView);
+                                        imageView.setVisibility(View.GONE);
                                         TextView textBanner = (TextView) getActivity().findViewById(R.id.bannerText);
-                                        textBanner.setVisibility(View.INVISIBLE);
+                                        textBanner.setVisibility(View.GONE);
                                     }
                                 });
                                 Task<Uri> getDownloadUriTask = uploadTask.continueWithTask(
@@ -293,7 +297,6 @@ public class HomeListFragment extends Fragment {
             }
             try {
                 inputStream.add(getActivity().getContentResolver().openInputStream(data.getData()));
-                LinearLayout linLayout = (LinearLayout) getActivity().findViewById(R.id.linearImageLayout);
                 try{
                     Bitmap myBitmap = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(data.getData()));
                     ImageView myImage = getActivity().findViewById(R.id.imageView);
@@ -302,10 +305,9 @@ public class HomeListFragment extends Fragment {
                     //myImage.setMaxHeight(200);
                     //myImage.setMaxWidth(200);
                     myImage.setImageBitmap(myBitmap);
-                    linLayout.addView(myImage);
+                    myImage.setVisibility(View.VISIBLE);
                 } catch (Exception e) {}
                 Toast.makeText(getActivity(), "Successfully Attached Image.", Toast.LENGTH_SHORT).show();
-                linLayout.setVisibility(View.VISIBLE);
                 TextView banner = (TextView) getActivity().findViewById(R.id.bannerText);
                 banner.setVisibility(View.VISIBLE);
             } catch (Exception e) {}

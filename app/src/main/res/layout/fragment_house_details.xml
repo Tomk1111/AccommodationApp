@@ -14,13 +14,13 @@
         android:id="@+id/listing_image"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        app:srcCompat="@color/colorAccent" />
+        app:srcCompat="@color/personalInfoCards" />
 
     <Button
         android:text="LIKE"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
-        android:textColor="@color/quantum_white_100"
+        style="@style/unlikedButtonStyle"
         android:id="@+id/button_like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
@@ -133,9 +133,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Contact Seller"
-        android:fontFamily="@font/source_sans_pro"
+        android:fontFamily="@font/googlesans_bold"
         android:background="@color/colorPrimary"
-        android:textStyle="bold"
         android:textSize="16dp"
         android:textColor="@color/quantum_white_100"/>
 

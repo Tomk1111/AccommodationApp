@@ -3,46 +3,83 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".PersonalInformationFragment">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/display_name_tag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/DarkModeAccountPageItemStyleHeaders"
-            android:text="Display Name"
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/name_card"
+            app:cardElevation="0dp"
+            app:cardCornerRadius="6dp"
+            style="@style/personalDetailsCardStyle"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"/>
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/display_name_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                style="@style/DarkModeAccountPageItemStyleHeaders"
+                android:text="Edit Display Name"/>
         <EditText
             android:id="@+id/username_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/display_name_tag"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="4dp"
+            style="@style/DarkModeAccountPageItemStyleEditText"/>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/email_card"
+            app:cardElevation="0dp"
+            app:cardCornerRadius="6dp"
+            style="@style/personalDetailsCardStyle"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
-            style="@style/DarkModeAccountPageItemStyleText"/>
+            android:layout_marginTop="16dp"
+            android:layout_below="@id/name_card"
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <TextView
             android:id="@+id/email_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/DarkModeAccountPageItemStyleHeaders"
             android:text="Email"
-            android:layout_below="@id/username_field"
-            android:layout_marginTop="32dp"
-            android:layout_marginHorizontal="16dp"/>
+            android:layout_margin="8dp"/>
         <TextView
             android:id="@+id/email_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="4dp"
             android:layout_below="@id/email_tag"
             android:text="Name"
             style="@style/DarkModeAccountPageItemStyleText"
             />
+        </androidx.cardview.widget.CardView>
 
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/date_joined_card"
+            app:cardElevation="0dp"
+            app:cardCornerRadius="6dp"
+            style="@style/personalDetailsCardStyle"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_below="@id/email_card"
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <TextView
             android:id="@+id/date_joined_tag"
             android:layout_width="wrap_content"
@@ -50,8 +87,7 @@
             style="@style/DarkModeAccountPageItemStyleHeaders"
             android:text="Date Joined"
             android:layout_below="@id/email_field"
-            android:layout_marginTop="32dp"
-            android:layout_marginHorizontal="16dp"/>
+            android:layout_margin="8dp"/>
         <TextView
             android:id="@+id/date_joined_text"
             android:layout_width="wrap_content"
@@ -59,17 +95,28 @@
             style="@style/DarkModeAccountPageItemStyleText"
             android:text="test"
             android:layout_below="@id/date_joined_tag"
-            android:layout_marginTop="8dp"
-            android:layout_marginHorizontal="16dp"/>
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginHorizontal="8dp"/>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/last_login_card"
+            app:cardElevation="0dp"
+            app:cardCornerRadius="6dp"
+            style="@style/personalDetailsCardStyle"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_below="@id/date_joined_card"
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <TextView
             android:id="@+id/last_login_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/DarkModeAccountPageItemStyleHeaders"
             android:text="Last Login"
-            android:layout_below="@id/date_joined_text"
-            android:layout_marginTop="32dp"
-            android:layout_marginHorizontal="16dp"/>
+            android:layout_margin="8dp"/>
         <TextView
             android:id="@+id/last_login_text"
             android:layout_width="wrap_content"
@@ -77,8 +124,10 @@
             style="@style/DarkModeAccountPageItemStyleText"
             android:text="test"
             android:layout_below="@id/last_login_tag"
-            android:layout_marginTop="8dp"
-            android:layout_marginHorizontal="16dp"/>
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginHorizontal="8dp"/>
+        </androidx.cardview.widget.CardView>
 
         <Button
             android:id="@+id/save_button"
@@ -88,7 +137,7 @@
             android:layout_marginTop="32dp"
             android:textColor="@color/lightText1"
             android:background="@color/colorPrimary"
-            android:layout_below="@id/last_login_text"
+            android:layout_below="@id/last_login_card"
             android:text="Save Changes"
             android:fontFamily="@font/googlesans_bold"/>
     </RelativeLayout>

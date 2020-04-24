@@ -6,14 +6,19 @@
 
 
 
+
+<!--    DARK MODE COLORS-->
     <color name="darkBackground">#293237</color>
     <color name="lightText1">#FFFFFF</color>
     <color name="lightText2">#99FFFFFF</color>
-    <color name="divider1">#66FFFFFF</color>
+    <color name="divider1">#1FFFFFFF</color>
 
-
-
-
+<!--    LIGHT MODE COLORS-->
+    <color name="lightBackground">#FFFFFF</color>
+    <color name="darkText1">#000000</color>
+    <color name="darkText2">#99000000</color>
+    <color name="divider2">#1F000000</color>
+    <color name="personalInfoCards">#F2F2F2</color>
 
 
 

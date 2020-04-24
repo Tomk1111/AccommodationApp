@@ -43,9 +43,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull HomeViewHolder holder, int position) {
-        holder.setTitleText(mDataFiltered.get(position).getPrice() + "");
+        holder.setTitleText(mDataFiltered.get(position).getAddress());
         holder.setDescriptionTextView(mDataFiltered.get(position).getDescription());
-        holder.setPriorityTextView(mDataFiltered.get(position).getAddress());
+        holder.setPriorityTextView("€" + mDataFiltered.get(position).getPrice() + "");
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

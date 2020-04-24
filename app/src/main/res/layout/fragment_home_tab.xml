@@ -12,7 +12,8 @@
         android:elevation="6dp"
         app:tabTextAppearance="@style/DarkModeAccountPageItemStyleHeaders"
         android:minHeight="?attr/actionBarSize"
-        android:theme="@style/AppTheme">
+        style="@style/darkTabsBackground"
+        >
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tabShow"

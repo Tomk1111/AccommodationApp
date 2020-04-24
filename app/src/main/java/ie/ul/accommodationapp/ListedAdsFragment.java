@@ -1,11 +1,14 @@
 package ie.ul.accommodationapp;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
@@ -28,7 +31,8 @@ public class ListedAdsFragment extends Fragment {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private CollectionReference notebookRef = db.collection("ListedAds/" + uid + "/userListed");
-
+    private SearchView searchView;
+    private SharedPreferences sharedPreferences;
     private ListAdapter listAdapter;
 
     public ListedAdsFragment() {
@@ -40,14 +44,7 @@ public class ListedAdsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_listed_ads, container, false);
-        mToolbar = getActivity().findViewById(R.id.main_toolbar);
-        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
+        updateUI();
         Query query = notebookRef.orderBy("price", Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<Listing> options = new FirestoreRecyclerOptions.Builder<Listing>()
                 .setQuery(query, Listing.class)
@@ -83,4 +80,24 @@ public class ListedAdsFragment extends Fragment {
         super.onStop();
         listAdapter.stopListening();
     }
+
+    public void updateUI() {
+        sharedPreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        boolean isNightMode = sharedPreferences.getBoolean("nightModeEnabled", false);
+        mToolbar = getActivity().findViewById(R.id.main_toolbar);
+        searchView = getActivity().findViewById(R.id.search_view);
+        searchView.setVisibility(View.GONE);
+        if (isNightMode) {
+            mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        } else {
+            mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+        }
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
+    }
+
 }

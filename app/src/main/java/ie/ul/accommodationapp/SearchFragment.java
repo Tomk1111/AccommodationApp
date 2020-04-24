@@ -1,6 +1,8 @@
 package ie.ul.accommodationapp;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -39,6 +41,7 @@ public class SearchFragment extends Fragment {
     private RecyclerView recyclerView;
     private HomeAdapter homeAdapter;
     private List<Listing> mData;
+    private SharedPreferences sharedPreferences;
     private FirebaseFirestore firebaseFirestore;
     private CollectionReference collectionReference;
     private ListAdapter adapter;
@@ -55,11 +58,7 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_search, container, false);
-        mToolbar = getActivity().findViewById(R.id.main_toolbar);
-        mToolbar.setNavigationIcon(null);
-        searchView = getActivity().findViewById(R.id.search_view);
-        searchView.setVisibility(View.VISIBLE);
-        searchView.setIconified(true);
+        updateUI();
         recyclerView = view.findViewById(R.id.house_listing_recycler_view);
         retrieveListings();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -78,7 +77,15 @@ public class SearchFragment extends Fragment {
         return view;
     }
 
-
+    public void updateUI() {
+        sharedPreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        boolean isNightMode = sharedPreferences.getBoolean("nightModeEnabled", false);
+        mToolbar = getActivity().findViewById(R.id.main_toolbar);
+        mToolbar.setNavigationIcon(null);
+        searchView = getActivity().findViewById(R.id.search_view);
+        searchView.setVisibility(View.VISIBLE);
+        searchView.setIconified(true);
+    }
 
 
 

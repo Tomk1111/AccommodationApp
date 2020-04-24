@@ -218,12 +218,12 @@ public class HouseDetailsFragment extends Fragment {
                                     if (task.isSuccessful()) {
                                         Toast.makeText(getContext(), listingModel.getAddress()
                                                 + " removed from likes.", Toast.LENGTH_SHORT).show();
-                                        likeButton.setBackgroundColor(getResources().getColor(R.color.lightText2));
+                                        likeButton.setBackgroundColor(getResources().getColor(R.color.personalInfoCards));
                                     }
                                 }
                             });
                         } else {
-                            likeButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                            likeButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                         }
                     } else {
                         if (buttonPressed) {
@@ -233,12 +233,13 @@ public class HouseDetailsFragment extends Fragment {
                                     if (task.isSuccessful()) {
                                         Toast.makeText(getContext(), listingModel.getAddress()
                                                 + " added to likes.", Toast.LENGTH_SHORT).show();
-                                        likeButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                                        likeButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                                     }
                                 }
                             });
                         }
-                        likeButton.setBackgroundColor(getResources().getColor(R.color.lightText2));
+                        likeButton.setBackgroundColor(getResources().getColor(R.color.personalInfoCards));
+//                        likeButton.setBackgroundColor(getResources().getColor(R.color.lightText2));
                     }
                 }
             }

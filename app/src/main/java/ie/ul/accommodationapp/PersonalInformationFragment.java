@@ -1,6 +1,8 @@
 package ie.ul.accommodationapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -32,20 +35,15 @@ public class PersonalInformationFragment extends Fragment {
     private TextView emailField, dateJoinedField, lastLoginField;
     private Button saveButton;
     private FirebaseFirestore db;
+    private SearchView searchView;
     private ProfileViewModel profileViewModel;
+    private SharedPreferences sharedPreferences;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         View view = inflater.inflate(R.layout.fragment_personal_information, container, false);
-        mToolbar = getActivity().findViewById(R.id.main_toolbar);
-        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
+        updateUI();
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         usernameField = view.findViewById(R.id.username_field);
@@ -85,6 +83,25 @@ public class PersonalInformationFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    public void updateUI() {
+        sharedPreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        boolean isNightMode = sharedPreferences.getBoolean("nightModeEnabled", false);
+        mToolbar = getActivity().findViewById(R.id.main_toolbar);
+        searchView = getActivity().findViewById(R.id.search_view);
+        searchView.setVisibility(View.GONE);
+        if (isNightMode) {
+            mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        } else {
+            mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+        }
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
     }
 
 
