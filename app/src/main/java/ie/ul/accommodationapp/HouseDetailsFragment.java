@@ -1,6 +1,8 @@
 package ie.ul.accommodationapp;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
@@ -54,8 +57,10 @@ public class HouseDetailsFragment extends Fragment {
     private CollectionReference userLikes;
     private String imageURL;
     private View view;
+    private SearchView searchView;
     // Firebase RTDB additions
     private FirebaseAuth mAuth;
+    private SharedPreferences sharedPreferences;
     private DatabaseReference contactRef;
     private DatabaseReference usersRef;
     private String currentUserId;
@@ -70,14 +75,7 @@ public class HouseDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_house_details, container, false);
-        mToolbar = getActivity().findViewById(R.id.main_toolbar);
-        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
+        updateUI();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM yyyy");
         listingModel = getArguments().getParcelable("listingModel");
         db = FirebaseFirestore.getInstance();
@@ -245,6 +243,27 @@ public class HouseDetailsFragment extends Fragment {
             }
         });
     }
+
+    public void updateUI() {
+        sharedPreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        boolean isNightMode = sharedPreferences.getBoolean("nightModeEnabled", false);
+        mToolbar = getActivity().findViewById(R.id.main_toolbar);
+        searchView = getActivity().findViewById(R.id.search_view);
+        searchView.setVisibility(View.GONE);
+        if (isNightMode) {
+            mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        } else {
+            mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+        }
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
+    }
+
+
 
     public void getHouseImageURL() {
         DocumentReference documentReference = db.collection("HouseImage").document("House"+ listingModel.getId()+"");

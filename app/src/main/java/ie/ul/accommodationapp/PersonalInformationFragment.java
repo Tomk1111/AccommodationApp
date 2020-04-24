@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -66,6 +67,10 @@ public class PersonalInformationFragment extends Fragment {
                     Toast.makeText(getContext(), "Please enter a username.", Toast.LENGTH_SHORT).show();
                 } else {
                     String usernameText = usernameField.getText().toString();
+                    UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
+                            .setDisplayName(usernameText)
+                            .build();
+                    mAuth.getCurrentUser().updateProfile(profileChangeRequest);
                     User user = new User(mAuth.getCurrentUser().getUid(), usernameText);
                     db.collection("Users").document(mAuth.getCurrentUser().getUid()).set(user)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
