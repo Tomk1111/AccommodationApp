@@ -111,6 +111,11 @@ public class HouseDetailsFragment extends Fragment {
         //if newUserID doesnt exist in users, they cannot have any conversations -
         usersRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
+        if (currentUserId.equals(listingModel.getUid())){
+            //User should not be able to press 'contact seller' or 'like' a house they rent.
+            contactSellerBtn.setVisibility(View.INVISIBLE);
+            likeButton.setVisibility(View.INVISIBLE);
+        }
 
         contactSellerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,8 +128,8 @@ public class HouseDetailsFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("uid", uid);
                 bundle.putString("userName", username);
-                createConversation(uid, username, url);
-                Navigation.findNavController(v).navigate(R.id.action_global_inboxFragment3);
+                //createConversation(uid, username, url);
+                //Navigation.findNavController(v).navigate(R.id.action_global_inboxFragment3);
             }
         });
 
