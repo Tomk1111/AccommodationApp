@@ -113,8 +113,8 @@ public class HouseDetailsFragment extends Fragment {
 
         if (currentUserId.equals(listingModel.getUid())){
             //User should not be able to press 'contact seller' or 'like' a house they rent.
-            contactSellerBtn.setVisibility(View.INVISIBLE);
-            likeButton.setVisibility(View.INVISIBLE);
+            contactSellerBtn.setVisibility(View.GONE);
+            likeButton.setVisibility(View.GONE);
         }
 
         contactSellerBtn.setOnClickListener(new View.OnClickListener() {
