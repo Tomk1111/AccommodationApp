@@ -97,7 +97,7 @@
     </style>
 
     <style name="splashIcon">
-        <item name="android:background">@drawable/ic_homey_white</item>
+        <item name="android:background">@drawable/ic_homey_primary</item>
     </style>
     <style name="splashBg">
         <item name="background">@color/personalInfoCards</item>
