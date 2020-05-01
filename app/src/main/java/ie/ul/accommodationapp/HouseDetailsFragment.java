@@ -1,6 +1,7 @@
 package ie.ul.accommodationapp;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -75,64 +76,66 @@ public class HouseDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_house_details, container, false);
-        updateUI();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM yyyy");
-        listingModel = getArguments().getParcelable("listingModel");
-        db = FirebaseFirestore.getInstance();
-        addressTextView = view.findViewById(R.id.address_view);
-        pricePerWeekView = view.findViewById(R.id.price_view);
-        descriptionView = view.findViewById(R.id.description_view);
-        roomsView = view.findViewById(R.id.rooms_view);
-        moveInDateView = view.findViewById(R.id.move_in_view);
-        moveOutViewDate = view.findViewById(R.id.move_out_view);
-        addressTextView.setText(listingModel.getAddress());
-        pricePerWeekView.setText("€" + listingModel.getPrice());
-        descriptionView.setText(listingModel.getDescription());
-        roomsView.setText(listingModel.getRooms() + " rooms");
-        moveInDateView.setText(simpleDateFormat.format(listingModel.getStartDate()));
-        moveOutViewDate.setText(simpleDateFormat.format(listingModel.getEndDate()));
-        likeButton=view.findViewById(R.id.button_like);
-        contactSellerBtn = view.findViewById(R.id.contact_seller);
-        listingImage = view.findViewById(R.id.listing_image);
-        updateLikeStatus(false);
-        getHouseImageURL();
-        likeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateLikeStatus(true);
+        Activity activity = getActivity();
+        if(activity != null) {
+            updateUI();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM yyyy");
+            listingModel = getArguments().getParcelable("listingModel");
+            db = FirebaseFirestore.getInstance();
+            addressTextView = view.findViewById(R.id.address_view);
+            pricePerWeekView = view.findViewById(R.id.price_view);
+            descriptionView = view.findViewById(R.id.description_view);
+            roomsView = view.findViewById(R.id.rooms_view);
+            moveInDateView = view.findViewById(R.id.move_in_view);
+            moveOutViewDate = view.findViewById(R.id.move_out_view);
+            addressTextView.setText(listingModel.getAddress());
+            pricePerWeekView.setText("€" + listingModel.getPrice());
+            descriptionView.setText(listingModel.getDescription());
+            roomsView.setText(listingModel.getRooms() + " rooms");
+            moveInDateView.setText(simpleDateFormat.format(listingModel.getStartDate()));
+            moveOutViewDate.setText(simpleDateFormat.format(listingModel.getEndDate()));
+            likeButton = view.findViewById(R.id.button_like);
+            contactSellerBtn = view.findViewById(R.id.contact_seller);
+            listingImage = view.findViewById(R.id.listing_image);
+            updateLikeStatus(false);
+            getHouseImageURL();
+            likeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    updateLikeStatus(true);
+                }
+            });
+
+            //Firebase RTDB setup
+            mAuth = FirebaseAuth.getInstance();
+            currentUserId = mAuth.getUid().toString();
+
+            contactRef = FirebaseDatabase.getInstance().getReference().child("Contacts");
+            //if newUserID doesnt exist in users, they cannot have any conversations -
+            usersRef = FirebaseDatabase.getInstance().getReference().child("Users");
+
+            if (currentUserId.equals(listingModel.getUid())) {
+                //User should not be able to press 'contact seller' or 'like' a house they rent.
+                contactSellerBtn.setVisibility(View.GONE);
+                likeButton.setVisibility(View.GONE);
             }
-        });
 
-        //Firebase RTDB setup
-        mAuth = FirebaseAuth.getInstance();
-        currentUserId = mAuth.getUid().toString();
+            contactSellerBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-        contactRef = FirebaseDatabase.getInstance().getReference().child("Contacts");
-        //if newUserID doesnt exist in users, they cannot have any conversations -
-        usersRef = FirebaseDatabase.getInstance().getReference().child("Users");
-
-        if (currentUserId.equals(listingModel.getUid())){
-            //User should not be able to press 'contact seller' or 'like' a house they rent.
-            contactSellerBtn.setVisibility(View.GONE);
-            likeButton.setVisibility(View.GONE);
+                    String uid = listingModel.getUid();
+                    String username = listingModel.getUserName();
+                    String url = imageURL;
+                    System.out.println("Contact seller button pressed");
+                    Bundle bundle = new Bundle();
+                    bundle.putString("uid", uid);
+                    bundle.putString("userName", username);
+                    //createConversation(uid, username, url);
+                    //Navigation.findNavController(v).navigate(R.id.action_global_inboxFragment3);
+                }
+            });
         }
-
-        contactSellerBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String uid = listingModel.getUid();
-                String username = listingModel.getUserName();
-                String url = imageURL;
-                System.out.println("Contact seller button pressed");
-                Bundle bundle = new Bundle();
-                bundle.putString("uid", uid);
-                bundle.putString("userName", username);
-                //createConversation(uid, username, url);
-                //Navigation.findNavController(v).navigate(R.id.action_global_inboxFragment3);
-            }
-        });
-
         return view;
     }
 
@@ -154,28 +157,29 @@ public class HouseDetailsFragment extends Fragment {
                         }
                         else{*/
             //there is no account created for this user
-            HashMap<String, String> profileMap = new HashMap<>();
-            profileMap.put("image", imageURL);
-            profileMap.put("name", username);
-            profileMap.put("uid", uid);
+            Activity activity = getActivity();
+            if(activity != null) {
+                HashMap<String, String> profileMap = new HashMap<>();
+                profileMap.put("image", imageURL);
+                profileMap.put("name", username);
+                profileMap.put("uid", uid);
 
-            usersRef.child(uid).setValue(profileMap)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()){
-                                Toast.makeText(getActivity(), "User Created in RealTimeDB", Toast.LENGTH_SHORT).show();
-                                //calling outer class methods inside the anonymous inner class
-                                HouseDetailsFragment.this.createConnection(uid);
+                usersRef.child(uid).setValue(profileMap)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(getActivity(), "User Created in RealTimeDB", Toast.LENGTH_SHORT).show();
+                                    //calling outer class methods inside the anonymous inner class
+                                    HouseDetailsFragment.this.createConnection(uid);
+
+                                } else {
+                                    String error = task.getException().toString();
+                                    Toast.makeText(getActivity(), "Error creating user: " + error, Toast.LENGTH_SHORT).show();
+                                }
 
                             }
-                            else {
-                                String error = task.getException().toString();
-                                Toast.makeText(getActivity(), "Error creating user: " + error , Toast.LENGTH_SHORT).show();
-                            }
-
-                        }
-                    });
+                        });
                     /*}
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -183,106 +187,118 @@ public class HouseDetailsFragment extends Fragment {
                    });
                    }
                    });*/
+            }
         }
 
     public void createConnection(String uid){
         //Make a connection between two users here
-
-        contactRef.child(uid).child(currentUserId).child("Chat").setValue("Yes")
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        contactRef.child(currentUserId).child(uid).child("Chat").setValue("Yes")
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()){
-                                            Toast.makeText(getActivity(), "Your new connection is in INBOX", Toast.LENGTH_SHORT).show();
+        Activity activity = getActivity();
+        if(activity != null) {
+            contactRef.child(uid).child(currentUserId).child("Chat").setValue("Yes")
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            contactRef.child(currentUserId).child(uid).child("Chat").setValue("Yes")
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Toast.makeText(getActivity(), "Your new connection is in INBOX", Toast.LENGTH_SHORT).show();
+                                            }
                                         }
-                                    }
-                                });
-                    }
-                });
+                                    });
+                        }
+                    });
+        }
     }
 
     public void updateLikeStatus(boolean buttonPressed) {
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DocumentReference documentReference = db.collection("LikedAds/" + uid + "/userLikes").document(listingModel.getId()+"");
-        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot documentSnapshot = task.getResult();
-                    if (documentSnapshot.exists()) {
-                        if (buttonPressed) {
-                            documentReference.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Toast.makeText(getContext(), listingModel.getAddress()
-                                                + " removed from likes.", Toast.LENGTH_SHORT).show();
-                                        likeButton.setBackgroundColor(getResources().getColor(R.color.personalInfoCards));
+        Activity activity = getActivity();
+        if(activity != null) {
+            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            DocumentReference documentReference = db.collection("LikedAds/" + uid + "/userLikes").document(listingModel.getId() + "");
+            documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot documentSnapshot = task.getResult();
+                        if (documentSnapshot.exists()) {
+                            if (buttonPressed) {
+                                documentReference.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(getContext(), listingModel.getAddress()
+                                                    + " removed from likes.", Toast.LENGTH_SHORT).show();
+                                            likeButton.setBackgroundColor(getResources().getColor(R.color.personalInfoCards));
+                                        }
                                     }
-                                }
-                            });
+                                });
+                            } else {
+                                likeButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                            }
                         } else {
-                            likeButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                        }
-                    } else {
-                        if (buttonPressed) {
-                            documentReference.set(listingModel).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Toast.makeText(getContext(), listingModel.getAddress()
-                                                + " added to likes.", Toast.LENGTH_SHORT).show();
-                                        likeButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                            if (buttonPressed) {
+                                documentReference.set(listingModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(getContext(), listingModel.getAddress()
+                                                    + " added to likes.", Toast.LENGTH_SHORT).show();
+                                            likeButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                                        }
                                     }
-                                }
-                            });
-                        }
-                        likeButton.setBackgroundColor(getResources().getColor(R.color.personalInfoCards));
+                                });
+                            }
+                            likeButton.setBackgroundColor(getResources().getColor(R.color.personalInfoCards));
 //                        likeButton.setBackgroundColor(getResources().getColor(R.color.lightText2));
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
     }
 
     public void updateUI() {
-        sharedPreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        boolean isNightMode = sharedPreferences.getBoolean("nightModeEnabled", false);
-        mToolbar = getActivity().findViewById(R.id.main_toolbar);
-        searchView = getActivity().findViewById(R.id.search_view);
-        searchView.setVisibility(View.GONE);
-        if (isNightMode) {
-            mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
-        } else {
-            mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
-        }
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
+        Activity activity = getActivity();
+        if(activity != null) {
+            sharedPreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+            boolean isNightMode = sharedPreferences.getBoolean("nightModeEnabled", false);
+            mToolbar = getActivity().findViewById(R.id.main_toolbar);
+            searchView = getActivity().findViewById(R.id.search_view);
+            searchView.setVisibility(View.GONE);
+            if (isNightMode) {
+                mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+            } else {
+                mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
             }
-        });
+            mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getActivity().onBackPressed();
+                }
+            });
+        }
     }
 
 
 
     public void getHouseImageURL() {
-        DocumentReference documentReference = db.collection("HouseImage").document("House"+ listingModel.getId()+"");
-        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot documentSnapshot = task.getResult();
-                    if (documentSnapshot.exists()) {
-                        imageURL = documentSnapshot.getString("URL");
-                        Picasso.get().load(imageURL).fit().into(listingImage);
+        Activity activity = getActivity();
+        if (activity != null) {
+            DocumentReference documentReference = db.collection("HouseImage").document("House" + listingModel.getId() + "");
+            documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot documentSnapshot = task.getResult();
+                        if (documentSnapshot.exists()) {
+                            imageURL = documentSnapshot.getString("URL");
+                            Picasso.get().load(imageURL).fit().into(listingImage);
+                        }
                     }
                 }
-                }
-        });
+            });
+        }
     }
 }
