@@ -42,6 +42,7 @@ public class HomeShowFragment extends Fragment {
 
 
     private ListAdapter adapter;
+    private int previousPosition=-1;
     public HomeShowFragment() {
         // Required empty public constructor
     }
@@ -84,7 +85,9 @@ public class HomeShowFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String item = parent.getItemAtPosition(position).toString();
                 // Showing selected spinner item
-                Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+                if (position!=previousPosition)
+                    Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+                previousPosition=position;
                 notebookRef
                         .orderBy(item,Query.Direction.DESCENDING)
                         .get()
