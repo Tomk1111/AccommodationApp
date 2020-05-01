@@ -10,10 +10,12 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -38,7 +40,8 @@ public class AuthenticationFragment extends Fragment {
     private static final int RC_SIGN_IN = 123;
     private FirebaseAuth mAuth;
     private BottomNavigationView bottomNavigationView;
-    private Button authButton;
+    private CardView authButton;
+    private TextView titleView;
     private ImageView icon;
     Animation fromBottom;
     Animation fromTop;
@@ -47,13 +50,14 @@ public class AuthenticationFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_authentication, container, false);
         container.removeAllViews();
-
         bottomNavigationView = getActivity().findViewById(R.id.bottom_navigation_view);
-        authButton = view.findViewById(R.id.authButton);
+        titleView = view.findViewById(R.id.title_view);
+        authButton = view.findViewById(R.id.authButton2);
         icon = view.findViewById(R.id.icon_home);
         fromBottom = AnimationUtils.loadAnimation(getContext(),R.anim.frombottom);
         fromTop = AnimationUtils.loadAnimation(getContext(),R.anim.fromtop);
         authButton.setAnimation(fromBottom);
+        titleView.setAnimation(fromTop);
         icon.setAnimation(fromTop);
         authButton.setOnClickListener(new View.OnClickListener() {
             @Override

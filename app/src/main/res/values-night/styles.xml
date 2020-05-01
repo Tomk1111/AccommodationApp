@@ -90,4 +90,20 @@
         <item name="android:background">@color/personalInfoCards</item>
         <item name="android:fontFamily">@font/googlesans_bold</item>
     </style>
+    <style name="splashHeadline">
+        <item name="android:textSize">36sp</item>
+        <item name="android:textColor">@color/lightText1</item>
+        <item name="fontFamily">@font/googlesans_bold</item>
+    </style>
+
+    <style name="splashIcon">
+        <item name="android:background">@drawable/ic_homey_white</item>
+    </style>
+    <style name="splashBg">
+        <item name="background">@color/personalInfoCards</item>
+    </style>
+    <style name="MyHintStyle" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/lightText2</item>
+        <item name="fontFamily">@font/googlesans_regular</item>
+    </style>
 </resources>

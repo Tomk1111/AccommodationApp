@@ -34,22 +34,42 @@
         android:layout_marginBottom="16dp"
         android:hint="Enter username" />
 
-    <EditText
-        android:id="@+id/password_input_field"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        style="@style/DarkModeIntroFields"
-        android:hint="Enter password"
-        android:layout_marginBottom="16dp"/>
-    <EditText
-        android:id="@+id/password_input_field2"
+        app:passwordToggleEnabled="true"
+        style="@style/DarkModeIntroFields">
+
+        <EditText
+            android:id="@+id/password_input_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            style="@style/DarkModeIntroFields"
+            android:hint="Enter password"
+            android:layout_marginBottom="16dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/DarkModeIntroFields"
-        android:inputType="textPassword"
-        android:hint="Confirm password"
-        android:layout_marginBottom="16dp"/>
+        app:passwordToggleEnabled="true"
+        style="@style/DarkModeIntroFields">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password_input_field2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/DarkModeIntroFields"
+            android:inputType="textPassword"
+            android:hint="Confirm password"
+            android:layout_marginBottom="16dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
