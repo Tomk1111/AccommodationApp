@@ -16,7 +16,12 @@
         android:text="Sign Up"
         style="@style/DarkModeIntroHeadline"
         android:layout_marginBottom="16dp" />
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/DarkModeIntroFields"
+        app:hintTextAppearance="@style/MyHintStyle">
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/email_input_field"
         android:inputType="textEmailAddress"
         android:layout_width="match_parent"
@@ -25,18 +30,25 @@
         android:hint="Enter email"
         android:layout_marginBottom="16dp"
         />
-
-    <EditText
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/DarkModeIntroFields"
+        app:hintTextAppearance="@style/MyHintStyle">
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/username_input_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/DarkModeIntroFields"
         android:layout_marginBottom="16dp"
         android:hint="Enter username" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:hintTextAppearance="@style/MyHintStyle"
         app:passwordToggleEnabled="true"
         style="@style/DarkModeIntroFields">
 
@@ -53,6 +65,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:hintTextAppearance="@style/MyHintStyle"
         app:passwordToggleEnabled="true"
         style="@style/DarkModeIntroFields">
         <com.google.android.material.textfield.TextInputEditText
