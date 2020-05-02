@@ -115,7 +115,7 @@ public class HouseDetailsFragment extends Fragment {
             usersRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
             if (currentUserId.equals(listingModel.getUid())) {
-                //User should not be able to press 'contact seller' or 'like' a house they rent.
+                //User should not be able to press 'contact seller' or 'like' on a house they list.
                 contactSellerBtn.setVisibility(View.GONE);
                 likeButton.setVisibility(View.GONE);
             }
@@ -127,70 +127,100 @@ public class HouseDetailsFragment extends Fragment {
                     String uid = listingModel.getUid();
                     String username = listingModel.getUserName();
                     String url = imageURL;
+
+                    String uid1 = currentUserId;
+                    String username1 = mAuth.getCurrentUser().getDisplayName();
+                    String url1 = ""; //cant get any data for the logged in user here
+
+
                     System.out.println("Contact seller button pressed");
                     Bundle bundle = new Bundle();
                     bundle.putString("uid", uid);
                     bundle.putString("userName", username);
-                    //createConversation(uid, username, url);
-                    //Navigation.findNavController(v).navigate(R.id.action_global_inboxFragment3);
+
+                    // does user with listing have a user account ?
+                    // does logged in user have a user account ?
+                    // create a conversation
+
+                    //these check if a user exists and creates a user if it doesnt
+                    userCheck(uid, username, url);
+                    userCheck(uid1, username1, "");
+                    createConnection(uid);
+                    //change this to the specific message conversation of the two users - change where the global action directs to
+                    Navigation.findNavController(v).navigate(R.id.action_global_inboxFragment3);
                 }
             });
         }
         return view;
     }
 
-        private void createConversation(String uid, String username, String imageURL) {
-            //check do they have a profile in Users and if not create one
-                /*usersRef.child(uid).addValueEventListener(new ValueEventListener() {   //usersRef.child(uid) -- then check for datasnapshot("uid"
+        private void userCheck(String uid, String username, String imageURL) {
+            Activity activity = getActivity();
+            if (activity != null) {
+
+                //check does a user with a listing have a profile in Users and if not create one
+                //check does the current user logged in have a profile in users in the RTDB
+                usersRef.child(uid).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        System.out.println(uid);
-                        //System.out.println( dataSnapshot.child() );
-                        System.out.println(dataSnapshot.child("uid").getValue().toString());
-                        //System.out.println(dataSnapshot.child(uid).getValue().toString());
-                        if( (dataSnapshot.child("uid").exists()) ){
-                            //the user has an account created already
-                            //Toast.makeText(getActivity(), "User EXists", Toast.LENGTH_SHORT).show();
-                            System.out.println("User EXists");
-                            // has there been a conversation created before tho between the userid of the listing and currentUserID
-                            //check and call createConversation
-                        }
-                        else{*/
-            //there is no account created for this user
-            Activity activity = getActivity();
-            if(activity != null) {
-                HashMap<String, String> profileMap = new HashMap<>();
-                profileMap.put("image", imageURL);
-                profileMap.put("name", username);
-                profileMap.put("uid", uid);
-
-                usersRef.child(uid).setValue(profileMap)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(getActivity(), "User Created in RealTimeDB", Toast.LENGTH_SHORT).show();
-                                    //calling outer class methods inside the anonymous inner class
-                                    HouseDetailsFragment.this.createConnection(uid);
-
+                        if (dataSnapshot.exists()) {
+                            System.out.println(dataSnapshot.getValue().toString());
+                            //check do they have a profile image - key, if not try and get it from this listing and add it
+                            if (dataSnapshot.child("image").getValue().toString().equals("")) {
+                                //this user profile has no image
+                                if (imageURL.equals("")) {
+                                    //there is no new house image to use to add to the user profile
+                                    System.out.println("there is no new house image to use to add to the user profile");
                                 } else {
-                                    String error = task.getException().toString();
-                                    Toast.makeText(getActivity(), "Error creating user: " + error, Toast.LENGTH_SHORT).show();
+                                    //a house image exists, update the user account with this image.
+                                    HouseDetailsFragment.this.createUser(uid, username, imageURL);
+                                    System.out.println("add image to profile");
                                 }
-
                             }
-                        });
-                    /*}
+                        } else {
+                            System.out.println("Creating user profile on RTDB");
+                            HouseDetailsFragment.this.createUser(uid, username, imageURL);
+                        }
+                    }
+
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
+
                     }
-                   });
-                   }
-                   });*/
+                });
+
             }
         }
 
+     public void createUser(String uid, String name, String image) {
+         // you need the uid, need username, - no image == "", boolean toggle to add a image if available? future feature
+
+         Activity activity = getActivity();
+         if (activity != null) {
+             HashMap<String, String> profileMap = new HashMap<>();
+             profileMap.put("image", image);
+             profileMap.put("name", name);
+             profileMap.put("uid", uid);
+
+             usersRef.child(uid).setValue(profileMap)
+                     .addOnCompleteListener(new OnCompleteListener<Void>() {
+                         @Override
+                         public void onComplete(@NonNull Task<Void> task) {
+                             if (task.isSuccessful()) {
+                                 Toast.makeText(getActivity(), "User Created in RealTimeDB", Toast.LENGTH_SHORT).show();
+
+                             } else {
+                                 String error = task.getException().toString();
+                                 Toast.makeText(getActivity(), "Error creating user: " + error, Toast.LENGTH_SHORT).show();
+                             }
+
+                         }
+                     });
+         }
+     }
+
     public void createConnection(String uid){
+        //check is there a connection already made
         //Make a connection between two users here
         Activity activity = getActivity();
         if(activity != null) {
@@ -198,15 +228,17 @@ public class HouseDetailsFragment extends Fragment {
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            contactRef.child(currentUserId).child(uid).child("Chat").setValue("Yes")
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                Toast.makeText(getActivity(), "Your new connection is in INBOX", Toast.LENGTH_SHORT).show();
+                            if (task.isSuccessful()) {
+                                contactRef.child(currentUserId).child(uid).child("Chat").setValue("Yes")
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Toast.makeText(getActivity(), "Your new connection is in INBOX", Toast.LENGTH_SHORT).show();
+                                                }
                                             }
-                                        }
-                                    });
+                                        });
+                            }
                         }
                     });
         }
