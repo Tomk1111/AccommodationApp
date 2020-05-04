@@ -107,6 +107,7 @@ public class MapFragment extends SupportMapFragment
     {
         mToolbar = getActivity().findViewById(R.id.main_toolbar);
         mToolbar.setNavigationIcon(null);
+        mToolbar.setTitle("Map");
         searchView = getActivity().findViewById(R.id.search_view);
         searchView.setVisibility(View.GONE);
         mGoogleMap=googleMap;
