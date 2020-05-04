@@ -55,8 +55,10 @@ public class HouseDetailsFragment extends Fragment {
     private Button likeButton;
     private Button contactSellerBtn;
     private FirebaseFirestore db;
-    private CollectionReference userLikes;
-    private String imageURL;
+    protected String imageURL;
+    protected String listingUserID; // accessed in anonymous class
+    protected String listingUserName; // accessed in anonymous class
+
     private View view;
     private SearchView searchView;
     // Firebase RTDB additions
@@ -108,7 +110,7 @@ public class HouseDetailsFragment extends Fragment {
 
             //Firebase RTDB setup
             mAuth = FirebaseAuth.getInstance();
-            currentUserId = mAuth.getUid().toString();
+            currentUserId = mAuth.getCurrentUser().getUid();
 
             contactRef = FirebaseDatabase.getInstance().getReference().child("Contacts");
             //if newUserID doesnt exist in users, they cannot have any conversations -
