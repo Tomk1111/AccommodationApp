@@ -1,9 +1,13 @@
 package ie.ul.accommodationapp;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +23,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -26,7 +31,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,9 +55,10 @@ public class ChatFragment extends Fragment {
     private String messageReceiverName;
     private String messageSenderID;
     private DatabaseReference rootRef;
-    private ImageButton SendMessageButton;
-    private EditText MessageInputText;
-
+    private CardView SendMessageButton;
+    private TextInputEditText MessageInputText;
+    private SharedPreferences sharedPreferences;
+    private SearchView searchView;
     private final List<Messages> messagesList = new ArrayList<>();
     private LinearLayoutManager LinearLayoutManager;
     private MessageAdapter messageAdapter;
@@ -88,8 +96,8 @@ public class ChatFragment extends Fragment {
         // Inflate the layout for this fragment
         MessageView = inflater.inflate(R.layout.fragment_chat, container, false);
 
-        SendMessageButton = (ImageButton) MessageView.findViewById(R.id.send_message_btn);
-        MessageInputText = (EditText) MessageView.findViewById(R.id.messageBox);
+        SendMessageButton =  MessageView.findViewById(R.id.send_message_btn);
+        MessageInputText = MessageView.findViewById(R.id.messageBox);
 
         //setting up the recycler view for displaying messages
         messageAdapter = new MessageAdapter(messagesList);
@@ -104,16 +112,7 @@ public class ChatFragment extends Fragment {
             }
         });
 
-        //Toolbar Code
-        mToolbar = getActivity().findViewById(R.id.main_toolbar);
-        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);//grey mode
-        mToolbar.setTitle(messageReceiverName);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-       });
+        updateUI(messageReceiverName);
 
         return MessageView;
     }
@@ -175,7 +174,9 @@ public class ChatFragment extends Fragment {
             Map messageTextBody = new HashMap();
             messageTextBody.put("message", messageText);
             messageTextBody.put("from", messageSenderID);
-
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd HH:mm");
+            String dateText = simpleDateFormat.format(new Date());
+            messageTextBody.put("date", dateText);
             //adding data to both the sender and receivers nosql item
             Map messageBodyDetails = new HashMap();
             //duplication for both the sender and receiver - nosql data duplication req.
@@ -198,4 +199,25 @@ public class ChatFragment extends Fragment {
 
 
     }
+
+    public void updateUI(String name) {
+        sharedPreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        boolean isNightMode = sharedPreferences.getBoolean("nightModeEnabled", false);
+        mToolbar = getActivity().findViewById(R.id.main_toolbar);
+        mToolbar.setTitle(name);
+        searchView = getActivity().findViewById(R.id.search_view);
+        searchView.setVisibility(View.GONE);
+        if (isNightMode) {
+            mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        } else {
+            mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+        }
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
+    }
+
 }

@@ -1,9 +1,12 @@
 package ie.ul.accommodationapp;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
@@ -45,8 +48,10 @@ public class InboxFragment extends Fragment {
     private RecyclerView conversationList;
     private ConversationAdapter conversationAdapter;
     private ArrayList<Conversation> convoList;
+    private SharedPreferences sharedPreferences;
     private DatabaseReference contactRef;
     private DatabaseReference usersRef;
+    private SearchView searchView;
     private FirebaseAuth mAuth;
     private View PrivateChatsView;
     private String currentUserId;
@@ -72,17 +77,8 @@ public class InboxFragment extends Fragment {
 
         conversationList = (RecyclerView) PrivateChatsView.findViewById(R.id.inbox_recyclerview);
         conversationList.setLayoutManager(new LinearLayoutManager( getContext() ));
+        updateUI();
 
-        //needed for the toolbar
-        mToolbar = getActivity().findViewById(R.id.main_toolbar);
-        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
-        mToolbar.setTitle("Inbox");
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
         return PrivateChatsView;
     }
 
@@ -169,4 +165,26 @@ public class InboxFragment extends Fragment {
 
         }
     }
+
+    public void updateUI() {
+        sharedPreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        boolean isNightMode = sharedPreferences.getBoolean("nightModeEnabled", false);
+        mToolbar = getActivity().findViewById(R.id.main_toolbar);
+        if (isNightMode) {
+            mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        } else {
+            mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+        }
+        mToolbar.setTitle("Inbox");
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
+        searchView = getActivity().findViewById(R.id.search_view);
+        searchView.setVisibility(View.GONE);
+    }
+
+
 }

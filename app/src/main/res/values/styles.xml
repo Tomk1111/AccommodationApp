@@ -111,5 +111,25 @@
         <item name="fontFamily">@font/googlesans_regular</item>
     </style>
 
+    <style name="timeMessageTextStyle">
+        <item name="fontFamily">@font/googlesans_regular</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/darkText2</item>
+    </style>
+    <style name="chatMessageStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/googlesans_regular</item>
+        <item name="android:textColor">@color/darkBackground</item>
+    </style>
+    <style name="chatEditTextBg">
+        <item name="android:background">@color/personalInfoCards</item>
+    </style>
+    <style name="chatEnterMessage">
+        <item name="fontFamily">@font/googlesans_regular</item>
+        <item name="android:textSize">16sp</item>
+        <item name="backgroundTint">@color/darkText2</item>
+        <item name="android:textColor">@color/darkText2</item>
+    </style>
+
 
 </resources>

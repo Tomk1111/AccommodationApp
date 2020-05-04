@@ -58,6 +58,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                 if (! (dataSnapshot.child("image").getValue().toString().equals(""))){
                     String imageReceiver = dataSnapshot.child("image").getValue().toString();
                     Picasso.get().load(imageReceiver).into(holder.receiverProfileImage);
+                    Picasso.get().load(imageReceiver).into(holder.receiverProfileImage);
                 }
                 else{
                     //do we need picasso here to load the placeholder image -- dont think so - already regereenced in the xml
@@ -78,6 +79,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         if (fromUserID.equals(messageSenderId)){
             holder.senderMessageText.setBackgroundResource(R.drawable.sender_messages_layout);
             holder.senderMessageText.setText(messages.getMessage());
+            holder.timeText.setText(messages.getDate());
             holder.senderMessageText.setVisibility(View.VISIBLE);
         } else {
             holder.receiverProfileImage.setVisibility(View.VISIBLE);
@@ -85,6 +87,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
             holder.receiverMessageText.setBackgroundResource(R.drawable.receiver_messages_layout);
             holder.receiverMessageText.setText(messages.getMessage());
+            holder.timeText.setText(messages.getDate());
         }
     }
 
@@ -95,7 +98,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     }
 
     public class MessageViewHolder extends RecyclerView.ViewHolder{
-        public TextView senderMessageText, receiverMessageText;
+        public TextView senderMessageText, timeText, receiverMessageText;
         public CircleImageView receiverProfileImage;
 
         //using this can initialise the view from the chat layout
@@ -104,6 +107,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             senderMessageText = (TextView) itemView.findViewById(R.id.sender_message_text);
             receiverMessageText = (TextView) itemView.findViewById(R.id.receiver_message_text);
             receiverProfileImage = (CircleImageView) itemView.findViewById(R.id.message_profile_image);
+            timeText = itemView.findViewById(R.id.time_message);
         }
     }
 
