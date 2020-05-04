@@ -126,6 +126,7 @@ public class ProfileFragment extends Fragment {
     public void updateUI() {
         mToolbar = getActivity().findViewById(R.id.main_toolbar);
         mToolbar.setNavigationIcon(null);
+        mToolbar.setTitle("Profile");
         searchView = getActivity().findViewById(R.id.search_view);
         searchView.setVisibility(View.GONE);
     }

@@ -38,6 +38,7 @@ public class HomeTabFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home_tab, container, false);
         tabLayout = view.findViewById(R.id.home_tab_layout);
         mToolbar = getActivity().findViewById(R.id.main_toolbar);
+        mToolbar.setTitle("Home");
         mToolbar.setNavigationIcon(null);
         searchView = getActivity().findViewById(R.id.search_view);
         searchView.setVisibility(View.GONE);

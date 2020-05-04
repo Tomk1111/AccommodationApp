@@ -82,6 +82,7 @@ public class SearchFragment extends Fragment {
         boolean isNightMode = sharedPreferences.getBoolean("nightModeEnabled", false);
         mToolbar = getActivity().findViewById(R.id.main_toolbar);
         mToolbar.setNavigationIcon(null);
+        mToolbar.setTitle("Search");
         searchView = getActivity().findViewById(R.id.search_view);
         searchView.setVisibility(View.VISIBLE);
         searchView.setIconified(true);

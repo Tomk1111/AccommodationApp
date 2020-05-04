@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
-import android.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -72,18 +72,11 @@ public class ChatFragment extends Fragment {
         if (chatBundle != null) {
             messageReceiverID = chatBundle.getString("uid");
             messageReceiverName = chatBundle.getString("userName");
-            //need to get one of the users house images too if one exists
-            // need to find out if an account has already been created for this user - if from inbox they definitely have
         }
-        System.out.println("userid " + messageReceiverID);
-        System.out.println("username " + messageReceiverName);
-        Toast.makeText(getActivity(), messageReceiverID, Toast.LENGTH_SHORT).show();
-        Toast.makeText(getActivity(), "name: " + messageReceiverName, Toast.LENGTH_SHORT).show();
 
         //get the user of this app's ID
         mAuth = FirebaseAuth.getInstance();
         messageSenderID = mAuth.getCurrentUser().getUid();
-
 
         //initialise the Firebase RTDB connection
         rootRef = FirebaseDatabase.getInstance().getReference();
@@ -110,15 +103,17 @@ public class ChatFragment extends Fragment {
                 SendMessage();
             }
         });
-        /*//needed for the toolbar
+
+        //Toolbar Code
         mToolbar = getActivity().findViewById(R.id.main_toolbar);
-        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);//grey mode
+        mToolbar.setTitle(messageReceiverName);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().onBackPressed();
-            }      //Different toolbar on top, have the name and image up there instead to show who you're chatting to
-        });*/
+            }
+       });
 
         return MessageView;
     }
@@ -136,6 +131,8 @@ public class ChatFragment extends Fragment {
                         Messages messages = dataSnapshot.getValue(Messages.class);
                         messagesList.add(messages);
                         messageAdapter.notifyDataSetChanged();
+                        //in a long conversation, you dont want the very first message to show up, you want the screen to be at the last message
+                        recyclerView.smoothScrollToPosition(recyclerView.getAdapter().getItemCount());
                     }
 
                     @Override

@@ -76,6 +76,7 @@ public class InboxFragment extends Fragment {
         //needed for the toolbar
         mToolbar = getActivity().findViewById(R.id.main_toolbar);
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        mToolbar.setTitle("Inbox");
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
