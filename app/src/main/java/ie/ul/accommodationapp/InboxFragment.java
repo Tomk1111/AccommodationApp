@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -106,7 +107,12 @@ public class InboxFragment extends Fragment {
                                     //check for profile image not all users have house images
                                     if (dataSnapshot.hasChild("image")) {
                                         final String returnedImage = dataSnapshot.child("image").getValue().toString();
-                                        //add image to screen here - picasso library is good
+                                        if (! (returnedImage.equals(""))){
+                                            //add image to screen here
+                                            Picasso.get().load(returnedImage).into(conversationViewHolder.profileImage);
+                                        }
+
+
                                     }
                                     final String returnedName = dataSnapshot.child("name").getValue().toString();
                                     conversationViewHolder.userName.setText(returnedName);
