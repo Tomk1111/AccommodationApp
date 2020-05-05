@@ -18,8 +18,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +36,8 @@ public class ProfileFragment extends Fragment {
 
     private Toolbar mToolbar;
     private TextView profileEditText,inboxText, likedAdsText, listedAdsText, devInfoText;
-    private Button logoutButton, nightModeButton;
+    private Button logoutButton;
+    private Switch nightModeSwitch;
     private SearchView searchView;
     private SharedPreferences sharedPreferences;
     public ProfileFragment() {
@@ -48,8 +51,9 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         updateUI();
         sharedPreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        nightModeButton = view.findViewById(R.id.night_mode_button);
-        TextView personalInfo = view.findViewById(R.id.personal_information_header_tag);
+        nightModeSwitch = view.findViewById(R.id.night_mode_switch);
+        boolean key = sharedPreferences.getBoolean("nightModeEnabled", false);
+        nightModeSwitch.setChecked(key);
         profileEditText = view.findViewById(R.id.profile_edit_tag);
         inboxText = view.findViewById(R.id.inbox_item);
         likedAdsText = view.findViewById(R.id.liked_ads_header);
@@ -57,23 +61,21 @@ public class ProfileFragment extends Fragment {
         devInfoText = view.findViewById(R.id.developer_information_header);
         logoutButton = view.findViewById(R.id.logout_button);
 
-        nightModeButton.setOnClickListener(new View.OnClickListener() {
+        nightModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                boolean key = sharedPreferences.getBoolean("nightModeEnabled", false);
-                if (key) {
-                    editor.putBoolean("nightModeEnabled", false).apply();
-                    ((BottomNavigationActivity) getActivity()).toggleNightMode(false);
-                    getActivity().recreate();
-                } else {
+                if (isChecked) {
                     editor.putBoolean("nightModeEnabled", true).apply();
                     ((BottomNavigationActivity) getActivity()).toggleNightMode(true);
+                    getActivity().recreate();
+                } else {
+                    editor.putBoolean("nightModeEnabled", false).apply();
+                    ((BottomNavigationActivity) getActivity()).toggleNightMode(false);
                     getActivity().recreate();
                 }
             }
         });
-
 
         inboxText.setOnClickListener(new View.OnClickListener() {
             @Override

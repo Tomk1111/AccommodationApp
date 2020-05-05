@@ -96,6 +96,16 @@
             android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"
             android:layout_below="@id/about_title_tag"/>
+        <Switch
+            android:id="@+id/night_mode_switch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:layout_marginHorizontal="16dp"
+            android:thumbTint="@color/colorPrimary"
+            android:layout_below="@id/developer_information_header"
+            style="@style/DarkModeAccountPageItemStyleText"
+            android:text="Night Mode"/>
         <Button
             android:id="@+id/logout_button"
             android:layout_width="match_parent"
@@ -104,20 +114,8 @@
             android:layout_marginTop="36dp"
             android:layout_marginBottom="16dp"
             android:background="@color/colorPrimary"
-            android:layout_below="@id/developer_information_header"
+            android:layout_below="@id/night_mode_switch"
             android:text="Log Out"
-            android:fontFamily="@font/googlesans_bold"
-            android:textColor="@color/lightText1"/>
-        <Button
-            android:id="@+id/night_mode_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="36dp"
-            android:layout_marginBottom="16dp"
-            android:background="@color/colorPrimary"
-            android:layout_below="@id/logout_button"
-            android:text="Night Mode Button"
             android:fontFamily="@font/googlesans_bold"
             android:textColor="@color/lightText1"/>
     </RelativeLayout>
