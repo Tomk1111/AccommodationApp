@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -27,8 +28,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -119,7 +125,7 @@ public class InboxFragment extends Fragment {
                                     }
                                     final String returnedName = dataSnapshot.child("name").getValue().toString();
                                     conversationViewHolder.userName.setText(returnedName);
-
+                                    getLatestMessage(userIDs, conversationViewHolder);
                                     //if desire to add the 'last seen' feature that could be added here
 
                                     conversationViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -161,17 +167,53 @@ public class InboxFragment extends Fragment {
 
     }
 
+    public void getLatestMessage(String id, ConversationViewHolder conversationViewHolder) {
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseDatabase.getInstance().getReference().child("Messages").child(currentUserId).child(id)
+            .orderByChild("date").limitToLast(1).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        System.out.println("UHAD CWYI DV" + dataSnapshot.toString());
+//                        System.out.println(dataSnapshot.getValue() + " IOx");
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            Messages tmp = ds.getValue(Messages.class);
+                            if (tmp != null) {
+                                System.out.println("ME = " + mAuth.getCurrentUser().getUid() + " AND YOU = " +tmp.getFrom());
+
+                                if (tmp.getFrom() == mAuth.getCurrentUser().getUid()) {
+                                    conversationViewHolder.lastMessage.setText("you: " + tmp.getMessage());
+                                } else {
+                                    conversationViewHolder.lastMessage.setText(tmp.getMessage());
+                                }
+                                conversationViewHolder.lastTime.setText(tmp.getDate());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+    }
+
+
+
     public static class ConversationViewHolder extends RecyclerView.ViewHolder{
 
         CircleImageView profileImage;
         TextView userName;
+        TextView lastMessage;
+        TextView lastTime;
 
         public ConversationViewHolder(@NonNull View itemView) {
             super(itemView);
 
             profileImage = itemView.findViewById(R.id.users_profile_image);
             userName = itemView.findViewById(R.id.user_profile_name);
-
+            lastMessage = itemView.findViewById(R.id.last_message_text);
+            lastTime = itemView.findViewById(R.id.last_message_time);
         }
     }
 
