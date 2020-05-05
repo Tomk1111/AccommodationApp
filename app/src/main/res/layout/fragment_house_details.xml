@@ -33,6 +33,9 @@
             android:padding="16dp"/>
     </androidx.cardview.widget.CardView>
 
+
+
+
     <TextView
         android:id="@+id/address_view"
         android:layout_width="match_parent"
@@ -147,7 +150,18 @@
         android:fontFamily="@font/googlesans_bold"
         android:background="@color/colorPrimary"
         android:textSize="16dp"
-        android:textColor="@color/quantum_white_100"/>
+        android:textColor="@color/lightText1"/>
+    <Button
+        android:id="@+id/delete_button"
+        android:layout_marginTop="32dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete Listing"
+        android:fontFamily="@font/googlesans_bold"
+        android:background="@color/quantum_googred"
+        android:textSize="16dp"
+        android:textColor="@color/lightText1"/>
 
 </LinearLayout>
 

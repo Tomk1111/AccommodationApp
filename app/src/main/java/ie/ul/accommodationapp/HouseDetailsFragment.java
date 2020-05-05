@@ -2,7 +2,9 @@ package ie.ul.accommodationapp;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -68,6 +70,7 @@ public class HouseDetailsFragment extends Fragment {
     private DatabaseReference contactRef;
     private DatabaseReference usersRef;
     private String currentUserId;
+    private Button delButton;
 
 
     public HouseDetailsFragment() {
@@ -80,11 +83,14 @@ public class HouseDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_house_details, container, false);
         Activity activity = getActivity();
+        listingModel = getArguments().getParcelable("listingModel");
+        getDeletedStatus();
         if (activity != null) {
             updateUI();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM yyyy");
-            listingModel = getArguments().getParcelable("listingModel");
             db = FirebaseFirestore.getInstance();
+            delButton = view.findViewById(R.id.delete_button);
+            delButton.setVisibility(View.GONE);
             addressTextView = view.findViewById(R.id.address_view);
             pricePerWeekView = view.findViewById(R.id.price_view);
             descriptionView = view.findViewById(R.id.description_view);
@@ -123,7 +129,56 @@ public class HouseDetailsFragment extends Fragment {
                 contactSellerBtn.setVisibility(View.GONE);
                 likeButton.setVisibility(View.GONE);
                 likeButtonImage.setVisibility(View.GONE);
+                delButton.setVisibility(View.VISIBLE);
             }
+
+            delButton.setOnClickListener(new View.OnClickListener() {
+
+
+                @Override
+                public void onClick(View v) {
+
+                    DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which) {
+                                case DialogInterface.BUTTON_POSITIVE:
+                                    db.collection("ListedAds").document(mAuth.getCurrentUser().getUid())
+                                            .collection("userListed").document("House" + listingModel.getId()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                            } else {
+                                                Toast.makeText(getActivity(), "Error deleting listing2: " + listingModel.getAddress(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                                    db.collection("Listings").document("House" + listingModel.getId()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                            } else {
+                                                Toast.makeText(getActivity(), "Error deleting listing: " + listingModel.getAddress(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                                    ((BottomNavigationActivity) getActivity()).getAllListings();
+                                    getActivity().onBackPressed();
+                                    break;
+                                case DialogInterface.BUTTON_NEGATIVE:
+
+                                    break;
+                            }
+                        }
+                    };
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage("Are you sure you want to delete this listing?").setPositiveButton("Yes", listener)
+                            .setNegativeButton("No", listener).show();
+
+
+                }
+            });
+
 
             contactSellerBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -158,7 +213,6 @@ public class HouseDetailsFragment extends Fragment {
 //                    });
 
 
-
                     // does user with listing have a user account ?
                     // does logged in user have a user account ?
                     // create a conversation
@@ -173,6 +227,7 @@ public class HouseDetailsFragment extends Fragment {
             });
         }
         return view;
+
     }
 
     private void userCheck(String uid, String username, String imageURL) {
@@ -212,6 +267,38 @@ public class HouseDetailsFragment extends Fragment {
 
         }
     }
+
+    public void getDeletedStatus() {
+
+        db = FirebaseFirestore.getInstance();
+        db.collection("Listings").document("House" + listingModel.getId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot snapshot = task.getResult();
+                    if (!snapshot.exists()) {
+                        removeFromLikes();
+                    }
+                }
+            }
+        });
+    }
+
+    public void removeFromLikes() {
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        db.collection("LikedAds").document(mAuth.getCurrentUser().getUid()+"")
+                .collection("userLikes").document("House"+listingModel.getId()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(getActivity(), "Listing Deleted by user.", Toast.LENGTH_SHORT).show();
+                    getActivity().onBackPressed();
+                }
+            }
+        });
+    }
+
 
     public void createUser(String uid, String name, String image) {
         // you need the uid, need username, - no image == "", boolean toggle to add a image if available? future feature
