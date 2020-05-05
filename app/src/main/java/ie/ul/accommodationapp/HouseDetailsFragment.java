@@ -55,7 +55,7 @@ public class HouseDetailsFragment extends Fragment {
     private Button likeButton;
     private Button contactSellerBtn;
     private FirebaseFirestore db;
-    protected String imageURL;
+    protected String imageURL="";
     protected String listingUserID; // accessed in anonymous class
     protected String listingUserName; // accessed in anonymous class
 
