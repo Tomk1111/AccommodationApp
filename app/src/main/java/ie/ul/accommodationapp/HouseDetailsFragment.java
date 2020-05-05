@@ -356,7 +356,7 @@ public class HouseDetailsFragment extends Fragment {
         Activity activity = getActivity();
         if (activity != null) {
             String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            DocumentReference documentReference = db.collection("LikedAds/" + uid + "/userLikes").document(listingModel.getId() + "");
+            DocumentReference documentReference = db.collection("LikedAds/" + uid + "/userLikes").document("House"+listingModel.getId());
             documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {

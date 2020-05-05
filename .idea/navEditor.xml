@@ -8,12 +8,29 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
+                  <entry key="action_global_inboxFragment3">
+                    <value>
+                      <LayoutPositions />
+                    </value>
+                  </entry>
+                  <entry key="chatFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="256" />
+                            <option name="y" value="288" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="homeShowFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="12" />
+                            <option name="x" value="252" />
                             <option name="y" value="12" />
                           </Point>
                         </option>
@@ -44,14 +61,72 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="inboxFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="12" />
+                            <option name="y" value="288" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_inboxFragment_to_chatFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="mapFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="256" />
-                            <option name="y" value="150" />
+                            <option name="x" value="12" />
+                            <option name="y" value="12" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="houseDetailsFragment6">
+                              <value>
+                                <LayoutPositions>
+                                  <option name="myPosition">
+                                    <Point>
+                                      <option name="x" value="256" />
+                                      <option name="y" value="12" />
+                                    </Point>
+                                  </option>
+                                </LayoutPositions>
+                              </value>
+                            </entry>
+                            <entry key="mapFragment">
+                              <value>
+                                <LayoutPositions>
+                                  <option name="myPosition">
+                                    <Point>
+                                      <option name="x" value="12" />
+                                      <option name="y" value="12" />
+                                    </Point>
+                                  </option>
+                                  <option name="myPositions">
+                                    <map>
+                                      <entry key="action_mapFragment_to_houseDetailsFragment6">
+                                        <value>
+                                          <LayoutPositions />
+                                        </value>
+                                      </entry>
+                                    </map>
+                                  </option>
+                                </LayoutPositions>
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -61,8 +136,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="252" />
-                            <option name="y" value="12" />
+                            <option name="x" value="12" />
+                            <option name="y" value="150" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -77,19 +152,39 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="inboxFragment">
+                            <entry key="houseDetailsFragment4">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
                             <entry key="likedAdsFragment">
                               <value>
-                                <LayoutPositions />
+                                <LayoutPositions>
+                                  <option name="myPositions">
+                                    <map>
+                                      <entry key="action_likedAdsFragment_to_houseDetailsFragment4">
+                                        <value>
+                                          <LayoutPositions />
+                                        </value>
+                                      </entry>
+                                    </map>
+                                  </option>
+                                </LayoutPositions>
                               </value>
                             </entry>
                             <entry key="listedAdsFragment">
                               <value>
-                                <LayoutPositions />
+                                <LayoutPositions>
+                                  <option name="myPositions">
+                                    <map>
+                                      <entry key="action_listedAdsFragment_to_houseDetailsFragment4">
+                                        <value>
+                                          <LayoutPositions />
+                                        </value>
+                                      </entry>
+                                    </map>
+                                  </option>
+                                </LayoutPositions>
                               </value>
                             </entry>
                             <entry key="personalInformationFragment">
@@ -112,17 +207,12 @@
                                           <LayoutPositions />
                                         </value>
                                       </entry>
-                                      <entry key="action_profileFragment_to_inboxFragment">
+                                      <entry key="action_profileFragment_to_likedAdsFragment2">
                                         <value>
                                           <LayoutPositions />
                                         </value>
                                       </entry>
-                                      <entry key="action_profileFragment_to_likedAdsFragment">
-                                        <value>
-                                          <LayoutPositions />
-                                        </value>
-                                      </entry>
-                                      <entry key="action_profileFragment_to_listedAdsFragment">
+                                      <entry key="action_profileFragment_to_listedAdsFragment2">
                                         <value>
                                           <LayoutPositions />
                                         </value>
@@ -147,9 +237,33 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="12" />
+                            <option name="x" value="252" />
                             <option name="y" value="150" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="houseDetailsFragment2">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="searchFragment">
+                              <value>
+                                <LayoutPositions>
+                                  <option name="myPositions">
+                                    <map>
+                                      <entry key="action_searchFragment_to_houseDetailsFragment2">
+                                        <value>
+                                          <LayoutPositions />
+                                        </value>
+                                      </entry>
+                                    </map>
+                                  </option>
+                                </LayoutPositions>
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
