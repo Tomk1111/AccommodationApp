@@ -57,6 +57,7 @@ public class InboxFragment extends Fragment {
     private FirebaseAuth mAuth;
     private View PrivateChatsView;
     private String currentUserId;
+    private TextView emptyMsgText;
 
     public InboxFragment() {
         // Required empty public constructor
@@ -75,6 +76,9 @@ public class InboxFragment extends Fragment {
 
         //inflate the layout for this fragment
         PrivateChatsView = inflater.inflate(R.layout.fragment_inbox, container, false);
+        //TODO Show this message when no contacts have been made
+        emptyMsgText = PrivateChatsView.findViewById(R.id.empty_message);
+        emptyMsgText.setVisibility(View.GONE);
         progressBar = PrivateChatsView.findViewById(R.id.inbox_progress_bar);
         conversationList = (RecyclerView) PrivateChatsView.findViewById(R.id.inbox_recyclerview);
         conversationList.setLayoutManager(new LinearLayoutManager( getContext() ));
@@ -151,6 +155,7 @@ public class InboxFragment extends Fragment {
                         return new ConversationViewHolder(view);
                     }
                 };
+        progressBar.setVisibility(View.GONE);
         conversationList.setAdapter(adapter);
         adapter.startListening();
 

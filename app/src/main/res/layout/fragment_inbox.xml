@@ -21,4 +21,12 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"/>
 
+    <TextView
+        android:id="@+id/empty_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        style="@style/DarkModeAccountPageItemStyleText"
+        android:text="Inbox empty. Contact landlords to see messages here." />
+
 </RelativeLayout>
