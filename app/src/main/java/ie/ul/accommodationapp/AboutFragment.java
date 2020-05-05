@@ -39,6 +39,7 @@ public class AboutFragment extends Fragment {
             sharedPreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
             boolean isNightMode = sharedPreferences.getBoolean("nightModeEnabled", false);
             mToolbar = getActivity().findViewById(R.id.main_toolbar);
+            mToolbar.setTitle("Developer Information");
             searchView = getActivity().findViewById(R.id.search_view);
             searchView.setVisibility(View.GONE);
             if (isNightMode) {

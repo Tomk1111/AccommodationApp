@@ -73,6 +73,7 @@
     <style name="searchIconStyle" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="searchIcon">@drawable/ic_search_white_24dp</item>
         <item name="closeIcon">@drawable/ic_search_white_24dp</item>
+        <item name="queryBackground">@color/divider1</item>
     </style>
     <style name="primaryButtonStyle">
         <item name="android:textColor">@color/darkText2</item>

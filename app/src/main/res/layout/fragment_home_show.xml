@@ -8,21 +8,41 @@
     >
 
 
-    <Spinner
-        android:id="@+id/filterbutton"
+    <RelativeLayout
+        android:id="@+id/filter_layout"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="8dp"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/colorPrimary"
-        android:textAlignment="center"
-        />
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/colorPrimary">
+            <Spinner
+                android:id="@+id/filterbutton"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:textAlignment="center" />
 
 
+        </androidx.cardview.widget.CardView>
+
+
+
+
+
+    </RelativeLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:layout_below="@+id/filterbutton"/>
+        android:layout_below="@+id/filter_layout"/>
 
 
 

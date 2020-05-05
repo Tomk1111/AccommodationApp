@@ -72,6 +72,7 @@
     <style name="searchIconStyle" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="searchIcon">@drawable/ic_search_black_24dp</item>
         <item name="closeIcon">@drawable/ic_search_black_24dp</item>
+        <item name="queryBackground">@color/personalInfoCards</item>
     </style>
 
     <style name="primaryButtonStyle">

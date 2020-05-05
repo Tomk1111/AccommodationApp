@@ -42,7 +42,12 @@ public class MainActivity extends AppCompatActivity {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
         mAuth = FirebaseAuth.getInstance();
-        if (mAuth.getCurrentUser() != null)
-            startActivity(new Intent(this, BottomNavigationActivity.class));
+        if (mAuth.getCurrentUser() != null) {
+            finish();
+            Intent intent = new Intent(this, BottomNavigationActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
     }
 }

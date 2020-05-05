@@ -66,4 +66,5 @@ public class HomeTabFragment extends Fragment {
         });
         return view;
     }
+
 }

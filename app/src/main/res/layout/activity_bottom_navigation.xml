@@ -29,7 +29,6 @@
                     android:layout_gravity="end"
                     android:layout_centerInParent="false"
                     style="@style/searchIconStyle"
-                    app:queryBackground="@color/personalInfoCards"
                     app:iconifiedByDefault="true"
                     android:layout_alignParentEnd="true"
                     app:queryHint="Search"/>
