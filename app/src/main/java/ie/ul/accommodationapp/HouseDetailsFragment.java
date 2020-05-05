@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -51,8 +52,8 @@ public class HouseDetailsFragment extends Fragment {
     private Listing listingModel;
     private TextView addressTextView, pricePerWeekView, descriptionView, roomsView,
             moveInDateView, moveOutViewDate;
-    private ImageView listingImage;
-    private Button likeButton;
+    private ImageView listingImage, likeButtonImage;
+    private CardView likeButton;
     private Button contactSellerBtn;
     private FirebaseFirestore db;
     protected String imageURL="";
@@ -97,6 +98,7 @@ public class HouseDetailsFragment extends Fragment {
             moveInDateView.setText(simpleDateFormat.format(listingModel.getStartDate()));
             moveOutViewDate.setText(simpleDateFormat.format(listingModel.getEndDate()));
             likeButton = view.findViewById(R.id.button_like);
+            likeButtonImage = view.findViewById(R.id.like_button_image);
             contactSellerBtn = view.findViewById(R.id.contact_seller);
             listingImage = view.findViewById(R.id.listing_image);
             updateLikeStatus(false);
@@ -120,6 +122,7 @@ public class HouseDetailsFragment extends Fragment {
                 //User should not be able to press 'contact seller' or 'like' on a house they list.
                 contactSellerBtn.setVisibility(View.GONE);
                 likeButton.setVisibility(View.GONE);
+                likeButtonImage.setVisibility(View.GONE);
             }
 
             contactSellerBtn.setOnClickListener(new View.OnClickListener() {
@@ -264,12 +267,14 @@ public class HouseDetailsFragment extends Fragment {
                                         if (task.isSuccessful()) {
                                             Toast.makeText(getContext(), listingModel.getAddress()
                                                     + " removed from likes.", Toast.LENGTH_SHORT).show();
-                                            likeButton.setBackgroundColor(getResources().getColor(R.color.personalInfoCards));
+                                            likeButton.setCardBackgroundColor(getResources().getColor(R.color.personalInfoCards));
+                                            likeButtonImage.setImageResource(R.drawable.ic_favorite_black_24dp);
                                         }
                                     }
                                 });
                             } else {
-                                likeButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                                likeButton.setCardBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                                likeButtonImage.setImageResource(R.drawable.ic_favorite_white_24dp);
                             }
                         } else {
                             if (buttonPressed) {
@@ -279,12 +284,14 @@ public class HouseDetailsFragment extends Fragment {
                                         if (task.isSuccessful()) {
                                             Toast.makeText(getContext(), listingModel.getAddress()
                                                     + " added to likes.", Toast.LENGTH_SHORT).show();
-                                            likeButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                                            likeButton.setCardBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                                            likeButtonImage.setImageResource(R.drawable.ic_favorite_white_24dp);
                                         }
                                     }
                                 });
                             }
-                            likeButton.setBackgroundColor(getResources().getColor(R.color.personalInfoCards));
+                            likeButton.setCardBackgroundColor(getResources().getColor(R.color.personalInfoCards));
+                            likeButtonImage.setImageResource(R.drawable.ic_favorite_black_24dp);
 //                        likeButton.setBackgroundColor(getResources().getColor(R.color.lightText2));
                         }
                     }
