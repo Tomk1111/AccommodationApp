@@ -131,6 +131,10 @@
         <item name="backgroundTint">@color/darkText2</item>
         <item name="android:textColor">@color/darkText2</item>
     </style>
-
+    <style name="houseListItemBottomDetailsStyle">
+        <item name="fontFamily">@font/googlesans_regular</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
 
 </resources>

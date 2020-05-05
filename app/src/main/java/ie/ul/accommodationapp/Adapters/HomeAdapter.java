@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,9 +44,14 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull HomeViewHolder holder, int position) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM yyyy");
+        String sDate = simpleDateFormat.format(mDataFiltered.get(position).getStartDate());
+        String eDate = simpleDateFormat.format(mDataFiltered.get(position).getEndDate());
         holder.setTitleText(mDataFiltered.get(position).getAddress());
         holder.setDescriptionTextView(mDataFiltered.get(position).getDescription());
         holder.setPriorityTextView("€" + mDataFiltered.get(position).getPrice() + "");
+        holder.setRoomText(mDataFiltered.get(position).getRooms() + " Room(s)");
+        holder.setDatesText(sDate + " - " + eDate);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,13 +118,23 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
 
     public class HomeViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView titleTextView, descriptionTextView, priorityTextView;
+        private TextView titleTextView, descriptionTextView, priorityTextView, roomsView, datesView;
 
         public HomeViewHolder(@NonNull View itemView) {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.text_view_title);
             descriptionTextView = itemView.findViewById(R.id.text_view_description);
             priorityTextView = itemView.findViewById(R.id.text_view_priority);
+            roomsView = itemView.findViewById(R.id.rooms_details_text);
+            datesView = itemView.findViewById(R.id.dates_details_text);
+        }
+
+        public void setRoomText(String text) {
+            roomsView.setText(text);
+        }
+
+        public void setDatesText(String text) {
+            datesView.setText(text);
         }
 
         public void setTitleText(String text) {

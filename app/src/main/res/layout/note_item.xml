@@ -11,41 +11,59 @@
     app:cardCornerRadius="6dp"
     style="@style/personalDetailsCardStyle"
     >
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="8dp">
+
         <TextView
             android:id="@+id/text_view_title"
             android:layout_width="match_parent"
-            android:layout_toLeftOf="@id/text_view_priority"
             android:layout_height="wrap_content"
-            android:text="TITLE"
             android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@id/text_view_priority"
             android:ellipsize="end"
-            android:textAppearance="@style/DarkModeIntroHeadline"
-            />
+            android:text="TITLE"
+            android:textAppearance="@style/DarkModeIntroHeadline" />
 
         <TextView
             android:id="@+id/text_view_priority"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginLeft="8dp"
-            android:textAppearance="@style/DarkModeIntroHeadline"
-            />
+            android:text="1"
+            android:textAppearance="@style/DarkModeIntroHeadline" />
 
         <TextView
             android:id="@+id/text_view_description"
+            style="@style/DarkModeAccountPageItemStyleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:text="Description"
-            style="@style/DarkModeAccountPageItemStyleText"
-            android:layout_marginTop="8dp"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:layout_below="@id/text_view_title"
-            />
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="8dp"
+            android:text="Description" />
+
+        <TextView
+            android:id="@+id/rooms_details_text"
+            style="@style/houseListItemBottomDetailsStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="5 Rooms" />
+
+        <TextView
+            android:id="@+id/dates_details_text"
+            style="@style/houseListItemBottomDetailsStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:text="20-05-01  -  30-6-23" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
