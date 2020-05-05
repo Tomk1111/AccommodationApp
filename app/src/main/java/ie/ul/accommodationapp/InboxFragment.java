@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -52,6 +53,7 @@ public class InboxFragment extends Fragment {
     private DatabaseReference contactRef;
     private DatabaseReference usersRef;
     private SearchView searchView;
+    private ProgressBar progressBar;
     private FirebaseAuth mAuth;
     private View PrivateChatsView;
     private String currentUserId;
@@ -71,10 +73,9 @@ public class InboxFragment extends Fragment {
         contactRef = FirebaseDatabase.getInstance().getReference().child("Contacts").child(currentUserId);
         usersRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
-
         //inflate the layout for this fragment
         PrivateChatsView = inflater.inflate(R.layout.fragment_inbox, container, false);
-
+        progressBar = PrivateChatsView.findViewById(R.id.inbox_progress_bar);
         conversationList = (RecyclerView) PrivateChatsView.findViewById(R.id.inbox_recyclerview);
         conversationList.setLayoutManager(new LinearLayoutManager( getContext() ));
         updateUI();
@@ -85,6 +86,7 @@ public class InboxFragment extends Fragment {
     @Override
     public void onStart(){
         super.onStart();
+        progressBar.setVisibility(View.VISIBLE);
 
         FirebaseRecyclerOptions<Conversation> options =
                 new FirebaseRecyclerOptions.Builder<Conversation>()
@@ -129,7 +131,9 @@ public class InboxFragment extends Fragment {
                                         }
                                     });
 
-                                }//if the data doesnt exist dont adding anything to the page - add future later if no messages add a textview telling you no messages exist
+                                }
+                                progressBar.setVisibility(View.GONE);
+                                //if the data doesnt exist dont adding anything to the page - add future later if no messages add a textview telling you no messages exist
                             } 
 
                             @Override
