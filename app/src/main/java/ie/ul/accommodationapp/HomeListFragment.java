@@ -74,6 +74,7 @@ public class HomeListFragment extends Fragment {
     StorageReference storageRef = storage.getReference();
     StorageReference listingImagesRef = null;
     ArrayList<InputStream> inputStream = new ArrayList<InputStream>();
+    boolean imageAttached=false;
 
 
     private void updateStartDateLabel(EditText startDate, Calendar myCalendar) {
@@ -197,6 +198,11 @@ public class HomeListFragment extends Fragment {
                 price = getView().findViewById(R.id.price);
                 description = getView().findViewById(R.id.description);
                 if (validateFields()) {
+                    if (!imageAttached) {
+                        Toast.makeText(getActivity(), "Please attach an image.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    imageAttached=false;
                     SimpleDateFormat formatter1 = new SimpleDateFormat("dd/MM/yyyy");
                     try {
                         String addressText = address.getText().toString();
@@ -313,6 +319,7 @@ public class HomeListFragment extends Fragment {
                     myImage.setVisibility(View.VISIBLE);
                 } catch (Exception e) {}
                 Toast.makeText(getActivity(), "Successfully Attached Image.", Toast.LENGTH_SHORT).show();
+                imageAttached=true;
                 TextView banner = (TextView) getActivity().findViewById(R.id.bannerText);
                 banner.setVisibility(View.VISIBLE);
             } catch (Exception e) {}
