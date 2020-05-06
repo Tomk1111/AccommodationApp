@@ -38,6 +38,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Document;
@@ -63,7 +65,8 @@ public class HouseDetailsFragment extends Fragment {
     protected String imageURL = "";
     protected String listingUserID; // accessed in anonymous class
     protected String listingUserName; // accessed in anonymous class
-
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageRef = storage.getReference();
     private View view;
     private SearchView searchView;
     // Firebase RTDB additions
@@ -169,6 +172,7 @@ public class HouseDetailsFragment extends Fragment {
                                             }
                                         }
                                     });
+                                    storageRef.child("House" + listingModel.getId() + "image" + 1 + ".jpg").delete();
                                     ((BottomNavigationActivity) getActivity()).getAllListings();
                                     getActivity().onBackPressed();
                                     break;
