@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,6 +59,7 @@ public class HouseDetailsFragment extends Fragment {
     private CardView likeButton;
     private Button contactSellerBtn;
     private FirebaseFirestore db;
+    private RelativeLayout lastRoomsNotice;
     protected String imageURL = "";
     protected String listingUserID; // accessed in anonymous class
     protected String listingUserName; // accessed in anonymous class
@@ -89,6 +91,7 @@ public class HouseDetailsFragment extends Fragment {
             updateUI();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM yyyy");
             db = FirebaseFirestore.getInstance();
+            lastRoomsNotice = view.findViewById(R.id.last_rooms_layout_notice);
             delButton = view.findViewById(R.id.delete_button);
             delButton.setVisibility(View.GONE);
             addressTextView = view.findViewById(R.id.address_view);
@@ -101,6 +104,9 @@ public class HouseDetailsFragment extends Fragment {
             pricePerWeekView.setText("€" + listingModel.getPrice());
             descriptionView.setText(listingModel.getDescription());
             roomsView.setText(listingModel.getRooms() + " rooms");
+            if (listingModel.getRooms() <= 3) {
+                lastRoomsNotice.setVisibility(View.VISIBLE);
+            }
             moveInDateView.setText(simpleDateFormat.format(listingModel.getStartDate()));
             moveOutViewDate.setText(simpleDateFormat.format(listingModel.getEndDate()));
             likeButton = view.findViewById(R.id.button_like);
@@ -130,6 +136,7 @@ public class HouseDetailsFragment extends Fragment {
                 likeButton.setVisibility(View.GONE);
                 likeButtonImage.setVisibility(View.GONE);
                 delButton.setVisibility(View.VISIBLE);
+                mToolbar.setTitle("Your Listing");
             }
 
             delButton.setOnClickListener(new View.OnClickListener() {

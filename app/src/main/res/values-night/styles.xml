@@ -85,7 +85,11 @@
         <item name="android:background">@color/colorPrimary</item>
         <item name="android:fontFamily">@font/googlesans_bold</item>
     </style>
-
+    <style name="deleteButtonStyle">
+        <item name="android:textColor">@color/lightText1</item>
+        <item name="android:background">@color/quantum_googred</item>
+        <item name="android:fontFamily">@font/googlesans_bold</item>
+    </style>
     <style name="unlikedButtonStyle">
         <item name="android:textColor">@color/darkText2</item>
         <item name="android:background">@color/personalInfoCards</item>
