@@ -4,6 +4,7 @@ package ie.ul.accommodationapp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatDelegate;
@@ -35,7 +36,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class ProfileFragment extends Fragment {
 
     private Toolbar mToolbar;
-    private TextView profileEditText,inboxText, likedAdsText, listedAdsText, devInfoText;
+    private TextView profileEditText,inboxText, likedAdsText, listedAdsText, devInfoText, websiteText;
     private Button logoutButton;
     private Switch nightModeSwitch;
     private SearchView searchView;
@@ -59,6 +60,7 @@ public class ProfileFragment extends Fragment {
         likedAdsText = view.findViewById(R.id.liked_ads_header);
         listedAdsText = view.findViewById(R.id.listed_ads_header);
         devInfoText = view.findViewById(R.id.developer_information_header);
+        websiteText = view.findViewById(R.id.website_header);
         logoutButton = view.findViewById(R.id.logout_button);
 
         nightModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -109,7 +111,13 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-
+        websiteText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://group13android.github.io/househunter/"));
+                startActivity(intent);
+            }
+        });
 
 
 

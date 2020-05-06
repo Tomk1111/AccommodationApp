@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Build;
@@ -171,8 +172,12 @@ public class MapFragment extends SupportMapFragment
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title("Current Position");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
-        mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
+        if (getActivity() !=null) {
+            Drawable circleDrawable1 = getActivity().getResources().getDrawable(R.drawable.ic_homey_my_marker);
+            BitmapDescriptor myicon = getMarkerIconFromDrawable(circleDrawable1);
+            markerOptions.icon(myicon);
+            mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
+        }
         FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
         CollectionReference pointsRef = rootRef.collection("Listings");
         pointsRef.get()
@@ -186,8 +191,12 @@ public class MapFragment extends SupportMapFragment
                             double lat = listing.getLatitude();
                             double lng = listing.getLongitude();
                             LatLng latLng = new LatLng(lat, lng);
-                            Marker marker=mGoogleMap.addMarker(new MarkerOptions().position(latLng).title(name));
-                            marker.setTag(listing);
+                            if (getActivity() !=null) {
+                                Drawable circleDrawable = getActivity().getResources().getDrawable(R.drawable.ic_homey_primary_marker);
+                                BitmapDescriptor markerIcon = getMarkerIconFromDrawable(circleDrawable);
+                                Marker marker = mGoogleMap.addMarker(new MarkerOptions().position(latLng).title(name).icon(markerIcon));
+                                marker.setTag(listing);
+                            }
                             pos=pos+1;
                             mGoogleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                                 @Override
@@ -210,7 +219,14 @@ public class MapFragment extends SupportMapFragment
                 });
 
     }
-
+    private BitmapDescriptor getMarkerIconFromDrawable(Drawable drawable) {
+        Canvas canvas = new Canvas();
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        canvas.setBitmap(bitmap);
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+        drawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
+    }
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private void checkLocationPermission() {
