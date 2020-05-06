@@ -202,6 +202,11 @@ public class HomeListFragment extends Fragment {
                         String addressText = address.getText().toString();
                         GeocodingResult[] results = GeocodingApi.geocode(context,
                                 addressText).await();
+                        if (results.length==0)
+                        {
+                            Toast.makeText(getActivity(), "Ooops Could not find Address.", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         LatLng coords = (results[0].geometry.location);
                         int priceInt = Integer.parseInt(price.getText().toString());
                         int roomInt = Integer.parseInt(rooms.getText().toString());
