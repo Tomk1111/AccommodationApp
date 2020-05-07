@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -71,6 +72,7 @@ public class HouseDetailsFragment extends Fragment {
     private SearchView searchView;
     // Firebase RTDB additions
     private FirebaseAuth mAuth;
+    private ProgressBar progressBar;
     private SharedPreferences sharedPreferences;
     private DatabaseReference contactRef;
     private DatabaseReference usersRef;
@@ -95,6 +97,8 @@ public class HouseDetailsFragment extends Fragment {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM yyyy");
             db = FirebaseFirestore.getInstance();
             lastRoomsNotice = view.findViewById(R.id.last_rooms_layout_notice);
+            progressBar = view.findViewById(R.id.progressBar);
+            progressBar.setVisibility(View.VISIBLE);
             delButton = view.findViewById(R.id.delete_button);
             delButton.setVisibility(View.GONE);
             addressTextView = view.findViewById(R.id.address_view);
@@ -449,6 +453,7 @@ public class HouseDetailsFragment extends Fragment {
                         DocumentSnapshot documentSnapshot = task.getResult();
                         if (documentSnapshot.exists()) {
                             imageURL = documentSnapshot.getString("URL");
+                            progressBar.setVisibility(View.GONE);
                             Picasso.get().load(imageURL).fit().into(listingImage);
                         }
                     }

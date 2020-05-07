@@ -10,6 +10,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="128dp"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/colorPrimary" />
+
         <ImageView
             android:id="@+id/listing_image"
             android:layout_width="match_parent"
