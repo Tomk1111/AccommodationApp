@@ -12,6 +12,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 
@@ -32,13 +34,14 @@ public class BottomNavigationActivity extends AppCompatActivity {
     private NavController navController;
     public List<Listing> mData;
     private SharedPreferences sharedPreferences;
-    private WifiManager manager;
+    private NetworkChangeReceiver receiver;
+    //private ConnectivityManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottom_navigation);
-        manager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        //manager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         mToolbar = findViewById(R.id.main_toolbar);
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
@@ -92,34 +95,50 @@ public class BottomNavigationActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    @Override
+   @Override
     protected void onStart() {
         super.onStart();
-        IntentFilter intentFilter = new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
-        registerReceiver(wifiStateReceiver,intentFilter);
+        receiver = new NetworkChangeReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(receiver,filter);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        unregisterReceiver(wifiStateReceiver);
+        unregisterReceiver(receiver);
     }
 
-    private BroadcastReceiver wifiStateReceiver = new BroadcastReceiver() {
+    public class NetworkChangeReceiver extends BroadcastReceiver
+    {
         @Override
-        public void onReceive(Context context, Intent intent) {
-            int wifiState = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE,WifiManager.WIFI_STATE_UNKNOWN);
-            switch (wifiState){
-                case WifiManager.WIFI_STATE_ENABLED:
+        public void onReceive(Context context, Intent intent)
+        {
+            try
+            {
+                if (isOnline(context)) {
                     System.out.println("wifi on");
-                    break;
-                case WifiManager.WIFI_STATE_DISABLED:
-                    System.out.println("wifi off");
+                } else {
                     Intent i = new Intent(getApplicationContext(),NoWifiActivity.class);
                     startActivity(i);
                     finish();
-                    break;
+                }
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             }
         }
-    };
+
+        private boolean isOnline(Context context) {
+            try {
+                ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo netInfo = cm.getActiveNetworkInfo();
+                //should check null because in airplane mode it will be null
+                return (netInfo != null && netInfo.isConnected());
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+    }
 }

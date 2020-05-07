@@ -6,6 +6,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 
@@ -13,43 +15,59 @@ import java.util.concurrent.TimeUnit;
 
 public class NoWifiActivity extends AppCompatActivity {
 
-    private WifiManager manager;
+    private NetworkChangeReceiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_no_wifi);
-        manager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        IntentFilter intentFilter = new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
-        registerReceiver(wifiStateReceiver,intentFilter);
+        receiver = new NetworkChangeReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(receiver,filter);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        unregisterReceiver(wifiStateReceiver);
+        unregisterReceiver(receiver);
     }
 
-    private BroadcastReceiver wifiStateReceiver = new BroadcastReceiver() {
+    public class NetworkChangeReceiver extends BroadcastReceiver
+    {
         @Override
-        public void onReceive(Context context, Intent intent) {
-            int wifiState = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE,WifiManager.WIFI_STATE_UNKNOWN);
-            switch (wifiState){
-                case WifiManager.WIFI_STATE_ENABLED:
-                    System.out.println("wifi on");
+        public void onReceive(Context context, Intent intent)
+        {
+            try
+            {
+                if (isOnline(context)) {
                     Intent i = new Intent(getApplicationContext(),BottomNavigationActivity.class);
                     startActivity(i);
                     finish();
-                    break;
-                case WifiManager.WIFI_STATE_DISABLED:
+                    System.out.println("wifi on");
+                } else {
                     System.out.println("wifi off");
-                    break;
+                }
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             }
         }
-    };
+
+        private boolean isOnline(Context context) {
+            try {
+                ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo netInfo = cm.getActiveNetworkInfo();
+                //should check null because in airplane mode it will be null
+                return (netInfo != null && netInfo.isConnected());
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+    }
 }
