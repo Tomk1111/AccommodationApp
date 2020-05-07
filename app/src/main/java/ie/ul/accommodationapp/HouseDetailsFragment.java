@@ -177,6 +177,15 @@ public class HouseDetailsFragment extends Fragment {
                                         }
                                     });
                                     storageRef.child("House" + listingModel.getId() + "image" + 1 + ".jpg").delete();
+                                    db.collection("HouseImage").document("House" + listingModel.getId() + "").delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                            } else {
+                                                Toast.makeText(getActivity(), "Error deleting listing: " + listingModel.getAddress(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
                                     ((BottomNavigationActivity) getActivity()).getAllListings();
                                     getActivity().onBackPressed();
                                     break;
