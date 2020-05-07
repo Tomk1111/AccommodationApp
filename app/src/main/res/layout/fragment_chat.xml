@@ -25,7 +25,7 @@
 
        <androidx.cardview.widget.CardView
            android:id="@+id/message_card"
-           android:layout_toLeftOf="@id/send_message_btn"
+           android:layout_toStartOf="@id/send_message_btn"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:layout_marginTop="4dp"

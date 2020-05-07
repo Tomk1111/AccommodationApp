@@ -8,7 +8,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Time sssDate"
         style="@style/timeMessageTextStyle"
         />
 
@@ -28,7 +27,6 @@
         android:layout_marginTop="10dp"
         android:layout_toEndOf="@+id/message_profile_image"
         android:background="@drawable/receiver_messages_layout"
-        android:text="Default text message"
         android:layout_below="@id/time_message"
         android:padding="10dp"
         style="@style/chatMessageStyle"
@@ -45,7 +43,6 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="10dp"
         android:background="@drawable/sender_messages_layout"
-        android:text="Sender messages default"
         style="@style/chatMessageStyle"
         android:padding="10dp"
         />

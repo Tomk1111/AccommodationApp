@@ -13,7 +13,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Log in"
+        android:text="@string/log_in"
         style="@style/DarkModeIntroHeadline"
         android:layout_marginBottom="16dp"
         />
@@ -30,7 +30,7 @@
         android:id="@+id/email_input_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter email"
+        android:hint="@string/enter_email"
         android:inputType="textEmailAddress"
         style="@style/DarkModeIntroFields"
         android:layout_marginBottom="16dp"
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             style="@style/DarkModeIntroFields"
-            android:hint="Enter password"
+            android:hint="@string/enter_password"
             android:layout_marginBottom="16dp"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:fontFamily="@font/googlesans_bold"
-            android:text="Log in"
+            android:text="@string/log_in"
             android:textColor="#FFFFFF" />
 
         <ProgressBar

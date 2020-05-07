@@ -13,7 +13,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome to House Hunter"
+        android:text="@string/welcome_to_house_hunter"
         style="@style/DarkModeIntroHeadline"
         android:layout_marginBottom="16dp"/>
 
@@ -24,7 +24,7 @@
         android:layout_marginBottom="16dp"
         android:background="@color/colorPrimary"
         android:fontFamily="@font/googlesans_bold"
-        android:text="Log in"
+        android:text="@string/log_in"
         android:textColor="@color/lightText1"/>
 
     <Button
@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        android:text="Create Account"
+        android:text="@string/create_account"
         android:fontFamily="@font/googlesans_bold"
         android:textColor="@color/lightText1"/>
 

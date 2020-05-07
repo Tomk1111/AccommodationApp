@@ -31,7 +31,7 @@
                     android:layout_gravity="center_vertical|center_horizontal"
                     android:ems="10"
                     style="@style/DarkModeAccountPageItemStyleEditText"
-                    android:hint="Address"
+                    android:hint="@string/address"
                     android:inputType="textPostalAddress"
                     android:textColorHint="@color/colorPrimary" />
 
@@ -56,7 +56,7 @@
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical|center_horizontal"
                     android:ems="10"
-                    android:hint="Number of rooms"
+                    android:hint="@string/number_of_rooms"
                     android:inputType="number"
                     style="@style/DarkModeAccountPageItemStyleEditText"
                     android:textColorHint="@color/colorPrimary" />
@@ -83,7 +83,7 @@
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical|center_horizontal"
                     android:ems="10"
-                    android:hint="Price"
+                    android:hint="@string/price"
                     android:inputType="number"
                     style="@style/DarkModeAccountPageItemStyleEditText"
                     android:textColorHint="@color/colorPrimary" />
@@ -109,7 +109,7 @@
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical|center_horizontal"
                     android:ems="10"
-                    android:hint="Description"
+                    android:hint="@string/description"
                     android:inputType="textMultiLine"
                     style="@style/DarkModeAccountPageItemStyleEditText"
                     android:textColorHint="@color/colorPrimary" />
@@ -136,7 +136,7 @@
                     android:layout_gravity="center_vertical|center_horizontal"
                     android:ems="10"
                     android:focusable="false"
-                    android:hint="Start Date"
+                    android:hint="@string/start_date"
                     android:inputType="date"
                     style="@style/DarkModeAccountPageItemStyleEditText"
                     android:textColorHint="@color/colorPrimary" />
@@ -163,7 +163,7 @@
                     android:layout_gravity="center_vertical|center_horizontal"
                     android:ems="10"
                     android:focusable="false"
-                    android:hint="End Date"
+                    android:hint="@string/end_date"
                     android:inputType="date"
                     style="@style/DarkModeAccountPageItemStyleEditText"
                     android:textColorHint="@color/colorPrimary" />
@@ -189,7 +189,7 @@
                     android:background="@color/colorPrimary"
                     android:ems="5"
                     android:fontFamily="@font/googlesans_bold"
-                    android:text="Submit"
+                    android:text="@string/submit"
                     android:textColor="@color/lightText1" />
 
                 <Button
@@ -201,7 +201,7 @@
                     android:background="@color/colorPrimary"
                     android:ems="5"
                     android:fontFamily="@font/googlesans_bold"
-                    android:text="Attach Image"
+                    android:text="@string/attach_image"
                     android:textColor="@color/lightText1"
                     app:layout_constraintTop_toBottomOf="@+id/submit" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -213,7 +213,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="8dp"
                 style="@style/DarkModeAccountPageItemStyleHeaders"
-                android:text="Attached Image"/>
+                android:text="@string/attached_image"/>
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="wrap_content"

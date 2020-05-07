@@ -12,7 +12,7 @@
             android:layout_marginTop="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Developers"
+            android:text="@string/developers"
             style="@style/DarkModeAccountPageItemStyleHeaders"
             android:layout_marginStart="16dp"/>
         <LinearLayout
@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 style="@style/DarkModeAccountPageItemStyleText"
-                android:text="Thomas Kiely"/>
+                android:text="@string/thomas_kiely"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 style="@style/DarkModeAccountPageItemStyleText"
-                android:text="Sean Morrissey"/>
+                android:text="@string/sean_morrissey"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 style="@style/DarkModeAccountPageItemStyleText"
-                android:text="Paul Murphy"/>
+                android:text="@string/paul_murphy"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 style="@style/DarkModeAccountPageItemStyleText"
-                android:text="Mark McNabola"/>
+                android:text="@string/mark_mcnabola"/>
         </LinearLayout>
         <LinearLayout
             android:layout_marginTop="16dp"
@@ -72,7 +72,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Description"
+                android:text="@string/description"
                 style="@style/DarkModeAccountPageItemStyleHeaders"/>
             <TextView
                 android:layout_width="match_parent"

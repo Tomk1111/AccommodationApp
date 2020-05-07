@@ -13,7 +13,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign Up"
+        android:text="@string/sign_up"
         style="@style/DarkModeIntroHeadline"
         android:layout_marginBottom="16dp" />
     <com.google.android.material.textfield.TextInputLayout
@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         style="@style/DarkModeIntroFields"
         android:layout_height="wrap_content"
-        android:hint="Enter email"
+        android:hint="@string/enter_email"
         android:layout_marginBottom="16dp"
         />
     </com.google.android.material.textfield.TextInputLayout>
@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         style="@style/DarkModeIntroFields"
         android:layout_marginBottom="16dp"
-        android:hint="Enter username" />
+        android:hint="@string/enter_username" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             style="@style/DarkModeIntroFields"
-            android:hint="Enter password"
+            android:hint="@string/enter_password"
             android:layout_marginBottom="16dp"/>
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             style="@style/DarkModeIntroFields"
             android:inputType="textPassword"
-            android:hint="Confirm password"
+            android:hint="@string/confirm_password"
             android:layout_marginBottom="16dp"/>
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -95,7 +95,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:fontFamily="@font/googlesans_bold"
-            android:text="Sign Up"
+            android:text="@string/sign_up"
             android:textColor="#FFFFFF" />
 
         <ProgressBar

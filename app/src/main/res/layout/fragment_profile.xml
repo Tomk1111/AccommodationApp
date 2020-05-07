@@ -8,7 +8,7 @@
     tools:context=".ProfileFragment">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <TextView
             android:layout_marginTop="16dp"
@@ -16,7 +16,7 @@
             android:id="@+id/personal_information_header_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Personal Information"
+            android:text="@string/personal_information"
             style="@style/DarkModeAccountPageItemStyleHeaders"
             />
         <TextView
@@ -27,12 +27,12 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             style="@style/DarkModeAccountPageItemStyleText"
-            android:text="Edit"/>
+            android:text="@string/edit"/>
         <TextView
             android:id="@+id/inbox_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Inbox"
+            android:text="@string/inbox"
             android:layout_marginStart="16dp"
             android:layout_marginTop="36dp"
             android:layout_below="@id/profile_edit_tag"
@@ -48,7 +48,7 @@
             android:id="@+id/ads_title_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Listings"
+            android:text="@string/listings"
             android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"
             style="@style/DarkModeAccountPageItemStyleHeaders"
@@ -57,7 +57,7 @@
             android:id="@+id/liked_ads_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Liked Ads"
+            android:text="@string/liked_ads"
             android:layout_marginTop="24dp"
             android:layout_marginStart="16dp"
             style="@style/DarkModeAccountPageItemStyleText"
@@ -66,7 +66,7 @@
             android:id="@+id/listed_ads_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Listed Ads"
+            android:text="@string/listed_ads"
             android:layout_marginTop="36dp"
             android:layout_marginStart="16dp"
             style="@style/DarkModeAccountPageItemStyleText"
@@ -82,7 +82,7 @@
             android:id="@+id/about_title_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="General"
+            android:text="@string/general"
             android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"
             style="@style/DarkModeAccountPageItemStyleHeaders"
@@ -91,7 +91,7 @@
             android:id="@+id/developer_information_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Developer Information"
+            android:text="@string/developer_information"
             style="@style/DarkModeAccountPageItemStyleText"
             android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"
@@ -100,7 +100,7 @@
             android:id="@+id/website_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="App Website"
+            android:text="@string/app_website"
             style="@style/DarkModeAccountPageItemStyleText"
             android:layout_marginTop="36dp"
             android:layout_marginStart="16dp"
@@ -114,7 +114,7 @@
             android:thumbTint="@color/colorPrimary"
             android:layout_below="@id/website_header"
             style="@style/DarkModeAccountPageItemStyleText"
-            android:text="Night Mode"/>
+            android:text="@string/night_mode"/>
         <Button
             android:id="@+id/logout_button"
             android:layout_width="match_parent"
@@ -124,7 +124,7 @@
             android:layout_marginBottom="16dp"
             android:background="@color/colorPrimary"
             android:layout_below="@id/night_mode_switch"
-            android:text="Log Out"
+            android:text="@string/log_out"
             android:fontFamily="@font/googlesans_bold"
             android:textColor="@color/lightText1"/>
     </RelativeLayout>
