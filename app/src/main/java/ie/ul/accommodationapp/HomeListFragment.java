@@ -184,6 +184,7 @@ public class HomeListFragment extends Fragment {
         attachImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                System.out.println("In here 1");
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
                 startActivityForResult(intent, PICK_PHOTO_FOR_LISTING);
@@ -228,7 +229,7 @@ public class HomeListFragment extends Fragment {
                                 uploadTask.addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception exception) {
-                                        inputStream = null;
+                                        inputStream = new ArrayList<InputStream>();
                                         ImageView imageView = view.findViewById(R.id.imageView);
                                         imageView.setVisibility(View.GONE);
                                         TextView textBanner = (TextView) getActivity().findViewById(R.id.bannerText);
@@ -238,7 +239,7 @@ public class HomeListFragment extends Fragment {
                                     @Override
                                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                         Toast.makeText(getActivity(), "Successfully Uploaded Image.", Toast.LENGTH_SHORT).show();
-                                        inputStream = null;
+                                        inputStream = new ArrayList<InputStream>();
                                         ImageView imageView = view.findViewById(R.id.imageView);
                                         imageView.setVisibility(View.GONE);
                                         TextView textBanner = (TextView) getActivity().findViewById(R.id.bannerText);
@@ -302,13 +303,18 @@ public class HomeListFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        System.out.println("In here 2");
         if (requestCode == PICK_PHOTO_FOR_LISTING && resultCode == getActivity().RESULT_OK) {
+            System.out.println("In here 3");
             if (data == null) {
+                System.out.println("In here 4");
                 return;
             }
             try {
+                System.out.println("In here 5");
                 inputStream.add(getActivity().getContentResolver().openInputStream(data.getData()));
                 try{
+                    System.out.println("In here 6");
                     Bitmap myBitmap = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(data.getData()));
                     ImageView myImage = getActivity().findViewById(R.id.imageView);
                     //ImageView myImage = new ImageView(getActivity());
@@ -317,6 +323,7 @@ public class HomeListFragment extends Fragment {
                     //myImage.setMaxWidth(200);
                     myImage.setImageBitmap(myBitmap);
                     myImage.setVisibility(View.VISIBLE);
+                    System.out.println("In here 7");
                 } catch (Exception e) {}
                 Toast.makeText(getActivity(), "Successfully Attached Image.", Toast.LENGTH_SHORT).show();
                 imageAttached=true;
