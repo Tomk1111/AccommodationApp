@@ -7,6 +7,9 @@ The site is viewable here with more information: https://group13android.github.i
 ## Getting started
 
 * Our app runs from android devices using API level 21 and above. To get the app runing on your device simply install the apk and run it.
+* We created an Account for demo purposes. You can login with account using the following information:
+* Email: goetz@demo.com
+* Password: 123456
 * To use certain functionality such as the map you must agree to location permissions first.
 * To run the app from source code in Android Studio simply pull the latest code and run the app. 
 * There is no other dependencies or actions necessary
