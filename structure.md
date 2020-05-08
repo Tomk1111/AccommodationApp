@@ -1,3 +1,3 @@
 # Navigation Structure of AccommodationApp / House Hunter
 
-Fill in details here.
+https://group13android.github.io/househunter/userGuide.html
