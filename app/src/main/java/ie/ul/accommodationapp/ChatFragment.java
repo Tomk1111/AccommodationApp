@@ -112,6 +112,7 @@ public class ChatFragment extends Fragment {
             }
         });
 
+
         updateUI(messageReceiverName);
 
         return MessageView;

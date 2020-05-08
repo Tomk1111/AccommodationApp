@@ -208,34 +208,20 @@ public class HouseDetailsFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
 
+                    //User with the listing youre viewing
                     String uid = listingModel.getUid();
                     String username = listingModel.getUserName();
                     String url = imageURL;
 
+                    //logged in user
                     String uid1 = currentUserId;
                     String username1 = mAuth.getCurrentUser().getDisplayName();
-                    String url1 = ""; //cant get any data for the logged in user here
-
+                    String url1 = ""; //cant get any image data for the logged in user here
 
                     System.out.println("Contact seller button pressed");
                     Bundle bundle = new Bundle();
                     bundle.putString("uid", uid);
                     bundle.putString("userName", username);
-//                    FirebaseFirestore db = FirebaseFirestore.getInstance();
-//                    db.collection("Users").document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                            if (task.isSuccessful()) {
-//                                DocumentSnapshot documentSnapshot = task.getResult();
-//                                String name = documentSnapshot.getString("userName");
-//                                bundle.putString("userName", name);
-//                                Navigation.findNavController(v).navigate(R.id.action_global_chatFragment, bundle);
-//                            } else {
-//                                Toast.makeText(getActivity(), "Error communicating with Server", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    });
-
 
                     // does user with listing have a user account ?
                     // does logged in user have a user account ?
@@ -243,9 +229,8 @@ public class HouseDetailsFragment extends Fragment {
 
                     //these check if a user exists and creates a user if it doesnt
                     userCheck(uid, username, url);
-                    userCheck(uid1, username1, "");
+                    userCheck(uid1, username1, url1);
                     createConnection(uid);
-                    //change this to the specific message conversation of the two users - change where the global action directs to
                     Navigation.findNavController(v).navigate(R.id.action_global_chatFragment, bundle);
                 }
             });
@@ -290,6 +275,27 @@ public class HouseDetailsFragment extends Fragment {
             });
 
         }
+    }
+
+    public String getListingUserName(String listingUserID){
+        //final String[] output = {""};
+        //Cant get data from inside the anonymous class out
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Users").document(listingUserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    String name = documentSnapshot.getString("userName");
+                    System.out.println("111 "+name);
+                    //listingUserName = output[0]; - just makes it null - outer class variable
+                } else {
+                    Toast.makeText(getActivity(), "Error communicating with Server", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        
+        return "";
     }
 
     public void getDeletedStatus() {
