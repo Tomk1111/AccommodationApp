@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -91,14 +92,23 @@ public class SearchFragment extends Fragment {
 
 
     public void retrieveListings() {
-
-        mData = ((BottomNavigationActivity) getActivity()).getListings();
-        homeAdapter = new HomeAdapter(getContext(), mData);
-        recyclerView.setAdapter(homeAdapter);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        linearLayoutManager.setStackFromEnd(true);
-        linearLayoutManager.setReverseLayout(true);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        notebookRef
+                .orderBy("price", Query.Direction.DESCENDING)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        System.out.println(queryDocumentSnapshots.toObjects(Listing.class));
+                        List <Listing>ab=new ArrayList<Listing>();
+                        ab=queryDocumentSnapshots.toObjects(Listing.class);
+                        homeAdapter= new HomeAdapter(getContext(), ab);
+                        recyclerView.setAdapter(homeAdapter);
+                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+                        linearLayoutManager.setStackFromEnd(true);
+                        linearLayoutManager.setReverseLayout(true);
+                        recyclerView.setLayoutManager(linearLayoutManager);
+                    }
+                });
     }
 
 

@@ -290,7 +290,7 @@ public class HomeListFragment extends Fragment {
                         startDate.setText("");
                         endDate.setText("");
                         Toast.makeText(getActivity(), "Successfully Added Listing.", Toast.LENGTH_SHORT).show();
-                        ((BottomNavigationActivity) getActivity()).addListing(newHouse);
+//                        ((BottomNavigationActivity) getActivity()).addListing(newHouse);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

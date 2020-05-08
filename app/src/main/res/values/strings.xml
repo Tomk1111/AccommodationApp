@@ -5,7 +5,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="personal_information">Personal Information</string>
     <string name="listed_ads">Listed Ads</string>
-    <string name="app_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur non magna eget diam efficitur lacinia. Sed mollis nibh volutpat, viverra est in, sagittis lacus. Ut non magna sem. Etiam ultrices diam justo, nec vestibulum dolor ullamcorper a. Phasellus dictum sollicitudin nunc. Donec faucibus posuere lectus, non dapibus eros sollicitudin ut. Sed mattis augue eget facilisis faucibus. In nec mattis velit, ut porttitor ex. Nunc gravida nec arcu sed pretium. Integer pretium nisl in massa posuere, ac luctus massa sagittis. Nulla vulputate, elit eu posuere imperdiet, eros nulla feugiat erat, et aliquet arcu tellus vel massa. Praesent quis ex leo. Nam auctor congue dolor, sit amet interdum tellus. Maecenas posuere in odio pellentesque egestas. Proin ut rhoncus justo. Sed suscipit faucibus arcu ut vulputate.</string>
+    <string
+        name="app_description">House Hunter is an app that allows renters to list rooms and houses for rent,
+            and allows people to search for houses to rent.\nThis app was developed for module CS4084 Mobile Application Development (Spring 2020).
+    </string>
     <string name="from">From</string>
     <string name="move_in">Move in</string>
     <string name="move_out">Move out</string>
@@ -14,10 +17,10 @@
     <string name="name">Name</string>
     <string name="date">Date</string>
     <string name="developers">Developers</string>
-    <string name="thomas_kiely">Thomas Kiely</string>
-    <string name="sean_morrissey">Sean Morrissey</string>
-    <string name="paul_murphy">Paul Murphy</string>
-    <string name="mark_mcnabola">Mark McNabola</string>
+    <string name="thomas_kiely">Thomas Kiely - 17185203</string>
+    <string name="sean_morrissey">Sean Morrissey - 17222761</string>
+    <string name="paul_murphy">Paul Murphy - 17198046</string>
+    <string name="mark_mcnabola">Mark McNabola - 17226163</string>
     <string name="description">Description</string>
     <string name="get_started">Get Started</string>
     <string name="welcome_to_house_hunter">Welcome to House Hunter</string>
