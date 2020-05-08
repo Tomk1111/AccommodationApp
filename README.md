@@ -19,3 +19,4 @@ The site is viewable here with more information: https://group13android.github.i
 
 * [Technical Design](design.md)
 * [Navigation structure](structure.md)
+
