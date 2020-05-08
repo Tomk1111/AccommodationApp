@@ -75,6 +75,8 @@ public class HomeListFragment extends Fragment {
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
     StorageReference listingImagesRef = null;
+    private ImageView myImage;
+    private TextView banner;
     private View view;
     ArrayList<InputStream> inputStream = new ArrayList<InputStream>();
     boolean imageAttached=false;
@@ -100,8 +102,10 @@ public class HomeListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home_list, container, false);
-        TextView textView = view.findViewById(R.id.bannerText);
-        textView.setVisibility(View.GONE);
+        myImage = view.findViewById(R.id.imageView);
+        myImage.setVisibility(View.GONE);
+        banner = view.findViewById(R.id.bannerText);
+        banner.setVisibility(View.GONE);
         return view;
     }
 
@@ -205,6 +209,8 @@ public class HomeListFragment extends Fragment {
                         if (results.length==0)
                         {
                             Toast.makeText(getActivity(), "Ooops Could not find Address.", Toast.LENGTH_SHORT).show();
+                            banner.setVisibility(View.GONE);
+                            myImage.setVisibility(View.GONE);
                             return;
                         }
                         LatLng coords = (results[0].geometry.location);
@@ -314,7 +320,7 @@ public class HomeListFragment extends Fragment {
                 try{
                     System.out.println("In here 6");
                     Bitmap myBitmap = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(data.getData()));
-                    ImageView myImage = getActivity().findViewById(R.id.imageView);
+                    myImage = getActivity().findViewById(R.id.imageView);
                     //ImageView myImage = new ImageView(getActivity());
                     //myImage.setLayoutParams(new android.view.ViewGroup.LayoutParams(200,200));
                     //myImage.setMaxHeight(200);
@@ -325,7 +331,7 @@ public class HomeListFragment extends Fragment {
                 } catch (Exception e) {}
                 Toast.makeText(getActivity(), "Successfully Attached Image.", Toast.LENGTH_SHORT).show();
                 imageAttached=true;
-                TextView banner = (TextView) getActivity().findViewById(R.id.bannerText);
+                banner = (TextView) getActivity().findViewById(R.id.bannerText);
                 banner.setVisibility(View.VISIBLE);
             } catch (Exception e) {}
         }
