@@ -186,7 +186,6 @@ public class HouseDetailsFragment extends Fragment {
                                             }
                                         }
                                     });
-                                    ((BottomNavigationActivity) getActivity()).getAllListings();
                                     getActivity().onBackPressed();
                                     break;
                                 case DialogInterface.BUTTON_NEGATIVE:

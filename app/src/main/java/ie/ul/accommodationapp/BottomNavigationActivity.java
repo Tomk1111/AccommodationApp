@@ -32,7 +32,6 @@ public class BottomNavigationActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private BottomNavigationView bottomNavigationView;
     private NavController navController;
-    public List<Listing> mData;
     private SharedPreferences sharedPreferences;
     private NetworkChangeReceiver receiver;
     //private ConnectivityManager manager;
@@ -50,9 +49,6 @@ public class BottomNavigationActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         navController = Navigation.findNavController(this, R.id.bottom_navigation_fragment_container);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
-        if (mData == null) {
-            getAllListings();
-        }
     }
 
     public void toggleNightMode(boolean isNight) {
@@ -61,33 +57,6 @@ public class BottomNavigationActivity extends AppCompatActivity {
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
-    }
-
-    public List<Listing> getListings() {
-        return mData;
-    }
-
-    public void addListing(Listing listing) {
-        mData.add(listing);
-    }
-
-    public void getAllListings() {
-        mData = new ArrayList<>();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference collectionReference = db.collection("Listings");
-        collectionReference.get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        if(!queryDocumentSnapshots.isEmpty()) {
-                            List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
-                            for (DocumentSnapshot documentSnapshot : list) {
-                                Listing listing = documentSnapshot.toObject(Listing.class);
-                                mData.add(listing);
-                            }
-                        }
-                    }
-                });
     }
 
     @Override
