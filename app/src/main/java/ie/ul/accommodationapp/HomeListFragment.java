@@ -10,6 +10,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 
 import android.os.StrictMode;
@@ -74,6 +75,7 @@ public class HomeListFragment extends Fragment {
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
     StorageReference listingImagesRef = null;
+    private View view;
     ArrayList<InputStream> inputStream = new ArrayList<InputStream>();
     boolean imageAttached=false;
 
@@ -97,7 +99,7 @@ public class HomeListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home_list, container, false);
+        view = inflater.inflate(R.layout.fragment_home_list, container, false);
         TextView textView = view.findViewById(R.id.bannerText);
         textView.setVisibility(View.GONE);
         return view;
@@ -282,7 +284,7 @@ public class HomeListFragment extends Fragment {
                         startDate.setText("");
                         endDate.setText("");
                         Toast.makeText(getActivity(), "Successfully Added Listing.", Toast.LENGTH_SHORT).show();
-//                        ((BottomNavigationActivity) getActivity()).addListing(newHouse);
+                        refresh();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -290,6 +292,11 @@ public class HomeListFragment extends Fragment {
             }
         });
     }
+
+    public void refresh() {
+        Navigation.findNavController(view).navigate(R.id.action_global_homeShowFragment);
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
