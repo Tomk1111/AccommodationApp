@@ -23,6 +23,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -39,6 +41,7 @@ public class PersonalInformationFragment extends Fragment {
     private SearchView searchView;
     private ProfileViewModel profileViewModel;
     private SharedPreferences sharedPreferences;
+    private DatabaseReference userRef;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -58,6 +61,9 @@ public class PersonalInformationFragment extends Fragment {
         dateJoinedField.setText(profileViewModel.getJoined());
         lastLoginField.setText(profileViewModel.getLastLogin());
 
+        //initialise the Firebase RTDB connection
+        userRef = FirebaseDatabase.getInstance().getReference().child("Users");
+
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,6 +73,7 @@ public class PersonalInformationFragment extends Fragment {
                     Toast.makeText(getContext(), "Please enter a username.", Toast.LENGTH_SHORT).show();
                 } else {
                     String usernameText = usernameField.getText().toString();
+                    updateUsernameRTDB(mAuth.getCurrentUser().getUid(), usernameText);
                     UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
                             .setDisplayName(usernameText)
                             .build();
@@ -88,6 +95,25 @@ public class PersonalInformationFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    //when a user changes their username we have to update this on the RT DB as well as FireStore
+    public void updateUsernameRTDB(String uid, String name){
+
+        userRef.child(uid).child("name").setValue(name)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            //Toast.makeText(getActivity(), "User Name updated RTDB", Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            String error = task.getException().toString();
+                            Toast.makeText(getActivity(), "Error updating user in RTDB: " + error, Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
     }
 
     public void updateUI() {
