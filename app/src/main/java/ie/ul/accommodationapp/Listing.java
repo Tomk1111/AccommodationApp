@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class Listing implements Parcelable {
-    private int id;
+    private String id;
     private double longitude;
     private double latitude;
     private String address;
@@ -28,7 +28,7 @@ public class Listing implements Parcelable {
 
     }
 
-    public Listing(int id, double lng, double lat, String addressText, int roomInt, int priceInt, String toString, Date sDate, Date eDate, int difInt, String uid, String userName) {
+    public Listing(String id, double lng, double lat, String addressText, int roomInt, int priceInt, String toString, Date sDate, Date eDate, int difInt, String uid, String userName) {
         this.id = id;
         this.longitude = lng;
         this.latitude = lat;
@@ -84,11 +84,11 @@ public class Listing implements Parcelable {
         this.address = address;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -147,7 +147,7 @@ public class Listing implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.id);
+        dest.writeString(this.id);
         dest.writeDouble(this.longitude);
         dest.writeDouble(this.latitude);
         dest.writeString(this.address);
@@ -160,7 +160,7 @@ public class Listing implements Parcelable {
     }
 
     protected Listing(Parcel in) {
-        this.id = in.readInt();
+        this.id = in.readString();
         this.longitude = in.readDouble();
         this.latitude = in.readDouble();
         this.address = in.readString();

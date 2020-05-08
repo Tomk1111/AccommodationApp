@@ -60,6 +60,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -67,7 +68,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class HomeListFragment extends Fragment {
 
-    int id;
+    String id;
     private EditText address, rooms, price, description, startDate, endDate;
     private static final int PICK_PHOTO_FOR_LISTING = 0;
     private FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -166,17 +167,7 @@ public class HomeListFragment extends Fragment {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         final CollectionReference listing1 = db.collection("Listings");
         final CollectionReference listing2 = db.collection("HouseImage");
-        listing1.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document: task.getResult()) {
-                        id++;
-                    }
-                    id++;
-                }
-            }
-        });
+        id = UUID.randomUUID().toString();
         final GeoApiContext context = new GeoApiContext.Builder()
                 .apiKey("AIzaSyCJorsEbO8BWUmHINg18AXww1wJpItBqQg")
                 .build();
